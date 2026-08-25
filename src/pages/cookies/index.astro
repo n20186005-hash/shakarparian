@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="کوکی ترتیبات | شکرپڑیاں اسلام آباد رہنما" description="ضروری، تجزیاتی، ترجیحی اور مارکیٹنگ کوکی انتخاب منظم کریں۔">
+  <section class="legal-hero">
+    <div class="container">
+      <a class="backlink" href="/">→ مرکزی رہنما پر واپس جائیں</a>
+      <h1>کوکی ترتیبات</h1>
+      <p>آخری اپ ڈیٹ: اگست 2026</p>
+    </div>
+  </section>
+  <article class="legal-wrap">
+    <p>ہم کوکی اور اسی نوع کی مقامی براؤزر ٹیکنالوجی صرف سائٹ کے بنیادی کام، آپ کی رضامندی یاد رکھنے اور—آپ کی اجازت پر—اجتماعی ٹریفک سمجھنے کے لیے استعمال کرتے ہیں۔ اس غیر منافع بخش سائٹ پر ذاتی اشتہارات فعال نہیں ہیں۔</p>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>ضروری ذخیرہ</h3><p>سائٹ کے بنیادی فنکشن، سکیورٹی اور آپ کی رضامندی کی حالت یاد رکھنے کے لیے۔ اسے بند نہیں کیا جا سکتا کیونکہ اسی کے ذریعے باقی ترجیحات نافذ رہتی ہیں۔</p></div>
+        <strong>ہمیشہ فعال</strong>
+      </div>
+    </div>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>تجزیاتی کوکی</h3><p>گوگل اینالیٹکس کے ذریعے مجموعی استعمال، مقبول صفحات اور عمومی ٹریفک رجحان سمجھنے میں مدد دیتی ہیں۔ یہ پہلے سے بند ہے اور صرف آپ کی رضامندی پر فعال ہوتی ہے۔</p></div>
+        <label class="switch"><input id="analytics" type="checkbox" /> فعال کریں</label>
+      </div>
+    </div>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>ترجیحی ذخیرہ</h3><p>آپ کے مقامی سائٹ انتخاب یاد رکھ سکتا ہے۔ موجودہ سائٹ ایک ہی اردو زبان اور مستقل بصری تھیم استعمال کرتی ہے، اس لیے اس زمرے کا استعمال محدود ہے۔</p></div>
+        <label class="switch"><input id="preferences" type="checkbox" /> فعال کریں</label>
+      </div>
+    </div>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>مارکیٹنگ کوکی</h3><p>ذاتی اشتہارات، تجارتی ری ٹارگٹنگ یا اشتہاری مہم کی پیمائش کے لیے۔ ہم یہ زمرہ استعمال نہیں کرتے۔</p></div>
+        <strong>غیر فعال</strong>
+      </div>
+    </div>
+
+    <h2>گوگل میپس کے بارے میں</h2>
+    <p>مرکزی رہنما میں گوگل میپس ایک بیرونی نقشے کے طور پر سرایت شدہ ہے۔ نقشہ خود گوگل کے سرور سے لوڈ ہوتا ہے اور اس کی اپنی کوکی/رازداری پالیسی ہو سکتی ہے۔ ہماری تجزیاتی رضامندی بند کرنے سے گوگل میپس کے بیرونی فریم کی اپنی تکنیکی کارروائی لازماً بند نہیں ہوتی؛ اگر آپ اسے مکمل طور پر نہیں لوڈ کرنا چاہتے تو نقشے والے حصے سے گریز یا براؤزر کی تیسرے فریق حفاظتی ترتیبات استعمال کریں۔</p>
+
+    <h2>رضامندی کا انتظام</h2>
+    <p>آپ کسی بھی وقت اسی صفحے پر واپس آ کر انتخاب بدل سکتے ہیں۔ “سب مسترد کریں” تجزیاتی اور اختیاری ترجیحی زمرے بند کر دیتا ہے، مگر بنیادی رضامندی حالت محفوظ رہتی ہے۔</p>
+    <div class="cookie-actions">
+      <button class="btn btn-primary" id="save-preferences" type="button">ترجیحات محفوظ کریں</button>
+      <button class="btn" style="border-color:#c9cfc9;background:white;color:#123d33" id="reject-all" type="button">سب مسترد کریں</button>
+    </div>
+    <p class="cookie-status" id="cookie-status" role="status" aria-live="polite"></p>
+  </article>
+
+  <script is:inline>
+    (() => {
+      const key = 'shakarparian-consent';
+      const analytics = document.getElementById('analytics');
+      const preferences = document.getElementById('preferences');
+      const status = document.getElementById('cookie-status');
+      const save = document.getElementById('save-preferences');
+      const reject = document.getElementById('reject-all');
+      const read = () => {
+        try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; }
+      };
+      const current = read();
+      analytics.checked = current.analytics === true;
+      preferences.checked = current.preferences === true;
+      const commit = (value, message) => {
+        const data = { necessary: true, analytics: !!value.analytics, preferences: !!value.preferences, marketing: false };
+        localStorage.setItem(key, JSON.stringify(data));
+        status.textContent = message;
+        window.dispatchEvent(new CustomEvent('shakarparian-consent-changed', { detail: data }));
+      };
+      save.addEventListener('click', () => commit({analytics: analytics.checked, preferences: preferences.checked}, 'آپ کی کوکی ترجیحات محفوظ ہو گئی ہیں۔'));
+      reject.addEventListener('click', () => {
+        analytics.checked = false;
+        preferences.checked = false;
+        commit({analytics:false, preferences:false}, 'اختیاری کوکی ترجیحات مسترد کر دی گئی ہیں۔');
+      });
+    })();
+  </script>
+</BaseLayout>

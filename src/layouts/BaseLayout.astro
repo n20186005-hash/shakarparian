@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Brand from '../components/Brand.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noHeader?: boolean;
+}
+const { title, description, image = '/brand/favicon.svg', noHeader = false } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const ogImage = Astro.site && image.startsWith('/') ? new URL(image, Astro.site).toString() : image;
+---
+<!doctype html>
+<html lang="ur-PK" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#123d33" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ur_PK" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/brand/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/brand/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <script is:inline>
+      (() => {
+        const GA_ID = 'G-HXM22WWPKP';
+        const key = 'shakarparian-consent';
+        const loadAnalytics = () => {
+          if (document.querySelector('script[data-ga-loader]')) return;
+          const s = document.createElement('script');
+          s.async = true;
+          s.dataset.gaLoader = 'true';
+          s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments)}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID, { anonymize_ip: true });
+        };
+        try {
+          const prefs = JSON.parse(localStorage.getItem(key) || '{}');
+          if (prefs.analytics === true) loadAnalytics();
+        } catch {}
+        window.addEventListener('shakarparian-consent-changed', (event) => {
+          if (event.detail?.analytics === true) loadAnalytics();
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">مرکزی مواد پر جائیں</a>
+    {!noHeader && (
+      <header class="site-header">
+        <div class="container header-row">
+          <Brand compact />
+          <nav class="nav" aria-label="مرکزی نیویگیشن">
+            <a href="/#history">پس منظر</a>
+            <a href="/#visit">دورے کی منصوبہ بندی</a>
+            <a href="/#transport">آمدورفت</a>
+            <a href="/#nearby">قریب کیا ہے</a>
+            <a href="/#faq">سوالات</a>
+            <a class="nav-cta" href="/#map">نقشہ دیکھیں</a>
+          </nav>
+        </div>
+      </header>
+    )}
+    <main id="main-content"><slot /></main>
+    <Footer />
+  </body>
+</html>

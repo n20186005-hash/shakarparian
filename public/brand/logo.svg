@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 150" role="img" aria-labelledby="title desc">
+  <title id="title">شکرپڑیاں اسلام آباد رہنما</title>
+  <desc id="desc">پاکستان مونومنٹ کے پتّوں، پہاڑی خط اور ستارے سے متاثر علامت</desc>
+  <g transform="translate(18 10)">
+    <circle cx="65" cy="65" r="60" fill="#f3ead7"/>
+    <path d="M65 20 C42 37 35 61 45 91 C56 79 64 59 65 20Z" fill="#a64b2a"/>
+    <path d="M65 20 C88 37 95 61 85 91 C74 79 66 59 65 20Z" fill="#b85a34"/>
+    <path d="M42 35 C22 54 21 78 38 101 C44 83 50 62 42 35Z" fill="#c36b3e"/>
+    <path d="M88 35 C108 54 109 78 92 101 C86 83 80 62 88 35Z" fill="#c36b3e"/>
+    <path d="M17 105 Q65 74 113 105 Q65 92 17 105Z" fill="#0f5a47"/>
+    <path d="M26 114 Q65 94 104 114 Q65 106 26 114Z" fill="#1d735d"/>
+    <path d="M65 47l4 9 10 1-8 6 3 10-9-5-9 5 3-10-8-6 10-1z" fill="#f4c769"/>
+  </g>
+  <g fill="#123d33" font-family="Noto Naskh Arabic, Noto Nastaliq Urdu, Segoe UI, Tahoma, sans-serif" text-anchor="start">
+    <text x="150" y="70" font-size="43" font-weight="700">شکرپڑیاں</text>
+    <text x="150" y="108" font-size="22" fill="#476c61">اسلام آباد کا غیر سرکاری معلوماتی رہنما</text>
+  </g>
+</svg>

@@ -1,0 +1,327 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
+const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '');
+const attractionUrl = siteUrl ? `${siteUrl}/` : undefined;
+
+const attractionSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['TouristAttraction', 'LocalBusiness'],
+  '@id': attractionUrl ? `${attractionUrl}#attraction` : undefined,
+  name: 'شکرپڑیاں نیشنل پارک',
+  alternateName: 'Shakarparian National Park',
+  description: 'اسلام آباد کی شکرپڑیاں پہاڑیوں پر واقع سبز تفریحی علاقہ، جہاں سے شہر کے وسیع مناظر، ریاستی شجرکاری کی روایت اور پاکستان مونومنٹ کے ثقافتی مقامات تک رسائی ملتی ہے۔',
+  url: attractionUrl,
+  image: [heroPhoto, parkPhoto],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'اسلام آباد ایکسپریس وے',
+    addressLocality: 'اسلام آباد',
+    postalCode: '44000',
+    addressCountry: 'PK',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 33.6899848,
+    longitude: 73.091096,
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.5',
+    ratingCount: 44843,
+    bestRating: '5',
+  },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Thursday','Saturday','Sunday'], opens: '09:30', closes: '20:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday','Friday'], opens: '09:30', closes: '20:30' },
+  ],
+  isAccessibleForFree: true,
+};
+
+const faqs = [
+  ['کیا شکرپڑیاں نیشنل پارک میں داخلہ مفت ہے؟', 'پارک کے عمومی کھلے حصوں میں داخلہ عموماً مفت سمجھا جاتا ہے، تاہم پاکستان مونومنٹ میوزیم یا دوسرے عجائب گھروں کے الگ ٹکٹ، سکیورٹی قواعد اور اوقات ہو سکتے ہیں۔ روانگی سے پہلے متعلقہ سرکاری مقام کے موجودہ قواعد ضرور دیکھیں۔'],
+  ['شکرپڑیاں دیکھنے کے لیے کتنا وقت رکھنا چاہیے؟', 'صرف سبزہ، نظارے اور آرام دہ چہل قدمی کے لیے تقریباً ڈیڑھ سے تین گھنٹے مناسب ہیں۔ پاکستان مونومنٹ اور قریبی عجائب گھروں کو بھی شامل کریں تو نصف دن زیادہ آرام دہ رہتا ہے۔'],
+  ['بہترین وقت کون سا ہے؟', 'گرمی سے بچنے اور نرم روشنی کے لیے صبح کا ابتدائی حصہ یا شام سے پہلے کا وقت بہتر رہتا ہے۔ اختتامِ ہفتہ اور قومی تعطیلات پر ہجوم بڑھ سکتا ہے۔ بارش، دھند یا شدید گرمی میں کھلے مقامات کا تجربہ بدل سکتا ہے۔'],
+  ['کیا گاڑی کی پارکنگ دستیاب ہے؟', 'شکرپڑیاں اور پاکستان مونومنٹ کے وزیٹر زون میں مخصوص پارکنگ علاقے موجود ہیں۔ مصروف دنوں میں جگہ محدود ہو سکتی ہے؛ سکیورٹی ہدایات اور موقع پر موجود نشانات کو ترجیح دیں۔'],
+  ['کیا پبلک ٹرانسپورٹ سے پہنچا جا سکتا ہے؟', 'سی ڈی اے کے روٹ نیٹ ورک میں شکرپڑیاں سے گزرنے والا فیڈر روٹ درج ہے۔ شہر کے میٹروبس یا بڑے ٹرانزٹ پوائنٹ تک پہنچ کر فیڈر، ٹیکسی یا رائیڈ ہیلنگ کے ذریعے آخری مرحلہ طے کیا جا سکتا ہے۔ شیڈول بدل سکتا ہے، اس لیے روانگی کے دن سی ڈی اے کا موجودہ روٹ نقشہ دیکھیں۔'],
+  ['کیا وہیل چیئر یا کم نقل و حرکت والے افراد کے لیے جگہ آسان ہے؟', 'مرکزی یادگاری اور وزیٹر حصوں میں پختہ راستے موجود ہیں، لیکن شکرپڑیاں ایک پہاڑی علاقہ ہے اور بعض راستوں میں ڈھلوان، سیڑھیاں یا طویل فاصلہ آ سکتا ہے۔ مخصوص رسائی کی ضرورت ہو تو اسی دن متعلقہ مقام سے تصدیق بہتر ہے۔'],
+  ['کیا کھانا اور پانی مل جاتا ہے؟', 'بڑے وزیٹر زون کے آس پاس چائے، اسنیکس یا بنیادی ریفریشمنٹ کی سہولت مل سکتی ہے، مگر دستیابی مستقل نہیں مانی جانی چاہیے۔ پانی ساتھ رکھنا مفید ہے؛ مکمل کھانے کے لیے شہری علاقوں میں ریسٹورنٹ اور فوڈ زون کی متعدد اقسام دستیاب ہیں۔'],
+  ['کیا رات کے وقت جانا مناسب ہے؟', 'پارک اور متعلقہ کمپلیکس کے داخلہ اوقات اور سکیورٹی حدود پر عمل کریں۔ اندھیرے کے بعد کم روشن یا سنسان راستوں سے گریز، نشان زدہ عوامی علاقوں تک محدود رہنا اور واپسی کی ٹرانسپورٹ پہلے طے کرنا زیادہ مناسب ہے۔'],
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([name, text]) => ({
+    '@type': 'Question',
+    name,
+    acceptedAnswer: { '@type': 'Answer', text },
+  })),
+};
+---
+<BaseLayout
+  title="شکرپڑیاں نیشنل پارک اسلام آباد | آزاد سیاحتی و تاریخی رہنما"
+  description="شکرپڑیاں نیشنل پارک کے نظارے، تاریخ، پاکستان مونومنٹ، اوقات، فیس، پارکنگ، پبلک ٹرانسپورٹ، ہوائی اڈے سے آمدورفت، سہولیات اور قریبی ثقافتی مقامات پر غیر تجارتی اردو رہنما۔"
+  image={heroPhoto}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-media">
+      <img src={heroPhoto} alt="شکرپڑیاں کی مغربی پہاڑی پر پاکستان مونومنٹ" width="1920" height="1080" fetchpriority="high" />
+    </div>
+    <div class="container hero-inner">
+      <div>
+        <div class="hero-kicker">اسلام آباد کی پہاڑی، یادگار اور شہری سبز منظرنامہ</div>
+        <h1 id="hero-title">شکرپڑیاں</h1>
+        <p>
+          اسلام آباد کے قلب میں بلند سبز پہاڑیاں، جہاں شہر کا پینوراما، ریاستی مہمانوں کی شجرکاری کی روایت، باغات اور پاکستان مونومنٹ ایک ہی ثقافتی منظرنامے میں ملتے ہیں۔ یہ رہنما دورے سے پہلے وہ عملی معلومات اکٹھی کرتا ہے جو موقع پر واقعی کام آتی ہیں۔
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#visit">دورہ منصوبہ بنائیں <span aria-hidden="true">←</span></a>
+          <a class="btn btn-ghost" href="#history">پس منظر پڑھیں</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="فوری معلومات">
+        <div class="hero-stat"><span>گوگل مقام کی درجہ بندی</span><strong>4.5 / 5</strong></div>
+        <div class="hero-stat"><span>نمایاں بلندی</span><strong>تقریباً 609 میٹر</strong></div>
+        <div class="hero-stat"><span>عام وزٹ ونڈو</span><strong>صبح 9:30 کے بعد</strong></div>
+        <div class="hero-stat"><span>موزوں دورانیہ</span><strong>1.5–3 گھنٹے</strong></div>
+        <div class="hero-stat"><span>مقام</span><strong>اسلام آباد، 44000</strong></div>
+        <div class="photo-credit">تصویر: Fawad4real — <a href="https://commons.wikimedia.org/wiki/File:Pakistan_Islamabad_monument_03.jpg" rel="license noopener noreferrer">CC BY-SA 4.0</a></div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="quickbar">
+    <div class="container quickgrid" aria-label="دورے کی مختصر جھلک">
+      <div class="quickitem"><small>داخلہ</small><strong>پارک کے عمومی حصے عموماً مفت</strong></div>
+      <div class="quickitem"><small>بہترین وقت</small><strong>صبح یا شام سے پہلے</strong></div>
+      <div class="quickitem"><small>مزاج</small><strong>خاندان، تاریخ، فوٹوگرافی، چہل قدمی</strong></div>
+      <div class="quickitem"><small>اہم احتیاط</small><strong>عجائب گھر کے اوقات الگ ہو سکتے ہیں</strong></div>
+    </div>
+  </div>
+
+  <section class="section" id="history">
+    <div class="container story-grid">
+      <div class="story-image">
+        <img src={parkPhoto} alt="شکرپڑیاں کے باغیچے میں یادگاری تختی اور سبزہ" width="1600" height="900" loading="lazy" />
+        <div class="story-badge">شکرپڑیاں کی ایک نمایاں روایت: مختلف ممالک کے سربراہانِ ریاست اور معزز مہمانوں کی لگائی ہوئی یادگاری شجرکاری۔</div>
+      </div>
+      <div class="story-copy">
+        <div class="eyebrow">جگہ کو سمجھیں</div>
+        <h2 class="section-title">صرف پارک نہیں، دارالحکومت کی ایک تہہ دار کہانی</h2>
+        <p>
+          شکرپڑیاں اسلام آباد کی منصوبہ بند شہری شناخت کے ابتدائی سبز مناظر میں شمار ہوتی ہے۔ کیپیٹل ڈویلپمنٹ اتھارٹی اسے تاریخی اہمیت والی پہاڑی تفریح گاہ کے طور پر بیان کرتی ہے اور یہاں تقریباً 609 میٹر کی بلندی سے شہر کے وسیع مناظر کا ذکر کرتی ہے۔
+        </p>
+        <p>
+          اس جگہ کی سب سے مخصوص روایت “دوستی” کی یادگاری شجرکاری ہے: مختلف ادوار میں پاکستان آنے والے سربراہانِ مملکت اور معزز مہمانوں نے یہاں درخت لگائے۔ یوں سبزہ صرف آرائش نہیں رہتا بلکہ پاکستان کی سفارتی یادداشت کا ایک زندہ نقش بن جاتا ہے۔ مغربی شکرپڑیاں پر پاکستان مونومنٹ نے بعد میں قومی وحدت اور وفاقی دارالحکومت کی علامتی پرت مزید نمایاں کی۔
+        </p>
+        <ul class="timeline">
+          <li><strong>منصوبہ بند دارالحکومت کا دور:</strong> 1960 کے بعد اسلام آباد کی ترقی کے ساتھ شکرپڑیاں کو شہری سبز اور تفریحی منظرنامے میں باقاعدہ جگہ ملی۔</li>
+          <li><strong>دوستی کی شجرکاری:</strong> سرکاری مہمانوں کی لگائی ہوئی یادگاری شجرکاری نے پہاڑی کو سفارتی یادداشت سے جوڑا۔</li>
+          <li><strong>قومی ثقافتی محور:</strong> پاکستان مونومنٹ، لوک ورثہ اور عجائب گھروں کے باعث یہ علاقہ فطرت کے ساتھ قومی تاریخ اور ثقافت کا مشترک وزیٹر زون بن گیا۔</li>
+          <li><strong>آج کا کردار:</strong> سی ڈی اے اب بھی شکرپڑیاں کے سبز علاقوں، صفائی اور شہری تفریحی استعمال کی دیکھ بھال میں کردار ادا کرتا ہے۔</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="why-title">
+    <div class="container">
+      <div class="eyebrow">موقع پر کیا دیکھیں</div>
+      <h2 class="section-title" id="why-title">چار وجوہ جو شکرپڑیاں کو الگ بناتی ہیں</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">◉</div><h3>شہر کا بلند منظر</h3><p>درختوں اور کھلے مقامات کے بیچ سے اسلام آباد–راولپنڈی کے شہری پھیلاؤ اور مارگلہ کے پس منظر کو مختلف زاویوں سے دیکھنے کا موقع ملتا ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>پاکستان مونومنٹ</h3><p>پھول کی پنکھڑیوں جیسی ساخت والی قومی یادگار مغربی شکرپڑیاں کی شناخت بن چکی ہے اور قومی وحدت کی علامتی تشریح پیش کرتی ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">♧</div><h3>دوستی کے درخت</h3><p>ریاستی اور سفارتی مہمانوں کی شجرکاری اس پارک کو ایک غیر معمولی “زندہ آرکائیو” بناتی ہے، جسے صرف باغ سمجھ کر گزر جانا اس کی اصل کہانی کھو دیتا ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">⌂</div><h3>ثقافتی اداروں کا جھرمٹ</h3><p>قومی یادگار، ورثہ عجائب گھر اور قدرتی تاریخ کے ادارے قریب ہونے سے ایک ہی دورے میں ماحول، تاریخ اور ثقافت جوڑی جا سکتی ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">☼</div><h3>موسمی کیفیت</h3><p>بہار میں سبزہ اور پھول، سردیوں میں صاف فضا اور گرمیوں میں صبح و شام کی نسبتاً نرم روشنی—ہر موسم کا تجربہ الگ ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">◎</div><h3>خاندانی رفتار</h3><p>یہ “تیز چیک لسٹ” والا مقام نہیں؛ بیٹھنے، منظر دیکھنے، تاریخ پڑھنے اور آہستہ چلنے کے لیے وقت رکھنے پر تجربہ بہتر ہوتا ہے۔</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section deep-green" id="transport">
+    <div class="container">
+      <div class="eyebrow">تفصیلی آمدورفت</div>
+      <h2 class="section-title">ہوائی اڈے، بس، ٹیکسی اور اپنی گاڑی سے کیسے پہنچیں</h2>
+      <p class="section-lead">شکرپڑیاں شہر کے مرکزی حصے کے قریب ہے، مگر آخری رسائی پہاڑی سڑکوں اور بڑے روڈ جنکشنز سے ہوتی ہے۔ درج ذیل طریقے تجارتی سفارش نہیں بلکہ سفری اقسام کی غیر جانب دار وضاحت ہیں۔</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <h3>اسلام آباد انٹرنیشنل ایئرپورٹ سے</h3>
+          <p><strong>آسان طریقہ:</strong> لائسنس یافتہ ٹیکسی یا رائیڈ ہیلنگ سے سیدھا “شکرپڑیاں نیشنل پارک / پاکستان مونومنٹ زون” تلاش کریں۔ ٹریفک کے مطابق سفر عموماً شہر کے پار ایک درمیانی فاصلے کا سفر بنتا ہے۔</p>
+          <p><strong>پبلک ٹرانسپورٹ:</strong> ایئرپورٹ سے میٹروبس/شہری ٹرانزٹ کے ذریعے مرکزی اسلام آباد کی سمت آئیں، پھر مناسب انٹرچینج سے فیڈر، ٹیکسی یا رائیڈ ہیلنگ کے ذریعے شکرپڑیاں کا آخری حصہ طے کریں۔ سامان زیادہ ہو تو آخری مرحلے کے لیے گاڑی زیادہ عملی رہتی ہے۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>میٹروبس اور شہری بس سے</h3>
+          <p>سی ڈی اے کے پبلک ٹرانزٹ نقشے میں <strong>ایس ٹی-02</strong> روٹ پی آئی ایم ایس سے شکرپڑیاں پارک کے راستے چلنے والے فیڈر کے طور پر درج ہے۔ آپ کے روانگی والے دن روٹ، آپریٹنگ دن اور فریکوئنسی تبدیل ہو سکتے ہیں۔</p>
+          <p>عملی حکمتِ عملی یہ ہے کہ پہلے مرکزی میٹروبس/ٹرانزٹ کوریڈور سے پی آئی ایم ایس یا قریبی بڑے انٹرچینج تک پہنچیں، پھر موجودہ فیڈر یا مختصر ٹیکسی سفر اختیار کریں۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>ٹیکسی اور رائیڈ ہیلنگ</h3>
+          <p>ڈرائیور کو صرف “شکرپڑیاں” کہنے کے بجائے مطلوبہ وزیٹر زون واضح کریں—مثلاً پارک کا مرکزی حصہ یا پاکستان مونومنٹ کا داخلی علاقہ—کیونکہ پہاڑی پر مختلف رسائی پوائنٹس ہیں۔ واپسی کے وقت موبائل سگنل اور گاڑی کی دستیابی پہلے چیک کرنا مفید ہے۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>نجی گاڑی، سائیکل اور پیدل</h3>
+          <p>نجی گاڑی کے لیے مرکزی سڑکوں سے نشان زدہ پارکنگ زون تک جائیں اور سکیورٹی بیریئرز/ٹریفک کنٹرول کی ہدایات پر عمل کریں۔ پہاڑی کے اندر مختصر چہل قدمی خوشگوار ہے، مگر بڑے ایکسپریس وے اور جنکشنز کی وجہ سے دور سے پیدل یا سائیکل آمد ہر مسافر کے لیے آرام دہ نہیں۔</p>
+        </article>
+      </div>
+      <div class="notice"><strong>روانگی سے پہلے:</strong> سرکاری ٹرانزٹ نقشہ، موسم، سکیورٹی/تقریب کی بندش اور عجائب گھر کے الگ اوقات دیکھیں۔ قومی دن، عید اور بڑے پروگراموں میں ٹریفک مینجمنٹ معمول سے مختلف ہو سکتی ہے۔</div>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <div class="container">
+      <div class="eyebrow">عملی وزیٹر معلومات</div>
+      <h2 class="section-title">اوقات، فیس، قیام اور بنیادی سہولیات</h2>
+      <p class="section-lead">کھلے شہری پارک، قومی یادگار اور عجائب گھر ایک ہی چیز نہیں ہیں؛ ہر مقام کے قواعد الگ ہو سکتے ہیں۔ اس لیے نیچے “پارک” اور “قریبی اداروں” کی معلومات الگ رکھی گئی ہیں۔</p>
+      <div class="visit-grid">
+        <article class="visit-card">
+          <h3>موجودہ عمومی اوقات</h3>
+          <p>گوگل مقام کی حالیہ فہرست میں شکرپڑیاں نیشنل پارک کے درج اوقات یہ ہیں۔ یہ بدلنے والی معلومات ہیں، خاص طور پر تہوار، سرکاری تقریب یا سکیورٹی انتظام کے دن۔</p>
+          <div class="hours">
+            <div class="hour-row"><span>پیر، منگل، جمعرات، ہفتہ، اتوار</span><strong>9:30 صبح – 8:00 شام</strong></div>
+            <div class="hour-row"><span>بدھ، جمعہ</span><strong>9:30 صبح – 8:30 شام</strong></div>
+          </div>
+          <p style="font-size:.82rem;margin-bottom:0">عجائب گھر اور پاکستان مونومنٹ کے اندرونی حصوں کے اوقات اس جدول سے مختلف ہو سکتے ہیں۔</p>
+        </article>
+        <article class="visit-card">
+          <h3>ٹکٹ / اخراجات</h3>
+          <p><strong>پارک:</strong> عمومی سبز اور کھلے تفریحی حصوں میں داخلہ عموماً مفت ہے۔</p>
+          <p><strong>عجائب گھر:</strong> قریبی عجائب گھروں یا اندرونی نمائشی حصوں کے الگ ٹکٹ ہو سکتے ہیں؛ چونکہ فیس بدل سکتی ہے، اس رہنما میں غیر تصدیق شدہ رقم درج نہیں کی گئی۔</p>
+          <p><strong>بجٹ:</strong> اصل متغیر خرچ آمدورفت، پارکنگ (اگر موقع پر فیس نافذ ہو)، پانی/کھانا اور الگ ثقافتی اداروں کے ٹکٹ ہیں۔</p>
+        </article>
+        <article class="visit-card">
+          <h3>بہترین وقت اور قیام کا دورانیہ</h3>
+          <p><strong>صبح:</strong> ہلکی ٹھنڈک، نسبتاً کم ہجوم اور چہل قدمی کے لیے بہتر۔</p>
+          <p><strong>شام سے پہلے:</strong> نرم روشنی اور شہر کے وسیع منظر کے لیے موزوں؛ غروب کے بعد واپسی کا وقت اور گیٹ کے اوقات ذہن میں رکھیں۔</p>
+          <p><strong>مدت:</strong> پارک 1.5–3 گھنٹے؛ عجائب گھر اور قومی یادگار کے ساتھ 3–5 گھنٹے یا نصف دن۔</p>
+        </article>
+        <article class="visit-card">
+          <h3>پارکنگ</h3>
+          <p>مرکزی وزیٹر علاقوں کے قریب مخصوص پارکنگ زون موجود ہیں۔ اختتامِ ہفتہ، تعطیلات اور تقریبات میں جلد پہنچنا بہتر ہے۔ سڑک کنارے غیر مجاز پارکنگ سے گریز کریں کیونکہ سکیورٹی اور ٹریفک انتظام اچانک سخت ہو سکتا ہے۔</p>
+          <p><strong>برقی گاڑی:</strong> پارک کے اندر مستقل عوامی چارجر کی تصدیق اس رہنما کو معتبر سرکاری ماخذ سے نہیں ملی؛ اس لیے شہر میں دستیاب عوامی چارجنگ مقام پر پہلے چارج مکمل کرنا زیادہ محفوظ منصوبہ ہے۔</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="facilities-title">
+    <div class="container">
+      <div class="eyebrow">آپ کے روزمرہ سوالات</div>
+      <h2 class="section-title" id="facilities-title">بیت الخلا، پانی، کھانا، رہائش، خریداری اور ایندھن</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon">بیت</div><h3>بیت الخلا</h3><p>سی ڈی اے عوامی مقامات کی صفائی اور عوامی بیت الخلا کی دیکھ بھال کے فرائض انجام دیتا ہے۔ مخصوص بلاک کی حالت یا کھلنے کی دستیابی بدل سکتی ہے؛ مرکزی وزیٹر زون میں نشانیاں دیکھیں اور بنیادی ذاتی سامان ساتھ رکھیں۔</p></article>
+        <article class="feature"><div class="icon">◌</div><h3>پانی اور ریفریشمنٹ</h3><p>بڑے وزیٹر حصوں کے قریب بنیادی ریفریشمنٹ مل سکتی ہے، مگر اسے یقینی نہ سمجھیں۔ خاص طور پر گرمی میں اپنی بوتل ساتھ لانا بہتر ہے۔</p></article>
+        <article class="feature"><div class="icon">♨</div><h3>کھانا</h3><p>ہم کسی مخصوص کاروبار کی سفارش نہیں کرتے۔ قریبی شہری علاقوں میں پاکستانی کھانے، خاندانی ریسٹورنٹ، کیفے، چائے اور فوری اسنیکس کی مختلف اقسام ملتی ہیں۔</p></article>
+        <article class="feature"><div class="icon">⌂</div><h3>رہائش</h3><p>پارک کے اندر سیاحتی ہوٹل کا تصور نہیں۔ مرکزی اسلام آباد میں ہوٹل، گیسٹ ہاؤس، سروسڈ اپارٹمنٹ اور بجٹ رہائش کی اقسام موجود ہیں؛ اپنی حفاظت، بجٹ اور نقل و حمل کے مطابق زمرہ منتخب کریں۔</p></article>
+        <article class="feature"><div class="icon">▣</div><h3>گروسری / ضروری خریداری</h3><p>قریبی شہری سیکٹرز میں سپرمارکیٹ، گروسری اور کنوینینس اسٹور کی اقسام دستیاب ہیں۔ پارک کے اندر مکمل خریداری کی توقع نہ رکھیں؛ پانی، دوا اور دھوپ سے بچاؤ کی چیزیں پہلے لے آئیں۔</p></article>
+        <article class="feature"><div class="icon">⛽</div><h3>ایندھن اور چارجنگ</h3><p>اسلام آباد کی بڑی رسائی سڑکوں پر پٹرول/ڈیزل اسٹیشن کی اقسام موجود ہیں۔ کسی مخصوص آپریٹر کی سفارش نہیں کی جاتی۔ برقی گاڑی کے لیے شہر میں قابلِ اعتماد چارجر پہلے تلاش کریں؛ پارک میں چارجر فرض نہ کریں۔</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="nearby">
+    <div class="container">
+      <div class="eyebrow">قریبی عوامی مقامات</div>
+      <h2 class="section-title">ایک ہی علاقے میں تاریخ، ثقافت اور باغ</h2>
+      <p class="section-lead">یہ فہرست تجارتی کاروبار نہیں بلکہ عوامی/ثقافتی مقامات کی جغرافیائی رہنمائی ہے۔ ہر ادارے کے داخلہ اوقات اور فیس الگ ہو سکتے ہیں۔</p>
+      <div class="attractions">
+        <article class="attraction"><b>پاکستان مونومنٹ</b><small>شکرپڑیاں کی مغربی پہاڑی پر قومی وحدت کی علامتی یادگار؛ پارک کے دورے کے ساتھ قدرتی امتزاج۔</small></article>
+        <article class="attraction"><b>پاکستان مونومنٹ میوزیم</b><small>قومی تاریخ اور تحریکِ پاکستان کے موضوعات پر نمائشی جگہ؛ اندرونی اوقات الگ چیک کریں۔</small></article>
+        <article class="attraction"><b>لوک ورثہ میوزیم</b><small>پاکستان کی زندہ ثقافتوں، دستکاری، لباس اور علاقائی روایتوں پر وسیع مجموعہ۔</small></article>
+        <article class="attraction"><b>پاکستان میوزیم آف نیچرل ہسٹری</b><small>ارضیات، حیاتیاتی تنوع اور قدرتی تاریخ میں دلچسپی رکھنے والوں کے لیے قریبی تعلیمی مقام۔</small></article>
+        <article class="attraction"><b>روز اینڈ جیسمین گارڈن</b><small>پھولوں اور کھلے سبز ماحول کے لیے قریبی باغ؛ موسمی کھلاؤ کے مطابق تجربہ بدلتا ہے۔</small></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="food-title">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <div class="eyebrow">قریب کھانے کی منصوبہ بندی</div>
+        <h2 class="section-title" id="food-title">“کہاں کھائیں” نہیں، “کس قسم کی سہولت ڈھونڈیں”</h2>
+        <p>غیر منافع بخش اور غیر تجارتی اداریاتی اصول کے تحت ہم کسی ریسٹورنٹ، کیفے یا برانڈ کو درجہ بندی نہیں دیتے۔ دورے کے انداز کے مطابق یہ زمرے زیادہ مفید ہیں:</p>
+        <ul>
+          <li><strong>مختصر دورہ:</strong> چائے، پانی، پیک شدہ اسنیکس یا ہلکی ریفریشمنٹ۔</li>
+          <li><strong>خاندانی نصف دن:</strong> مرکزی اسلام آباد میں بیٹھ کر کھانے والے خاندانی پاکستانی ریسٹورنٹ یا فوڈ زون۔</li>
+          <li><strong>غذائی پابندی:</strong> حلال عمومی معیار کے باوجود الرجی، سبزی خور یا مخصوص خوراک کے لیے آرڈر سے پہلے اجزاء کی تصدیق کریں۔</li>
+          <li><strong>پکنک:</strong> صرف اجازت یافتہ حصے استعمال کریں، کچرا واپس لے جائیں اور جنگلی/سبز علاقے میں آگ یا کھلی شعلہ سرگرمی سے گریز کریں۔</li>
+        </ul>
+      </div>
+      <div class="story-image" style="min-height:430px">
+        <img src={monumentPhoto} alt="پاکستان مونومنٹ اور شکرپڑیاں کا کھلا ثقافتی منظر" width="1600" height="1067" loading="lazy" />
+        <div class="story-badge">ایک بہتر نصف دن: سبزہ → قومی یادگار → ایک عجائب گھر → شہر میں کھانا۔</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="map">
+    <div class="container">
+      <div class="eyebrow">مقام اور راستہ</div>
+      <h2 class="section-title">شکرپڑیاں نیشنل پارک کا نقشہ</h2>
+      <p class="section-lead">نقشہ اردو/پاکستان علاقائی ترتیبات کے ساتھ سرایت کیا گیا ہے۔ نقشہ لوڈ ہونے پر گوگل کی اپنی رازداری اور کوکی پالیسیاں لاگو ہو سکتی ہیں۔</p>
+      <div class="map-shell" style="margin-top:2rem">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5913.273879471171!2d73.0910959773476!3d33.68998477329565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfc00721e44139%3A0xc76180e59480ec37!2z6IiN56eR5biV6YeM5piC5bGx!5e1!3m2!1sur!2sPK!4v1787621372278!5m2!1sur!2sPK"
+          width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="شکرپڑیاں نیشنل پارک — گوگل نقشہ"
+        ></iframe>
+        <div class="map-caption"><span>پتہ: اسلام آباد ایکسپریس وے، اسلام آباد 44000، پاکستان</span><span>نقشہ: گوگل میپس</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="photos-title">
+    <div class="container">
+      <div class="eyebrow">اصل فوٹوگرافی</div>
+      <h2 class="section-title" id="photos-title">شکرپڑیاں کا زمینی مزاج</h2>
+      <div class="photo-strip">
+        <figure class="photo-panel">
+          <img src={parkingPhoto} alt="شکرپڑیاں کے وزیٹر علاقے میں پارکنگ اور سبز پہاڑی منظر" width="1600" height="900" loading="lazy" />
+          <figcaption class="caption">تصویر: Irfa9mahmood — CC BY-SA 4.0، وکیمیڈیا کامنز</figcaption>
+        </figure>
+        <figure class="photo-panel">
+          <img src={parkPhoto} alt="شکرپڑیاں کا باغیچہ اور یادگاری شجرکاری کا حصہ" width="1200" height="675" loading="lazy" />
+          <figcaption class="caption">تصویر: Irfa9mahmood — CC BY-SA 4.0، وکیمیڈیا کامنز</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="eyebrow">عمومی سوالات</div>
+      <h2 class="section-title">دورے سے پہلے اکثر پوچھے جانے والے سوال</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container source-box">
+      <h3>اداریاتی طریقہ اور بنیادی ماخذ</h3>
+      <p>یہ ایک غیر سرکاری، غیر منافع بخش معلوماتی صفحہ ہے۔ تاریخی، شہری اور ٹرانسپورٹ پس منظر کو سرکاری/عوامی اداروں کے مواد سے تقابل کیا گیا ہے۔ بدلنے والی معلومات کے لیے ہم تاریخِ “آخری تصدیق” جیسا مصنوعی دعویٰ نہیں کرتے؛ روانگی کے دن اصل ادارے سے موجودہ حالت دیکھیں۔</p>
+      <ul>
+        <li><a href="https://cda.gov.pk/destination" rel="noopener noreferrer">کیپیٹل ڈویلپمنٹ اتھارٹی — اسلام آباد مقامات / شکرپڑیاں</a></li>
+        <li><a href="https://cda.gov.pk/public/metro_routes" rel="noopener noreferrer">کیپیٹل ڈویلپمنٹ اتھارٹی — پبلک ٹرانزٹ روٹ نقشہ</a></li>
+        <li><a href="https://doam.gov.pk/public/sites/10162" rel="noopener noreferrer">محکمہ آثارِ قدیمہ و عجائب گھر — لوک ورثہ میوزیم معلومات</a></li>
+        <li><a href="https://tourism.gov.pk/" rel="noopener noreferrer">پاکستان ٹورازم ڈویلپمنٹ کارپوریشن</a></li>
+        <li>مقام، درجہ بندی اور درج عمومی اوقات: فراہم کردہ گوگل میپس مقام اور عوامی نقشہ فہرست۔</li>
+      </ul>
+      <p>تصاویر: Wikimedia Commons پر Fawad4real اور Irfa9mahmood کی CC BY-SA 4.0 فوٹوگرافی؛ مکمل فائل/لائسنس روابط اوپر فوٹو کریڈٹ اور منصوبے کی تصویری manifest میں موجود ہیں۔</p>
+    </div>
+  </section>
+</BaseLayout>

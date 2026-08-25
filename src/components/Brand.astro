@@ -1,0 +1,8 @@
+---
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+---
+<a href="/" class={compact ? 'brand-mini' : 'brand-mini'} aria-label="شکرپڑیاں رہنما — مرکزی صفحہ">
+  <img src="/brand/favicon.svg" width="46" height="46" alt="" aria-hidden="true" />
+  <span>شکرپڑیاں رہنما</span>
+</a>
