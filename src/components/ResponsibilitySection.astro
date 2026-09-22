@@ -1,25 +1,33 @@
 ---
 import { RESPONSIBILITY_GROUPS } from '../data/visitor';
-import { ATTRACTION } from '../data/site';
----
+import { localeFromUrl, type Locale } from '../i18n';
 
-<section class="section" id="responsibility" aria-labelledby="responsibility-title">
+const locale: Locale = localeFromUrl(Astro.url);
+const L = locale === 'en' ? {
+  eyebrow: 'Visitor responsibility',
+  title: 'Keep Shakarparian clean & safe',
+  lead: 'A few simple habits protect the greenery, wildlife, and the experience of everyone who visits.',
+} : {
+  eyebrow: 'زائرین کی ذمہ داری',
+  title: 'شکرپڑیاں کو صاف اور محفوظ رکھیں',
+  lead: 'چند سادہ عادات سبزہ، جنگلی حیات اور ہر آنے والے کے تجربے کو محفوظ رکھتی ہیں۔',
+};
+---
+<section class="section-sm deep-green" aria-labelledby="responsibility-title">
   <div class="container">
-    <div class="eyebrow">سائنسی آگاہی اور وزیٹر ذمہ داری</div>
-    <h2 class="section-title" id="responsibility-title">{ATTRACTION.fullName} کے لیے محفوظ اور ذمہ دار وزیٹ کا کوڈ</h2>
-    <p class="section-lead">
-      یہ ایک سرکاری یا تحفظاتی ادارہ نہیں، بلکہ ایک غیر منافع بخش معلوماتی رہنما ہے۔ مقامی ماحول، ثقافتی یادگاروں اور دوسرے زائرین کے احترام کے لیے ذیل کے اصول مفید ہیں۔
-    </p>
-    <div class="resp-grid">
-      {RESPONSIBILITY_GROUPS.map((g) => (
-        <article class="resp-card">
-          <div class="resp-icon" aria-hidden="true">{g.icon}</div>
-          <div>
-            <h3>{g.title}</h3>
-            <p>{g.body}</p>
-          </div>
-        </article>
-      ))}
+    <div class="eyebrow">{L.eyebrow}</div>
+    <h2 class="section-title" id="responsibility-title">{L.title}</h2>
+    <p class="section-lead">{L.lead}</p>
+    <div class="guide-grid">
+      {
+        RESPONSIBILITY_GROUPS.map((g) => (
+          <article class="guide-card">
+            <div class="icon" aria-hidden="true">{g.icon}</div>
+            <h3>{locale === 'en' ? g.titleEn : g.title}</h3>
+            <p>{locale === 'en' ? g.bodyEn : g.body}</p>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>

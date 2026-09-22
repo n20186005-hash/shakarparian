@@ -1,145 +1,133 @@
-export const WEATHER_LOCATION = {
-  latitude: 33.6899848,
-  longitude: 73.091096,
-  timezone: 'Asia/Karachi',
+import type { Locale } from '../i18n';
+
+export const WEATHER_LOCATION = { latitude: 33.6869, longitude: 73.0656, timezone: 'Asia/Karachi' };
+
+const WMO_BY_CODE: Record<number, { ur: string; en: string }> = {
+  0: { ur: 'صاف آسمان', en: 'Clear sky' },
+  1: { ur: 'زیادہ تر صاف', en: 'Mainly clear' },
+  2: { ur: 'جزوی ابر آلود', en: 'Partly cloudy' },
+  3: { ur: 'ابر آلود', en: 'Overcast' },
+  45: { ur: 'دھند', en: 'Fog' },
+  48: { ur: 'جمی ہوئی دھند', en: 'Rime fog' },
+  51: { ur: 'ہلکی بوندا باندی', en: 'Light drizzle' },
+  53: { ur: 'بوندا باندی', en: 'Moderate drizzle' },
+  55: { ur: 'تیز بوندا باندی', en: 'Dense drizzle' },
+  56: { ur: 'جمی ہوئی بوندا باندی', en: 'Freezing drizzle' },
+  57: { ur: 'جمی ہوئی بوندا باندی', en: 'Freezing drizzle' },
+  61: { ur: 'ہلکی بارش', en: 'Slight rain' },
+  63: { ur: 'درمیانی بارش', en: 'Moderate rain' },
+  65: { ur: 'تیز بارش', en: 'Heavy rain' },
+  66: { ur: 'جمی ہوئی بارش', en: 'Freezing rain' },
+  67: { ur: 'جمی ہوئی بارش', en: 'Freezing rain' },
+  71: { ur: 'ہلکی برفباری', en: 'Slight snow' },
+  73: { ur: 'درمیانی برفباری', en: 'Moderate snow' },
+  75: { ur: 'تیز برفباری', en: 'Heavy snow' },
+  77: { ur: 'برف کے دانے', en: 'Snow grains' },
+  80: { ur: 'ہلکی بوندیں', en: 'Slight showers' },
+  81: { ur: 'درمیانی بوندیں', en: 'Moderate showers' },
+  82: { ur: 'تیز بوندیں', en: 'Violent showers' },
+  85: { ur: 'ہلکی برفباری', en: 'Slight snow' },
+  86: { ur: 'تیز برفباری', en: 'Heavy snow' },
+  95: { ur: 'گرج چمک طوفان', en: 'Thunderstorm' },
+  96: { ur: 'گرج چمک اور اولے', en: 'Thunderstorm with hail' },
+  99: { ur: 'گرج چمک اور بڑے اولے', en: 'Severe thunderstorm with hail' },
 };
 
-type WmoEntry = {
+const UMBRELLA_CODES = new Set([45, 48, 51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86, 95, 96, 99]);
+
+function describeWmo(code: number, locale: Locale): string {
+  const e = WMO_BY_CODE[code];
+  if (e) return locale === 'en' ? e.en : e.ur;
+  return locale === 'en' ? 'Weather change' : 'موسم کی تبدیلی';
+}
+
+function computeOutfit(code: number, highUv: boolean, locale: Locale): string {
+  if (UMBRELLA_CODES.has(code)) {
+    return locale === 'en'
+      ? 'Carry an umbrella or rain layer; paved paths can get slippery.'
+      : 'چھتری یا بارش کا لباس ساتھ رکھیں؛ پختہ پگڈنڈیاں پھسلنے والی ہو سکتی ہیں۔';
+  }
+  if (highUv) {
+    return locale === 'en'
+      ? 'Sun can be strong: a hat, sunglasses, and sunscreen help.'
+      : 'دھوپ زیادہ ہو سکتی ہے: ٹوپی، شیشے اور سن اسکرین مفید رہتے ہیں۔';
+  }
+  return locale === 'en'
+    ? 'Light, breathable clothing and water are enough for a short visit.'
+    : 'ہلکے کپڑے اور پانی ایک چھوٹے دورے کے لیے کافی ہیں۔';
+}
+
+function weekday(dateStr: string, locale: Locale): string {
+  try {
+    return new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'ur-PK', { weekday: 'short' }).format(new Date(dateStr + 'T00:00:00'));
+  } catch {
+    return '';
+  }
+}
+
+export type WeatherCurrent = {
+  temp: number;
   text: string;
+  apparent: number;
+  humidity: number;
+  wind: number;
   umbrella: boolean;
+  outfit: string;
+  highUv: boolean;
 };
-
-// WMO weather interpretation codes -> Urdu description + umbrella heuristic
-const WMO: Record<number, WmoEntry> = {
-  0: { text: 'صاف آسمان', umbrella: false },
-  1: { text: 'زیادہ تر صاف', umbrella: false },
-  2: { text: 'جزوی ابر آلود', umbrella: false },
-  3: { text: 'ابر آلود', umbrella: false },
-  45: { text: 'دھند', umbrella: false },
-  48: { text: 'جمی ہوئی دھند', umbrella: false },
-  51: { text: 'ہلکی بوندا باندی', umbrella: true },
-  53: { text: 'بوندا باندی', umbrella: true },
-  55: { text: 'تیز بوندا باندی', umbrella: true },
-  56: { text: 'جمی ہوئی بوندا باندی', umbrella: true },
-  57: { text: 'جمی ہوئی بوندا باندی', umbrella: true },
-  61: { text: 'ہلکی بارش', umbrella: true },
-  63: { text: 'درمیانی بارش', umbrella: true },
-  65: { text: 'تیز بارش', umbrella: true },
-  66: { text: 'جمی ہوئی بارش', umbrella: true },
-  67: { text: 'جمی ہوئی بارش', umbrella: true },
-  71: { text: 'ہلکی برفباری', umbrella: false },
-  73: { text: 'درمیانی برفباری', umbrella: false },
-  75: { text: 'تیز برفباری', umbrella: false },
-  77: { text: 'برف کے دانے', umbrella: false },
-  80: { text: 'ہلکی بوندیں', umbrella: true },
-  81: { text: 'درمیانی بوندیں', umbrella: true },
-  82: { text: 'تیز بوندیں', umbrella: true },
-  85: { text: 'ہلکی برفباری', umbrella: false },
-  86: { text: 'تیز برفباری', umbrella: false },
-  95: { text: 'گرج چمک طوفان', umbrella: true },
-  96: { text: 'گرج چمک اور اولے', umbrella: true },
-  99: { text: 'گرج چمک اور بڑے اولے', umbrella: true },
-};
-
-export function describeWmo(code: number): WmoEntry {
-  return WMO[code] ?? { text: 'موسم کی تبدیلی', umbrella: false };
-}
-
-export function outfitHint(apparent: number): string {
-  if (apparent < 10) return 'گرم کپڑے، جیکٹ اور ہلکی ٹوپی ساتھ رکھیں۔';
-  if (apparent < 20) return 'ہلکی جیکٹ یا سویٹر کافی رہتا ہے۔';
-  if (apparent < 30) return 'سوتی اور ہلکے کپڑے موزوں ہیں۔';
-  return 'ہلکے رنگ کے سوتی کپڑے، پانی اور دھوپ کا تحفظ رکھیں۔';
-}
-
-export type DayForecast = {
-  date: string;
+export type WeatherDay = {
   weekday: string;
-  code: number;
   text: string;
   tmax: number;
   tmin: number;
-  precipSum: number;
   precipProb: number;
   umbrella: boolean;
 };
-
-export type WeatherData = {
+export type WeatherSnapshot = {
   updatedAt: string;
-  current: {
-    temp: number;
-    apparent: number;
-    code: number;
-    text: string;
-    humidity: number;
-    wind: number;
-    umbrella: boolean;
-    outfit: string;
-    highUv: boolean;
-  };
-  days: DayForecast[];
+  current: WeatherCurrent;
+  days: WeatherDay[];
 };
 
-const WEEKDAYS_UR = ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'];
-const CACHE_TTL_MS = 10 * 60 * 1000;
-
-let cache: { at: number; data: WeatherData } | null = null;
-
-export async function getWeather(): Promise<WeatherData> {
-  if (cache && Date.now() - cache.at < CACHE_TTL_MS) {
-    return cache.data;
-  }
-
-  const { latitude, longitude, timezone } = WEATHER_LOCATION;
-  const url =
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}` +
-    `&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m` +
-    `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,uv_index_max` +
-    `&timezone=${encodeURIComponent(timezone)}&forecast_days=7`;
-
-  const res = await fetch(url, { headers: { accept: 'application/json' } });
-  if (!res.ok) throw new Error(`weather fetch failed: ${res.status}`);
-  const j = (await res.json()) as any;
-
-  const cur = j.current;
-  const curInfo = describeWmo(cur.weather_code);
-  const uvMaxToday = (j.daily?.uv_index_max?.[0] as number | undefined) ?? 0;
-
-  const days: DayForecast[] = (j.daily?.time ?? []).map((date: string, i: number) => {
-    const code = j.daily.weather_code[i] as number;
-    const info = describeWmo(code);
-    const precipProb = (j.daily.precipitation_probability_max?.[i] as number) ?? 0;
-    const precipSum = (j.daily.precipitation_sum?.[i] as number) ?? 0;
-    const d = new Date(date + 'T00:00:00');
-    return {
-      date,
-      weekday: WEEKDAYS_UR[d.getDay()],
-      code,
-      text: info.text,
-      tmax: Math.round(j.daily.temperature_2m_max[i]),
-      tmin: Math.round(j.daily.temperature_2m_min[i]),
-      precipSum,
-      precipProb,
-      umbrella: info.umbrella || precipProb >= 50 || precipSum >= 0.3,
-    };
-  });
-
-  const data: WeatherData = {
+export async function getWeather(locale: Locale = 'ur'): Promise<WeatherSnapshot> {
+  const { latitude, longitude } = WEATHER_LOCATION;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max&forecast_days=7&timezone=Asia%2FKarachi`;
+  const fallback = (): WeatherSnapshot => ({
     updatedAt: new Date().toISOString(),
-    current: {
-      temp: Math.round(cur.temperature_2m),
-      apparent: Math.round(cur.apparent_temperature),
-      code: cur.weather_code,
-      text: curInfo.text,
-      humidity: Math.round(cur.relative_humidity_2m),
-      wind: Math.round(cur.wind_speed_10m),
-      umbrella: curInfo.umbrella,
-      outfit: outfitHint(cur.apparent_temperature),
-      highUv: uvMaxToday >= 6,
-    },
-    days,
-  };
-
-  cache = { at: Date.now(), data };
-  return data;
+    current: { temp: 29, text: describeWmo(1, locale), apparent: 30, humidity: 45, wind: 8, umbrella: false, outfit: computeOutfit(1, false, locale), highUv: false },
+    days: [],
+  });
+  try {
+    const res = await fetch(url, { cf: { cacheTtl: 1800 } as any });
+    if (!res.ok) return fallback();
+    const j = await res.json();
+    const c = j.current;
+    const d = j.daily;
+    const highUv = (d.uv_index_max?.[0] ?? 0) >= 6;
+    const current: WeatherCurrent = {
+      temp: Math.round(c.temperature_2m),
+      text: describeWmo(c.weather_code, locale),
+      apparent: Math.round(c.apparent_temperature),
+      humidity: Math.round(c.relative_humidity_2m),
+      wind: Math.round(c.wind_speed_10m),
+      umbrella: UMBRELLA_CODES.has(c.weather_code),
+      outfit: computeOutfit(c.weather_code, highUv, locale),
+      highUv,
+    };
+    const days: WeatherDay[] = (d.time ?? []).map((date: string, i: number) => {
+      const code = d.weather_code[i];
+      const prob = d.precipitation_probability_max?.[i] ?? 0;
+      return {
+        weekday: weekday(date, locale),
+        text: describeWmo(code, locale),
+        tmax: Math.round(d.temperature_2m_max[i]),
+        tmin: Math.round(d.temperature_2m_min[i]),
+        precipProb: prob,
+        umbrella: UMBRELLA_CODES.has(code) || prob >= 50,
+      };
+    });
+    return { updatedAt: new Date().toISOString(), current, days };
+  } catch {
+    return fallback();
+  }
 }

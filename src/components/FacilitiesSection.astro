@@ -1,24 +1,33 @@
 ---
 import { FACILITY_GROUPS } from '../data/visitor';
-import { ATTRACTION } from '../data/site';
----
+import { localeFromUrl, type Locale } from '../i18n';
 
-<section class="section" id="facilities" aria-labelledby="facilities-title">
+const locale: Locale = localeFromUrl(Astro.url);
+const L = locale === 'en' ? {
+  eyebrow: 'Visitor facilities',
+  title: 'Facilities available during the visit',
+  lead: 'Shakarparian is a public green area, so facilities are basic. The list below is compiled from public material; availability can vary by point, so confirm on the day.',
+} : {
+  eyebrow: 'زائرین کی سہولیات',
+  title: 'دورے کے دوران دستیاب سہولیات',
+  lead: 'شکرپڑیاں ایک عوامی سبز علاقہ ہے، اس لیے سہولیات بنیادی نوعیت کی ہیں۔ ذیل کی فہرست عوامی مواد سے مرتب ہے؛ دستیابی پوائنٹ کے لحاظ سے مختلف ہو سکتی ہے، اس لیے دن میں تصدیق کر لیں۔',
+};
+---
+<section class="section-sm" aria-labelledby="facilities-title">
   <div class="container">
-    <div class="eyebrow">وزیٹر سہولیات — قسم کے لحاظ سے جائزہ</div>
-    <h2 class="section-title" id="facilities-title">{ATTRACTION.shortName} کے ارد گرد سہولیات اور بنیادی خدمات</h2>
-    <p class="section-lead">
-      یہ رہنما کسی خاص کاروبار یا برانڈ کی سفارش نہیں کرتا۔ ذیل میں ہر قسم کی سہولت کا عام خاکہ دیا گیا ہے تاکہ دورے کی منصوبہ بندی آسان ہو۔
-      حتمی دستیابی، اوقات اور فیس روانگی کے دن متعلقہ مقام سے تصدیق کر لیں۔
-    </p>
-    <div class="facility-grid">
-      {FACILITY_GROUPS.map((f) => (
-        <article class="facility">
-          <div class="facility-icon" aria-hidden="true">{f.icon}</div>
-          <h3>{f.title}</h3>
-          <p>{f.body}</p>
-        </article>
-      ))}
+    <div class="eyebrow">{L.eyebrow}</div>
+    <h2 class="section-title" id="facilities-title">{L.title}</h2>
+    <p class="section-lead">{L.lead}</p>
+    <div class="feature-grid">
+      {
+        FACILITY_GROUPS.map((f) => (
+          <article class="feature">
+            <div class="icon" aria-hidden="true">{f.icon}</div>
+            <h3>{locale === 'en' ? f.titleEn : f.title}</h3>
+            <p>{locale === 'en' ? f.bodyEn : f.body}</p>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>

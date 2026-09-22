@@ -1,24 +1,41 @@
 ---
 import { AUDIENCE_ROUTES } from '../data/visitor';
-import { ATTRACTION } from '../data/site';
----
+import { localeFromUrl, type Locale } from '../i18n';
 
-<section class="section" id="routes" aria-labelledby="routes-title">
+const locale: Locale = localeFromUrl(Astro.url);
+const L = locale === 'en' ? {
+  eyebrow: 'Routes by visitor type',
+  title: 'Suggested routes by visitor type',
+  lead: 'Three simple plans for different company and mobility — pick what fits your group.',
+} : {
+  eyebrow: 'زائرین کی قسم کے لحاظ سے روٹ',
+  title: 'زائرین کی قسم کے لحاظ سے تجویز کردہ روٹ',
+  lead: 'مختلف ساتھی اور نقل و حرکت کے لیے تین سادہ منصوبے — اپنے گروپ کے مطابق چنیں۔',
+};
+const t = (ur: string, en: string) => (locale === 'en' ? en : ur);
+const stepsOf = (r: typeof AUDIENCE_ROUTES[number]) => (locale === 'en' ? r.stepsEn : r.steps);
+---
+<section class="section-sm" aria-labelledby="routes-title">
   <div class="container">
-    <div class="eyebrow">آبادی کے لحاظ سے راستے</div>
-    <h2 class="section-title" id="routes-title">{ATTRACTION.shortName} کے لیے تین مخصوص سفری راستے</h2>
-    <p class="section-lead">اپنے سفری گروپ اور رفتار کے مطابق ایک راستہ چنیں — خاندان، فوٹوگرافی یا کم نقل و حرکت والے ساتھیوں کے لیے۔</p>
-    <div class="route-grid">
-      {AUDIENCE_ROUTES.map((r) => (
-        <article class="route-card">
-          <div class="route-head"><span class="route-icon" aria-hidden="true">{r.icon}</span><h3>{r.title}</h3></div>
-          <p class="route-audience">{r.audience}</p>
-          <ol class="route-steps">
-            {r.steps.map((s) => <li>{s}</li>)}
-          </ol>
-          <p class="route-tip">💡 {r.tips}</p>
-        </article>
-      ))}
+    <div class="eyebrow">{L.eyebrow}</div>
+    <h2 class="section-title" id="routes-title">{L.title}</h2>
+    <p class="section-lead">{L.lead}</p>
+    <div class="guide-grid">
+      {
+        AUDIENCE_ROUTES.map((r) => (
+          <article class="guide-card">
+            <div class="icon" aria-hidden="true">{r.icon}</div>
+            <h3>{t(r.title, r.titleEn)}</h3>
+            <p class="route-audience">{t(r.audience, r.audienceEn)}</p>
+            <ol class="route-steps">
+              {stepsOf(r).map((s) => (
+                <li>{s}</li>
+              ))}
+            </ol>
+            <p class="route-tip">💡 {t(r.tips, r.tipsEn)}</p>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>

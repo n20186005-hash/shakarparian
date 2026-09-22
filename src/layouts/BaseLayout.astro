@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Brand from '../components/Brand.astro';
 import Footer from '../components/Footer.astro';
 import { ATTRACTION, SITE_NAME } from '../data/site';
+import { localeFromUrl, hreflangAlternates, localizedPath, type Locale } from '../i18n';
 
 interface Props {
   title: string;
@@ -17,9 +18,21 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString(
 const ogImage = Astro.site && image.startsWith('/') ? new URL(image, Astro.site).toString() : image;
 const socialTitle = ogTitle ?? title;
 const socialImageAlt = imageAlt ?? `${SITE_NAME} — ${title}`;
+
+const locale: Locale = localeFromUrl(Astro.url);
+const langAttr = locale === 'en' ? 'en' : 'ur-PK';
+const dirAttr = locale === 'en' ? 'ltr' : 'rtl';
+const ogLocale = locale === 'en' ? 'en_US' : 'ur_PK';
+const alternates = hreflangAlternates(Astro.url.pathname);
+const navHref = (hash: string) => (locale === 'en' ? `/en${hash}` : hash);
+const otherLocale: Locale = locale === 'en' ? 'ur' : 'en';
+const switchHref = localizedPath(Astro.url.pathname, otherLocale);
+const switchLabel = locale === 'en' ? 'اردو' : 'English';
+const skipText = locale === 'en' ? 'Skip to main content' : 'مرکزی مواد پر جائیں';
+const navAria = locale === 'en' ? 'Primary navigation' : 'مرکزی نیویگیشن';
 ---
 <!doctype html>
-<html lang="ur-PK" dir="rtl">
+<html lang={langAttr} dir={dirAttr}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,8 +40,11 @@ const socialImageAlt = imageAlt ?? `${SITE_NAME} — ${title}`;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#123d33" />
     {canonical && <link rel="canonical" href={canonical} />}
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+    ))}
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ur_PK" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={description} />
@@ -77,24 +93,25 @@ const socialImageAlt = imageAlt ?? `${SITE_NAME} — ${title}`;
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">مرکزی مواد پر جائیں</a>
+    <a class="skip-link" href="#main-content">{skipText}</a>
     {!noHeader && (
       <header class="site-header">
         <div class="container header-row">
-          <Brand compact />
-          <nav class="nav" aria-label="مرکزی نیویگیشن">
-            <a href="/#history">پس منظر</a>
-            <a href="/#visit">دورے کی منصوبہ بندی</a>
-            <a href="/#transport">آمدورفت</a>
-            <a href="/#nearby">قریب کیا ہے</a>
-            <a href="/#faq">سوالات</a>
-            <a class="nav-cta" href="/#map">نقشہ دیکھیں</a>
+          <Brand compact href={locale === 'en' ? '/en/' : '/'} />
+          <nav class="nav" aria-label={navAria}>
+            <a href={navHref('/#history')}>{locale === 'en' ? 'Background' : 'پس منظر'}</a>
+            <a href={navHref('/#visit')}>{locale === 'en' ? 'Plan your visit' : 'دورے کی منصوبہ بندی'}</a>
+            <a href={navHref('/#transport')}>{locale === 'en' ? 'Getting there' : 'آمدورفت'}</a>
+            <a href={navHref('/#nearby')}>{locale === 'en' ? 'Nearby' : 'قریب کیا ہے'}</a>
+            <a href={navHref('/#faq')}>{locale === 'en' ? 'FAQ' : 'سوالات'}</a>
+            <a class="nav-cta" href={navHref('/#map')}>{locale === 'en' ? 'View map' : 'نقشہ دیکھیں'}</a>
+            <a class="nav-lang" href={switchHref} hreflang={otherLocale}>{switchLabel}</a>
           </nav>
         </div>
       </header>
     )}
     <main id="main-content"><slot /></main>
-    <Footer />
+    <Footer locale={locale} />
     <script is:inline>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

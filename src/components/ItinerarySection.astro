@@ -1,24 +1,44 @@
 ---
 import { ITINERARIES } from '../data/visitor';
-import { ATTRACTION } from '../data/site';
----
+import { localeFromUrl, type Locale } from '../i18n';
 
-<section class="section-sm" id="itinerary" aria-labelledby="itinerary-title">
+const locale: Locale = localeFromUrl(Astro.url);
+const L = locale === 'en' ? {
+  eyebrow: 'Suggested itineraries',
+  title: 'Itineraries for half and full day',
+  lead: 'Two easy plans based on how much time you have — keep museum hours in mind for the full-day option.',
+} : {
+  eyebrow: 'تجویز کردہ سفری منصوبے',
+  title: 'نصف اور پورے دن کے لیے منصوبے',
+  lead: 'آپ کے پاس وقت کے حساب سے دو آسان منصوبے — پورے دن کے لیے عجائب گھروں کے اوقات ذہن میں رکھیں۔',
+};
+const t = (ur: string, en: string) => (locale === 'en' ? en : ur);
+const spotsOf = (it: typeof ITINERARIES[number]) => (locale === 'en' ? it.spotsEn : it.spots);
+---
+<section class="section-sm" aria-labelledby="itinerary-title">
   <div class="container">
-    <div class="eyebrow">عمومی سفری منصوبہ</div>
-    <h2 class="section-title" id="itinerary-title">{ATTRACTION.shortName} کے لیے عمومی جائزے — نصف دن یا پورا دن</h2>
-    <p class="section-lead">وقت اور دلچسپی کے مطابق ایک خاکہ منتخب کریں۔ دونوں میں چہل قدمی، یادگار اور ثقافتی ادارے شامل ہیں۔</p>
-    <div class="itinerary-grid">
-      {ITINERARIES.map((it) => (
-        <article class="itinerary-card">
-          <div class="itinerary-head"><span class="route-icon" aria-hidden="true">{it.icon}</span><h3>{it.title}</h3></div>
-          <p class="itinerary-meta">⏱️ {it.duration} · {it.pace}</p>
-          <ul class="itinerary-spots">
-            {it.spots.map((s) => <li>{s}</li>)}
-          </ul>
-          <p class="route-tip">📌 {it.notes}</p>
-        </article>
-      ))}
+    <div class="eyebrow">{L.eyebrow}</div>
+    <h2 class="section-title" id="itinerary-title">{L.title}</h2>
+    <p class="section-lead">{L.lead}</p>
+    <div class="guide-grid">
+      {
+        ITINERARIES.map((it) => (
+          <article class="guide-card">
+            <div class="icon" aria-hidden="true">{it.icon}</div>
+            <h3>{t(it.title, it.titleEn)}</h3>
+            <div class="itinerary-meta">
+              <span>⏱️ {t(it.duration, it.durationEn)}</span>
+              <span>🚶 {t(it.pace, it.paceEn)}</span>
+            </div>
+            <ul class="itinerary-spots">
+              {spotsOf(it).map((s) => (
+                <li>{s}</li>
+              ))}
+            </ul>
+            <p class="route-tip">💡 {t(it.notes, it.notesEn)}</p>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>

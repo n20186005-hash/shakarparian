@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SubHero from '../../../components/SubHero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SourcesSection from '../../../components/SourcesSection.astro';
+import RelatedGuides from '../../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
+
+const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/en/getting-there/`;
+const crumb = { name: 'پہنچنا اور پارکنگ', nameLatin: 'Getting There & Parking' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['How to reach Shakarparian from Islamabad Airport?', 'Use a licensed taxi or ride-hailing directly to “Shakarparian National Park / Pakistan Monument zone”. Depending on traffic it is a medium cross-city journey.'],
+  ['Is public transport available?', 'The CDA public transit map lists a feeder route via Shakarparian Park (e.g., ST-02). Routes, operating days, and frequency can change, so check the current map on your travel day.'],
+  ['Is parking available?', 'There are designated parking zones near the main visitor areas. Space can be limited on weekends and event days, so arriving early is better.'],
+  ['What address to tell the driver?', 'Rather than just saying “Shakarparian”, specify the desired visitor zone — the main park area or the Pakistan Monument — because there are different access points on the hill.'],
+];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteNameEn('Getting There & Parking (Shakarparian)')}
+  ogTitle={`Getting There & Parking — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+  description={`Non-commercial English guidance for reaching ${ATTRACTION.fullNameLatin} (${ATTRACTION.cityLatin}) by airport, metrobus, taxi, private car, and parking.`}
+  image={parkingPhoto}
+  imageAlt={`Parking and green hill view in the visitor area of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="Transport & parking"
+    title="Getting There & Parking"
+    latin="Getting There & Parking — Shakarparian, Islamabad"
+    lead={`${ATTRACTION.fullNameLatin} is near the central part of the city, but final access is via hillside roads. Methods by airport, public transport, taxi, private car, and parking are described here.`}
+    image={parkingPhoto}
+    imageAlt={`Parking and green hill view in the visitor area of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section" aria-labelledby="modes">
+    <div class="container">
+      <div class="eyebrow">Ways to reach</div>
+      <h2 class="section-title" id="modes">Ways to reach {ATTRACTION.fullNameLatin}</h2>
+      <p class="section-lead">The methods below are unbiased descriptions of travel types, not commercial recommendations.</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <h3>From Islamabad International Airport</h3>
+          <p><strong>Easiest way:</strong> Use a licensed taxi or ride-hailing directly to “Shakarparian National Park / Pakistan Monument zone”.</p>
+          <p><strong>Public transport:</strong> From the airport take the metrobus/urban transit toward central Islamabad, then cover the final leg by feeder or taxi from a suitable interchange.</p>
+        </article>
+        <article class="guide-card">
+          <h3>By metrobus and city bus</h3>
+          <p>The CDA public transit map lists <strong>ST-02</strong> as a feeder running via the Shakarparian Park from PIMS. Routes, operating days, and frequency can change.</p>
+          <p>Practical strategy: first reach PIMS via the main corridor, then take the current feeder or a short taxi ride.</p>
+        </article>
+        <article class="guide-card">
+          <h3>Taxi and ride-hailing</h3>
+          <p>Rather than just saying “Shakarparian” to the driver, specify the desired visitor zone. Before return, it helps to check mobile signal and vehicle availability.</p>
+        </article>
+        <article class="guide-card">
+          <h3>Private car, bicycle, and walking</h3>
+          <p>For a private car, go to the marked parking zone and follow traffic-control instructions. A short walk inside the hill is pleasant, but walking or cycling from far against the large expressways is not comfortable for every traveller.</p>
+        </article>
+      </div>
+      <div class="notice"><strong>Before you leave:</strong> Check the official transit map, weather, security/event closures, and museums’ separate hours.</div>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="compare">
+    <div class="container">
+      <div class="eyebrow">Comparison</div>
+      <h2 class="section-title" id="compare">Transport comparison</h2>
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr><th>Method</th><th>Best for</th><th>Advantage</th><th>Disadvantage / caution</th><th>Cost trend</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Method"><strong>Airport transfer</strong></td><td data-label="Best for">First-time visitors, with luggage</td><td data-label="Advantage">Direct to the place, little guidance needed</td><td data-label="Disadvantage">Cross-city distance and traffic</td><td data-label="Cost">Medium to high</td></tr>
+            <tr><td data-label="Method"><strong>Taxi / ride-hailing</strong></td><td data-label="Best for">Small groups, flexible time</td><td data-label="Advantage">Door to door, name the marked zone</td><td data-label="Disadvantage">Rush-hour and signal issues</td><td data-label="Cost">Medium</td></tr>
+            <tr><td data-label="Method"><strong>Metrobus / feeder bus</strong></td><td data-label="Best for">Budget travel, eco-friendly</td><td data-label="Advantage">Cheap, connects to main corridors</td><td data-label="Disadvantage">Final leg on foot or short taxi</td><td data-label="Cost">Low</td></tr>
+            <tr><td data-label="Method"><strong>Private car</strong></td><td data-label="Best for">Family, luggage, freedom</td><td data-label="Advantage">Easy to parking zone, flexible return</td><td data-label="Disadvantage">Limited parking on weekends</td><td data-label="Cost">Fuel + parking</td></tr>
+            <tr><td data-label="Method"><strong>Bicycle / walking</strong></td><td data-label="Best for">From nearby residence</td><td data-label="Advantage">Green and free</td><td data-label="Disadvantage">Stay away from large expressways</td><td data-label="Cost">Free</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="parking">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <div class="eyebrow">Parking</div>
+        <h2 class="section-title" id="parking">Where to park the car</h2>
+        <p>There are designated parking zones near the main visitor areas. Arriving early on weekends, holidays, and event days is better so you can find space.</p>
+        <p>Avoid unauthorized roadside parking because security and traffic management can tighten suddenly. No permanent public charger inside the park could be confirmed from a reliable official source for this guide, so completing a charge at an available public charging point in the city first is the safer plan.</p>
+      </div>
+      <div class="story-image">
+        <img src={parkPhoto} alt={`Garden and visitor area of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`} width="1600" height="900" loading="lazy" />
+        <div class="story-badge">Use marked parking zones and follow security instructions.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="there-faq">
+    <div class="container">
+      <div class="eyebrow">Common questions</div>
+      <h2 class="section-title" id="there-faq">Questions about reaching & parking</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="getting-there" />
+  <SourcesSection />
+</BaseLayout>

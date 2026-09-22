@@ -1,0 +1,390 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourcesSection from '../../components/SourcesSection.astro';
+import { ATTRACTION, NEARBY_LANDMARKS, SITE_URL } from '../../data/site';
+import { buildAttractionSchema, buildBreadcrumbSchema, buildFaqSchema } from '../../lib/schema';
+import WeatherSection from '../../components/WeatherSection.astro';
+import SeasonsSection from '../../components/SeasonsSection.astro';
+import FacilitiesSection from '../../components/FacilitiesSection.astro';
+import AudienceRoutes from '../../components/AudienceRoutes.astro';
+import ItinerarySection from '../../components/ItinerarySection.astro';
+import ResponsibilitySection from '../../components/ResponsibilitySection.astro';
+import RelatedGuides from '../../components/RelatedGuides.astro';
+
+const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
+const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const attractionUrl = `${siteUrl}/en/`;
+
+const attractionSchema = buildAttractionSchema({ url: attractionUrl, images: [heroPhoto, parkPhoto] });
+const breadcrumbSchema = buildBreadcrumbSchema(attractionUrl);
+
+const faqs: [string, string][] = [
+  ['Where is Shakarparian National Park located?', `${ATTRACTION.fullNameLatin} is on the Islamabad Expressway in ${ATTRACTION.cityLatin}, ${ATTRACTION.regionLatin}, ${ATTRACTION.countryLatin}. Plus code ${ATTRACTION.plusCode} and coordinates ${ATTRACTION.latitude}, ${ATTRACTION.longitude}; it is a green recreation area spread across the Shakarparian hills near the centre of the capital.`],
+  ['Is entry to Shakarparian National Park free?', 'Entry to the general open areas of the park is generally understood to be free, but the Pakistan Monument Museum or other museums may have separate tickets, security rules, and hours. Always check the current rules of the relevant official site before you go.'],
+  ['How much time should I keep for Shakarparian?', 'About 1.5 to 3 hours is enough for the greenery, the viewpoint, and a relaxed walk. If you also include the Pakistan Monument and nearby museums, a half day is more comfortable.'],
+  ['What is the best time to visit?', 'The early morning or the time just before sunset is better to avoid heat and for soft light. Crowds can grow on weekends and national holidays. Rain, fog, or extreme heat can change the open-site experience.'],
+  ['Is car parking available?', 'There are designated parking areas in the Shakarparian and Pakistan Monument visitor zone. Space can be limited on busy days; follow security guidance and on-site signs.'],
+  ['Can I reach it by public transport?', 'The CDA route network lists a feeder route passing through Shakarparian. You can reach the city metrobus or a major transit point and then cover the final leg by feeder, taxi, or ride-hailing. Schedules can change, so check the current CDA route map on your travel day.'],
+  ['Is it easy for wheelchair or limited-mobility visitors?', 'Paved paths exist in the main monument and visitor areas, but Shakarparian is a hillside and some routes may have slopes, stairs, or long distances. If you need specific access, it is best to confirm with the site on the day.'],
+  ['Is food and water available?', 'Near larger visitor zones you may find tea, snacks, or basic refreshments, but availability should not be assumed. Carry your own water; for a full meal, many types of restaurants and food zones exist in the city sectors.'],
+  ['Is it suitable to visit at night?', 'Follow the opening hours and security boundaries of the park and related complex. Avoid poorly lit or deserted paths after dark, stay within marked public areas, and arrange return transport in advance.'],
+];
+
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={`${ATTRACTION.fullNameLatin} (${ATTRACTION.cityLatin}) — Visitor Guide, Timings & Location`}
+  ogTitle={`${ATTRACTION.fullNameLatin} — ${ATTRACTION.cityLatin} Travel Guide`}
+  description={`${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.regionLatin}, ${ATTRACTION.countryLatin}: a non-commercial English visitor guide with location and map, timings, entry, Pakistan Monument, Lok Virsa, transport, parking, facilities, and nearby cultural sites.`}
+  image={heroPhoto}
+  imageAlt={`${ATTRACTION.fullNameLatin} — main view in ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-media">
+      <img src={heroPhoto} alt={`${ATTRACTION.fullNameLatin} — main view of the Pakistan Monument on the western hill of ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`} width="1920" height="1080" fetchpriority="high" />
+    </div>
+    <div class="container hero-inner">
+      <div>
+        <div class="hero-kicker">Islamabad’s hill, monument, and urban green landscape</div>
+        <h1 id="hero-title">{ATTRACTION.fullNameLatin} <span class="hero-city">({ATTRACTION.cityLatin})</span></h1>
+        <p class="hero-latin" dir="ltr">{ATTRACTION.fullNameLatin} — {ATTRACTION.cityLatin}, {ATTRACTION.regionLatin}, {ATTRACTION.countryLatin}</p>
+        <p>
+          In the heart of Islamabad, elevated green hills where the city panorama, the tradition of trees planted by visiting heads of state, gardens, and the Pakistan Monument meet in one cultural landscape. This guide gathers the practical information that actually helps before a visit.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#visit">Plan your visit <span aria-hidden="true">←</span></a>
+          <a class="btn btn-ghost" href="#history">Read the background</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Quick facts">
+        <div class="hero-stat"><span>Google place rating</span><strong>{ATTRACTION.ratingValue} / 5 ({ATTRACTION.ratingCountLabel} reviews)</strong></div>
+        <div class="hero-stat"><span>Notable elevation</span><strong>about 609 m</strong></div>
+        <div class="hero-stat"><span>Typical visit window</span><strong>after 9:30 AM</strong></div>
+        <div class="hero-stat"><span>Comfortable duration</span><strong>1.5–3 hours</strong></div>
+        <div class="hero-stat"><span>Location</span><strong>{ATTRACTION.cityLatin}, {ATTRACTION.postalCode}</strong></div>
+        <div class="hero-stat"><span>Plus code</span><strong dir="ltr" style="font-size:.92rem">{ATTRACTION.plusCode}</strong></div>
+        <div class="photo-credit">Photo: Fawad4real — <a href="https://commons.wikimedia.org/wiki/File:Pakistan_Islamabad_monument_03.jpg" rel="license noopener noreferrer">CC BY-SA 4.0</a></div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs />
+  </div>
+
+  <section class="section-sm" id="about" aria-labelledby="about-title">
+    <div class="container about-grid">
+      <div>
+        <div class="eyebrow">About the place</div>
+        <h2 class="section-title" id="about-title">About {ATTRACTION.fullNameLatin}</h2>
+        <p>
+          <strong>{ATTRACTION.fullNameLatin}</strong> — locally called <strong>{ATTRACTION.shortNameLatin}</strong> and listed in English records as
+          the national park of {ATTRACTION.cityLatin} — is a green recreational and cultural hillside area in the heart of {ATTRACTION.cityLatin}, {ATTRACTION.regionLatin}, {ATTRACTION.countryLatin}. Visitors usually search this place simply as “{ATTRACTION.shortNameLatin}”; both names point to the same park.
+        </p>
+        <p class="entity-trail">
+          Geographic relation:
+          <span>{ATTRACTION.fullNameLatin}</span> → <span>{ATTRACTION.cityLatin}</span> → <span>{ATTRACTION.regionLatin}</span> → <span>{ATTRACTION.countryLatin}</span>
+        </p>
+        <p>
+          While visiting {ATTRACTION.fullNameLatin}, travellers can easily see the surrounding historical and cultural landmarks, especially
+          <strong>{NEARBY_LANDMARKS[0].nameLatin}</strong> and <strong>{NEARBY_LANDMARKS[1].nameLatin}</strong>.
+          That is why within a single half day you can see nature, national history, and crafts together.
+        </p>
+      </div>
+      <aside class="entity-card" aria-label="Technical details of the place">
+        <h3>Place record</h3>
+        <dl>
+          <div><dt>Full name</dt><dd>{ATTRACTION.fullNameLatin}</dd></div>
+          <div><dt>Also known as</dt><dd>{ATTRACTION.shortNameLatin}<small>{ATTRACTION.cityLatin} {ATTRACTION.fullNameLatin}</small></dd></div>
+          <div><dt>Address</dt><dd>{ATTRACTION.streetAddressLatin}<small>{ATTRACTION.streetAddressLatin}, {ATTRACTION.cityLatin} {ATTRACTION.postalCode}</small></dd></div>
+          <div><dt>Coordinates</dt><dd dir="ltr">{ATTRACTION.latitude}, {ATTRACTION.longitude}<small>latitude, longitude</small></dd></div>
+          <div><dt>Plus code</dt><dd dir="ltr">{ATTRACTION.plusCode}</dd></div>
+          <div><dt>Google rating</dt><dd>{ATTRACTION.ratingValue} / 5<small>{ATTRACTION.ratingCountLabel} reviews</small></dd></div>
+        </dl>
+        <a class="entity-maplink" href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">See {ATTRACTION.fullNameLatin} on Google Maps</a>
+      </aside>
+    </div>
+  </section>
+
+  <div class="quickbar">
+    <div class="container quickgrid" aria-label="Visit snapshot">
+      <div class="quickitem"><small>Entry</small><strong>Park general areas usually free</strong></div>
+      <div class="quickitem"><small>Best time</small><strong>Morning or before sunset</strong></div>
+      <div class="quickitem"><small>Mood</small><strong>Family, history, photography, walks</strong></div>
+      <div class="quickitem"><small>Key caution</small><strong>Museum hours may differ</strong></div>
+    </div>
+  </div>
+
+  <WeatherSection />
+  <SeasonsSection />
+
+  <section class="section" id="history">
+    <div class="container story-grid">
+      <div class="story-image">
+        <img src={parkPhoto} alt="Memorial plaque and greenery in the gardens of Shakarparian" width="1600" height="900" loading="lazy" />
+        <div class="story-badge">A notable Shakarparian tradition: trees planted by visiting heads of state and honoured guests from different countries.</div>
+      </div>
+      <div class="story-copy">
+        <div class="eyebrow">Understand the place</div>
+        <h2 class="section-title">History and significance of {ATTRACTION.fullNameLatin}: more than a park, a layered story of the capital</h2>
+        <p>
+          Shakarparian counts among the early green vistas of Islamabad’s planned urban identity. The Capital Development Authority describes it as a hill resort of historical importance and notes the wide city views from its roughly 609 m elevation.
+        </p>
+        <p>
+          The most distinctive tradition of this place is the “friendship” memorial planting: over different eras, visiting heads of state and honoured guests to Pakistan planted trees here. Thus the greenery is not merely decoration but a living record of Pakistan’s diplomatic memory. On the western Shakarparian, the Pakistan Monument later added the symbolic layer of national unity and the federal capital.
+        </p>
+        <ul class="timeline">
+          <li><strong>Planned-capital era:</strong> After the 1960s, as Islamabad developed, Shakarparian was formally placed within the urban green and recreational landscape.</li>
+          <li><strong>Friendship planting:</strong> Memorial trees planted by official guests linked the hill to diplomatic memory.</li>
+          <li><strong>National cultural hub:</strong> With the Pakistan Monument, Lok Virsa, and museums, the area became a shared visitor zone of nature plus national history and culture.</li>
+          <li><strong>Present role:</strong> The CDA continues to maintain Shakarparian’s green areas, cleanliness, and urban recreational use.</li>
+        </ul>
+        <h3 class="history-sub">The story of the name and local traditions</h3>
+        <p>
+          The name “Shakarparian” is an interesting linguistic blend. Local interpretation understands it as a combination of two parts — “shakar” (sweetness) and “parian/perian” (a group of fairies) — giving rise to the traditional idea of “sweet hills” or “abode of fairies”. Another popular tradition links it to a pleasant pasture where livestock milk was considered sweet. These interpretations are more part of local language and tradition than historical documents, but they give the name its poetic colour.
+        </p>
+        <p>
+          Geographically, Shakarparian sits on the southern slopes of the Margalla Hills, with the Rawal Lake and the Islamabad Expressway system spread at its foot. This location makes it the rare point to “see the city from above the city”.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="why-title">
+    <div class="container">
+      <div class="eyebrow">What to see on site</div>
+      <h2 class="section-title" id="why-title">Six reasons {ATTRACTION.fullNameLatin} stands out</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">◉</div><h3>City viewpoint</h3><p>Between the trees and open spaces you get angles on the Islamabad–Rawalpindi urban spread and the Margalla backdrop.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>Pakistan Monument</h3><p>The petal-shaped national monument on the western Shakarparian has become its identity and offers a symbolic reading of national unity.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">♧</div><h3>Friendship trees</h3><p>Trees planted by state and diplomatic guests make this park an unusual “living archive” — passing it off as just a garden loses its real story.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">⌂</div><h3>Cluster of cultural institutions</h3><p>The national monument, heritage museum, and natural-history institution nearby let you combine environment, history, and culture in one visit.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">☼</div><h3>Seasonal moods</h3><p>Greenery and blossoms in spring, clear air in winter, and relatively soft morning/evening light in summer — every season feels different.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">◎</div><h3>Family pace</h3><p>This is not a “fast checklist” spot; keeping time to sit, view, read history, and walk slowly makes the experience better.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section deep-green" id="transport">
+    <div class="container">
+      <div class="eyebrow">Detailed transport</div>
+      <h2 class="section-title">Getting to {ATTRACTION.fullNameLatin}: from airport, bus, taxi, and your own car</h2>
+      <p class="section-lead">Shakarparian is near the central part of the city, but the final access is via hillside roads and large road junctions. The methods below are unbiased descriptions of travel types, not commercial recommendations.</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <h3>From Islamabad International Airport</h3>
+          <p><strong>Easiest way:</strong> Use a licensed taxi or ride-hailing directly to “Shakarparian National Park / Pakistan Monument zone”. Depending on traffic, the trip is usually a medium-distance cross-city journey.</p>
+          <p><strong>Public transport:</strong> From the airport, take the metrobus/urban transit toward central Islamabad, then cover the final leg to Shakarparian by feeder, taxi, or ride-hailing from a suitable interchange. With heavy luggage, a car for the final leg is more practical.</p>
+        </article>
+        <article class="guide-card">
+          <h3>By metrobus and city bus</h3>
+          <p>The CDA public transit map lists <strong>ST-02</strong> as a feeder running via the Shakarparian Park from PIMS. On your travel day, the route, operating days, and frequency may differ.</p>
+          <p>The practical strategy is to first reach PIMS or a nearby major interchange via the main metrobus/transit corridor, then take the current feeder or a short taxi ride.</p>
+        </article>
+        <article class="guide-card">
+          <h3>Taxi and ride-hailing</h3>
+          <p>Rather than just saying “Shakarparian” to the driver, specify the desired visitor zone — for example the main park area or the inner Pakistan Monument area — because there are different access points on the hill. Before return, it helps to check mobile signal and vehicle availability.</p>
+        </article>
+        <article class="guide-card">
+          <h3>Private car, bicycle, and walking</h3>
+          <p>For a private car, follow the marked parking zone from the main roads and follow security barriers/traffic-control instructions. A short walk inside the hill is pleasant, but walking or cycling from far against the large expressways and junctions is not comfortable for every traveller.</p>
+        </article>
+      </div>
+      <div class="notice"><strong>Before you leave:</strong> Check the official transit map, weather, security/event closures, and museums’ separate hours. On Independence Day, Eid, and major programmes, traffic management can differ from normal.</div>
+
+      <h3 class="compare-head">Transport comparison</h3>
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr><th>Method</th><th>Best for</th><th>Advantage</th><th>Disadvantage / caution</th><th>Cost trend</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Method"><strong>Airport transfer</strong></td>
+              <td data-label="Best for">First-time visitors, with luggage</td>
+              <td data-label="Advantage">Direct to the place, little guidance needed</td>
+              <td data-label="Disadvantage">Cross-city distance and traffic</td>
+              <td data-label="Cost">Medium to high</td>
+            </tr>
+            <tr>
+              <td data-label="Method"><strong>Taxi / ride-hailing</strong></td>
+              <td data-label="Best for">Small groups, flexible time</td>
+              <td data-label="Advantage">Door to door, name the marked zone</td>
+              <td data-label="Disadvantage">Rush-hour and signal issues</td>
+              <td data-label="Cost">Medium</td>
+            </tr>
+            <tr>
+              <td data-label="Method"><strong>Metrobus / feeder bus</strong></td>
+              <td data-label="Best for">Budget travel, eco-friendly</td>
+              <td data-label="Advantage">Cheap, connects to main corridors</td>
+              <td data-label="Disadvantage">Final leg on foot or short taxi</td>
+              <td data-label="Cost">Low</td>
+            </tr>
+            <tr>
+              <td data-label="Method"><strong>Private car</strong></td>
+              <td data-label="Best for">Family, luggage, freedom</td>
+              <td data-label="Advantage">Easy to parking zone, flexible return</td>
+              <td data-label="Disadvantage">Limited parking on weekends</td>
+              <td data-label="Cost">Fuel + parking</td>
+            </tr>
+            <tr>
+              <td data-label="Method"><strong>Bicycle / walking</strong></td>
+              <td data-label="Best for">From nearby residence</td>
+              <td data-label="Advantage">Green and free</td>
+              <td data-label="Disadvantage">Stay away from large expressways</td>
+              <td data-label="Cost">Free</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <div class="container">
+      <div class="eyebrow">Practical visitor information</div>
+      <h2 class="section-title">Hours, fees, duration, and basic facilities for visiting {ATTRACTION.fullNameLatin}</h2>
+      <p class="section-lead">An open urban park, a national monument, and museums are not the same thing; each place may have separate rules. So the information for “park” and “nearby institutions” is kept separate below.</p>
+      <div class="visit-grid">
+        <article class="visit-card">
+          <h3>Current general hours</h3>
+          <p>Per the recent Google place listing, the listed hours for Shakarparian National Park are as follows. These are changing information, especially on festival, official-event, or security-management days.</p>
+          <div class="hours">
+            <div class="hour-row"><span>Mon, Tue, Thu, Sat, Sun</span><strong>9:30 AM – 8:00 PM</strong></div>
+            <div class="hour-row"><span>Wed, Fri</span><strong>9:30 AM – 8:30 PM</strong></div>
+          </div>
+          <p style="font-size:.82rem;margin-bottom:0">The hours of museums and the inner Pakistan Monument may differ from this table.</p>
+        </article>
+        <article class="visit-card">
+          <h3>Tickets / expenses</h3>
+          <p><strong>Park:</strong> Entry to the general green and open recreation areas is generally free.</p>
+          <p><strong>Museums:</strong> Nearby museums or indoor exhibition areas may have separate tickets; because fees can change, this guide does not list unverified amounts.</p>
+          <p><strong>Budget:</strong> The real variable costs are transport, parking (if a fee applies on site), water/food, and separate cultural-institution tickets.</p>
+        </article>
+        <article class="visit-card">
+          <h3>Best time and duration</h3>
+          <p><strong>Morning:</strong> Light coolness, relatively fewer crowds, better for walking.</p>
+          <p><strong>Before sunset:</strong> Soft light and the wide city view; keep the return time and gate hours in mind after dusk.</p>
+          <p><strong>Duration:</strong> Park 1.5–3 hours; with museums and the national monument 3–5 hours or a half day.</p>
+        </article>
+        <article class="visit-card">
+          <h3>Parking</h3>
+          <p>Designated parking zones exist near the main visitor areas. Arriving early is better on weekends, holidays, and event days. Avoid unauthorized roadside parking because security and traffic management can tighten suddenly.</p>
+          <p><strong>Electric vehicle:</strong> No permanent public charger inside the park could be confirmed from a reliable official source for this guide; so completing a charge at an available public charging point in the city first is the safer plan.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <FacilitiesSection />
+  <AudienceRoutes />
+  <ItinerarySection />
+  <ResponsibilitySection />
+
+  <section class="section" id="nearby">
+    <div class="container">
+      <div class="eyebrow">Nearby public sites</div>
+      <h2 class="section-title">Historical markers and nearby places around {ATTRACTION.shortNameLatin}</h2>
+      <p class="section-lead">
+        While visiting {ATTRACTION.fullNameLatin}, travellers can easily see the surrounding historical markers and interesting places, among which <strong>{NEARBY_LANDMARKS[0].nameLatin}</strong> and
+        <strong>{NEARBY_LANDMARKS[1].nameLatin}</strong> are most prominent. This list is geographic guidance to public/cultural sites, not commercial businesses. Each institution may have separate entry hours and fees.
+      </p>
+      <div class="attractions">
+        <article class="attraction"><b>Pakistan Monument</b><small>Symbolic monument of national unity on the western Shakarparian hill; a natural blend with the park visit.</small></article>
+        <article class="attraction"><b>Pakistan Monument Museum</b><small>Exhibition space on national history and the Pakistan Movement; check indoor hours separately.</small></article>
+        <article class="attraction"><b>Lok Virsa Museum</b><small>Wide collection on Pakistan’s living cultures, crafts, dress, and regional traditions.</small></article>
+        <article class="attraction"><b>Pakistan Museum of Natural History</b><small>Nearby educational spot for those interested in geology, biodiversity, and natural history.</small></article>
+        <article class="attraction"><b>Rose & Jasmine Garden</b><small>Nearby garden for flowers and open green ambience; the experience changes with the seasonal bloom.</small></article>
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides showHome={false} heading="Detailed sub-guides" />
+
+  <section class="section-sm" aria-labelledby="food-title">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <div class="eyebrow">Plan nearby food</div>
+        <h2 class="section-title" id="food-title">Not “where to eat”, but “what kind of facility to look for”</h2>
+        <p>Under non-profit and non-commercial editorial principles we do not rank any restaurant, café, or brand. By visit style, these categories are more useful:</p>
+        <ul>
+          <li><strong>Short visit:</strong> Tea, water, packaged snacks, or light refreshment.</li>
+          <li><strong>Family half day:</strong> A sit-down family Pakistani restaurant or food zone in central Islamabad.</li>
+          <li><strong>Dietary restrictions:</strong> Despite halal as a general standard, confirm ingredients before ordering for allergy, vegetarian, or specific diets.</li>
+          <li><strong>Picnic:</strong> Use only permitted areas, take litter back, and avoid fire or open-flame activity in wild/green areas.</li>
+        </ul>
+      </div>
+      <div class="story-image" style="min-height:430px">
+        <img src={monumentPhoto} alt={`Pakistan Monument — open cultural view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`} width="1600" height="1067" loading="lazy" />
+        <div class="story-badge">A better half day: greenery → national monument → a museum → meal in the city.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="map">
+    <div class="container">
+      <div class="eyebrow">Location and route</div>
+      <h2 class="section-title">Map and location of {ATTRACTION.fullNameLatin}</h2>
+      <p class="section-lead">The map is embedded with Urdu/Pakistan regional settings. When the map loads, Google’s own privacy and cookie policies may apply.</p>
+      <div class="map-shell" style="margin-top:2rem">
+        <iframe
+          src={ATTRACTION.mapsEmbedSrc}
+          width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title={`${ATTRACTION.fullNameLatin} — Google Map`}
+        ></iframe>
+        <div class="map-caption">
+          <span>Address: {ATTRACTION.streetAddressLatin}, {ATTRACTION.cityLatin} {ATTRACTION.postalCode}, {ATTRACTION.countryLatin}</span>
+          <span dir="ltr">{ATTRACTION.latitude}, {ATTRACTION.longitude} · {ATTRACTION.plusCode}</span>
+        </div>
+      </div>
+      <p class="authority-link">
+        For official updates and regional tourism information, see:
+        <a href="https://cda.gov.pk/destination" target="_blank" rel="noopener noreferrer">Capital Development Authority — Islamabad destinations</a>,
+        <a href="https://tourism.gov.pk/" target="_blank" rel="noopener noreferrer">Pakistan Tourism Development Corporation (official tourism portal)</a>
+        and <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">{ATTRACTION.fullNameLatin} on Google Maps</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="photos-title">
+    <div class="container">
+      <div class="eyebrow">Real photography</div>
+      <h2 class="section-title" id="photos-title">The ground mood of {ATTRACTION.fullNameLatin}</h2>
+      <div class="photo-strip">
+        <figure class="photo-panel">
+          <img src={parkingPhoto} alt={`Parking and green hill view in the visitor area of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`} width="1600" height="900" loading="lazy" />
+          <figcaption class="caption">Photo: Irfa9mahmood — CC BY-SA 4.0, Wikimedia Commons</figcaption>
+        </figure>
+        <figure class="photo-panel">
+          <img src={parkPhoto} alt={`Garden and memorial-planting area of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`} width="1200" height="675" loading="lazy" />
+          <figcaption class="caption">Photo: Irfa9mahmood — CC BY-SA 4.0, Wikimedia Commons</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="eyebrow">Frequently asked questions</div>
+      <h2 class="section-title">Common questions before the visit</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SourcesSection />
+</BaseLayout>

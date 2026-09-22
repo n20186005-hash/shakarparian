@@ -1,39 +1,52 @@
 ---
 import { ATTRACTION, OFFICIAL_SOURCES } from '../data/site';
+import { localeFromUrl, type Locale } from '../i18n';
 
 interface Props {
-  sources?: readonly { readonly label: string; readonly href: string }[];
+  sources?: readonly { readonly label: string; readonly labelEn: string; readonly href: string }[];
 }
 const { sources = OFFICIAL_SOURCES } = Astro.props;
+const locale: Locale = localeFromUrl(Astro.url);
+const L = locale === 'en' ? {
+  eyebrow: 'References & sources',
+  title: 'Editorial method and key sources',
+  p1: 'This is an independent, non-profit information page. Historical, civic, and transport context has been compiled from public/official material. We do not claim an artificial “last verified” date for changing information; check the live status with the relevant body on the day of your visit.',
+  p2: 'Location, rating ({rating} / 5, {count} reviews) and the listed general hours come from the linked Google Maps place and public map listing. Plus code: {plus}.',
+  p3: 'Images: CC BY-SA 4.0 photography by Fawad4real and Irfa9mahmood on Wikimedia Commons; full file/licence links are in the photo credits above and the project image manifest.',
+  sourceLabel: 'source label',
+} : {
+  eyebrow: 'حوالہ جات اور مآخذ',
+  title: 'اداریاتی طریقہ اور بنیادی ماخذ',
+  p1: 'یہ ایک غیر سرکاری، غیر منافع بخش معلوماتی صفحہ ہے۔ تاریخی، شہری اور ٹرانسپورٹ پس منظر کو سرکاری/عوامی اداروں کے مواد سے تقابل کیا گیا ہے۔ بدلنے والی معلومات کے لیے ہم تاریخِ “آخری تصدیق” جیسا مصنوعی دعویٰ نہیں کرتے؛ روانگی کے دن اصل ادارے سے موجودہ حالت دیکھیں۔',
+  p2: 'مقام، درجہ بندی ({rating} / 5، {count} آراء) اور درج عمومی اوقات: فراہم کردہ گوگل میپس مقام اور عوامی نقشہ فہرست۔ پلس کوڈ: {plus}',
+  p3: 'تصاویر: Wikimedia Commons پر Fawad4real اور Irfa9mahmood کی CC BY-SA 4.0 فوٹوگرافی؛ مکمل فائل/لائسنس روابط اوپر فوٹو کریڈٹ اور منصوبے کی تصویری manifest میں موجود ہیں۔',
+  sourceLabel: 'source label',
+};
+const labelKey = locale === 'en' ? 'labelEn' : 'label';
 ---
 <section class="section-sm" id="sources" aria-labelledby="sources-title">
   <div class="container source-box">
-    <div class="eyebrow">حوالہ جات اور مآخذ</div>
-    <h2 class="section-title" id="sources-title">اداریاتی طریقہ اور بنیادی ماخذ</h2>
+    <div class="eyebrow">{L.eyebrow}</div>
+    <h2 class="section-title" id="sources-title">{L.title}</h2>
     <p>
-      یہ ایک غیر سرکاری، غیر منافع بخش معلوماتی صفحہ ہے۔ تاریخی، شہری اور ٹرانسپورٹ پس منظر کو سرکاری/عوامی اداروں کے
-      مواد سے تقابل کیا گیا ہے۔ بدلنے والی معلومات کے لیے ہم تاریخِ “آخری تصدیق” جیسا مصنوعی دعویٰ نہیں کرتے؛ روانگی کے
-      دن اصل ادارے سے موجودہ حالت دیکھیں۔
+      {L.p1}
     </p>
     <ol class="source-list">
       {
         sources.map((source) => (
           <li>
             <a href={source.href} target="_blank" rel="noopener noreferrer">
-              {source.label}
+              {source[labelKey]}
             </a>
           </li>
         ))
       }
     </ol>
     <p class="source-meta">
-      مقام، درجہ بندی ({ATTRACTION.ratingValue} / 5، {ATTRACTION.ratingCountLabel} آراء) اور درج عمومی اوقات: فراہم کردہ
-      <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">گوگل میپس مقام</a>
-      اور عوامی نقشہ فہرست۔ پلس کوڈ: <span dir="ltr">{ATTRACTION.plusCode}</span>
+      {L.p2.replace('{rating}', ATTRACTION.ratingValue).replace('{count}', ATTRACTION.ratingCountLabel).replace('{plus}', ATTRACTION.plusCode)}
     </p>
     <p>
-      تصاویر: Wikimedia Commons پر Fawad4real اور Irfa9mahmood کی CC BY-SA 4.0 فوٹوگرافی؛ مکمل فائل/لائسنس روابط اوپر
-      فوٹو کریڈٹ اور منصوبے کی تصویری manifest میں موجود ہیں۔
+      {L.p3}
     </p>
   </div>
 </section>

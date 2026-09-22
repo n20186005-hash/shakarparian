@@ -1,27 +1,46 @@
 ---
 import Brand from './Brand.astro';
+import { localeFromUrl, type Locale } from '../i18n';
+
+interface Props {
+  locale?: Locale;
+}
+const { locale = localeFromUrl(Astro.url) } = Astro.props;
+const legalBase = locale === 'en' ? '/en' : '';
+const L = locale === 'en' ? {
+  note: 'This website is an independent, non-profit tourism information guide. It is not affiliated with any government body, park administration, or official organisation.',
+  disclaimer: 'Information about the place has been compiled by comparing public material from the Capital Development Authority, the Islamabad Capital Territory Administration, and the Pakistan Tourism Development Corporation; it contains no commercial recommendation.',
+  copyright: '© 2026 Shakarparian Islamabad Guide. All rights reserved.',
+  legalAria: 'Legal links',
+} : {
+  note: 'یہ ویب سائٹ ایک آزاد، غیر منافع بخش سیاحتی معلوماتی رہنما منصوبہ ہے۔ اس کا کسی سرکاری ادارے، پارک انتظامیہ یا سرکاری تنظیم سے الحاق نہیں۔',
+  disclaimer: 'مقام سے متعلق معلومات کو کیپیٹل ڈویلپمنٹ اتھارٹی، اسلام آباد کیپیٹل ٹیریٹری انتظامیہ اور پاکستان ٹورازم ڈویلپمنٹ کارپوریشن کے عوامی مواد سے تقابل کر کے مرتب کیا گیا ہے؛ اس میں کوئی تجارتی سفارش شامل نہیں۔',
+  copyright: '© 2026 شکرپڑیاں اسلام آباد رہنما۔ جملہ حقوق محفوظ ہیں۔',
+  legalAria: 'قانونی روابط',
+};
+const links = locale === 'en'
+  ? [['Privacy Policy', `${legalBase}/privacy/`], ['Terms of Use', `${legalBase}/terms/`], ['Cookie Settings', `${legalBase}/cookies/`]]
+  : [['رازداری کی پالیسی', `${legalBase}/privacy/`], ['استعمال کی شرائط', `${legalBase}/terms/`], ['کوکی ترتیبات', `${legalBase}/cookies/`]];
 ---
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
       <div>
         <Brand compact />
-        <p class="footer-note" style="margin-top:1rem;max-width:650px">
-          یہ ویب سائٹ ایک آزاد، غیر منافع بخش سیاحتی معلوماتی رہنما منصوبہ ہے۔ اس کا کسی سرکاری ادارے، پارک انتظامیہ یا سرکاری تنظیم سے الحاق نہیں۔
-        </p>
+        <p class="footer-note" style="margin-top:1rem;max-width:650px">{L.note}</p>
       </div>
       <div>
-        <div class="footer-links" aria-label="قانونی روابط">
-          <a href="/privacy/">رازداری کی پالیسی</a>
-          <a href="/terms/">استعمال کی شرائط</a>
-          <a href="/cookies/">کوکی ترتیبات</a>
+        <div class="footer-links" aria-label={L.legalAria}>
+          {links.map(([label, href]) => (
+            <a href={href}>{label}</a>
+          ))}
         </div>
       </div>
     </div>
     <div class="footer-legal">
-      <p>مقام سے متعلق معلومات کو کیپیٹل ڈویلپمنٹ اتھارٹی، اسلام آباد کیپیٹل ٹیریٹری انتظامیہ اور پاکستان ٹورازم ڈویلپمنٹ کارپوریشن کے عوامی مواد سے تقابل کر کے مرتب کیا گیا ہے؛ اس میں کوئی تجارتی سفارش شامل نہیں۔</p>
+      <p>{L.disclaimer}</p>
       <p>تصویری حقوق: ویب سائٹ پر دکھائی جانے والی تمام تصاویر کے حقوق اصل فوٹوگرافروں کے پاس ہیں؛ جہاں لازم ہو وہاں کریئیٹو کامنز لائسنس اور انتساب درج ہے۔</p>
-      <p>© 2026 شکرپڑیاں اسلام آباد رہنما۔ جملہ حقوق محفوظ ہیں۔</p>
+      <p>{L.copyright}</p>
     </div>
   </div>
 </footer>

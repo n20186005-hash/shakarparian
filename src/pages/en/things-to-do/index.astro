@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SubHero from '../../../components/SubHero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SourcesSection from '../../../components/SourcesSection.astro';
+import RelatedGuides from '../../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
+
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
+const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/en/things-to-do/`;
+const crumb = { name: 'پارک میں کیا کریں اور پکنک', nameLatin: 'Things to Do & Picnic' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['What is best to do in Shakarparian?', `Walking in the greenery, the elevated city view, seeing the Pakistan Monument, reading the memorial planting, and a family picnic are the key experiences here.`],
+  ['Is a picnic allowed?', 'Sitting and carrying light food in permitted and marked areas is generally acceptable, but an open flame or fire in open green or wild areas is strongly discouraged. Take your litter back with you.'],
+  ['When is good for photography?', 'Soft morning light and the golden hour before sunset are best for the monument, the greenery, and the city backdrop.'],
+  ['Is it suitable for children and seniors?', 'The main visitor areas have paved paths, but this is a hillside and some routes may have slopes or long distances. If specific access is needed, confirm with the site on the day.'], ];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteNameEn('Things to Do & Picnic (Shakarparian)')}
+  ogTitle={`Things to Do & Picnic — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+  description={`What to do in ${ATTRACTION.fullNameLatin} (${ATTRACTION.cityLatin}): viewpoints, memorial planting, photography, and a family picnic — a non-commercial English guide.`}
+  image={parkPhoto}
+  imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="Park experience"
+    title="Things to Do & Picnic"
+    latin="Things to Do & Picnic at Shakarparian"
+    lead={`In ${ATTRACTION.fullNameLatin} you do more than walk around: see the city view, read the memorial planting, take photographs, and enjoy a family picnic. This page gives practical advice.`}
+    image={parkPhoto}
+    imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section-sm" aria-labelledby="activities">
+    <div class="container">
+      <div class="eyebrow">What to do on site</div>
+      <h2 class="section-title" id="activities">Six activities in {ATTRACTION.fullNameLatin}</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">◉</div><h3>Elevated city view</h3><p>From the hill edges see the wide Islamabad–Rawalpindi spread and the Margalla backdrop.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>Pakistan Monument</h3><p>See the national monument’s structure and indoor museum on the western Shakarparian.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">♧</div><h3>Memorial planting</h3><p>Read the rows of trees planted by state and diplomatic guests — a living archive.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">📷</div><h3>Photography</h3><p>Open plazas, greenery, and monument angles suit photography enthusiasts.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🚶</div><h3>Walking</h3><p>Slow walks on paved paths and rest benches are great for refreshment.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">👨‍👩‍👧</div><h3>Family time</h3><p>This is not a “fast checklist” place; sitting, viewing, and reading history is the point.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="picnic">
+    <div class="container story-grid">
+      <div class="story-image">
+        <img src={parkingPhoto} alt={`Visitor area and green hill view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`} width="1600" height="900" loading="lazy" />
+        <div class="story-badge">Use marked areas for picnics, take litter back, and do not light open flames.</div>
+      </div>
+      <div class="story-copy">
+        <div class="eyebrow">Picnic guidance</div>
+        <h2 class="section-title" id="picnic">How to picnic: permission, caution, and etiquette</h2>
+        <p>Sitting and carrying light food in permitted and marked areas is generally acceptable, but keep a few rules in mind:</p>
+        <ul>
+          <li><strong>Marked place:</strong> Sit only in permitted visitor/green areas; avoid paths or security zones.</li>
+          <li><strong>Litter back:</strong> Take used boxes and plastic back with you so the greenery stays clean.</li>
+          <li><strong>No open flame:</strong> Strictly avoid fire, barbecue, or open flame in open green or wild areas.</li>
+          <li><strong>Water:</strong> Carrying water helps because availability should not be assumed constant.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="photo-tips">
+    <div class="container">
+      <div class="eyebrow">Photography tips</div>
+      <h2 class="section-title" id="photo-tips">Practical tips for the best shots</h2>
+      <div class="guide-grid">
+        <article class="guide-card"><h3>Light</h3><p>Soft light in the early hours or before sunset is best for the stone structure and greenery.</p></article>
+        <article class="guide-card"><h3>Angle</h3><p>Open plazas around the monument and the hill edge give panoramic frames with the city backdrop.</p></article>
+        <article class="guide-card"><h3>Crowds</h3><p>Pick early weekdays or early morning to avoid the weekend crowds.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="todo-faq">
+    <div class="container">
+      <div class="eyebrow">Common questions</div>
+      <h2 class="section-title" id="todo-faq">Questions about activities & picnic</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="things-to-do" />
+  <SourcesSection />
+</BaseLayout>

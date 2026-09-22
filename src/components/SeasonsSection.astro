@@ -1,38 +1,63 @@
 ---
 import { SEASON_ROWS } from '../data/visitor';
-import { ATTRACTION } from '../data/site';
----
+import { localeFromUrl, type Locale } from '../i18n';
 
-<section class="section-sm" id="seasons" aria-labelledby="seasons-title">
+const locale: Locale = localeFromUrl(Astro.url);
+const L = locale === 'en' ? {
+  eyebrow: 'Seasonal strategy',
+  title: 'When to visit Shakarparian by season',
+  lead: 'Shakarparian is an open hillside park, so weather and greenery change a lot across the year. The table below compares months, conditions, and a simple advice level.',
+  ratingHeader: 'Rating',
+  season: 'Season',
+  months: 'Months',
+  condition: 'Condition',
+  temp: 'Temperature',
+  advice: 'Advice',
+  ratings: { 'بہترین': 'Best', 'اچھا': 'Good', 'معمولی': 'Fair', 'محتاط رہیں': 'Caution' } as Record<string, string>,
+} : {
+  eyebrow: 'موسموں کی حکمتِ عملی',
+  title: 'شکرپڑیاں کا موسموں کے لحاظ سے بہترین وقت',
+  lead: 'شکرپڑیاں ایک کھلا پہاڑی پارک ہے، اس لیے سال بھر موسم اور سبزہ بہت بدلتے ہیں۔ نیچے دی گئی جدول مہینوں، صورتحال اور ایک سادہ مشورہ درجے کا موازنہ کرتی ہے۔',
+  ratingHeader: 'درجہ بندی',
+  season: 'موسم',
+  months: 'مہینے',
+  condition: 'صورتحال',
+  temp: 'درجہ حرارت',
+  advice: 'مشورہ',
+  ratings: { 'بہترین': 'بہترین', 'اچھا': 'اچھا', 'معمولی': 'معمولی', 'محتاط رہیں': 'محتاط رہیں' } as Record<string, string>,
+};
+const t = (ur: string, en: string) => (locale === 'en' ? en : ur);
+---
+<section class="section-sm" aria-labelledby="seasons-title">
   <div class="container">
-    <div class="eyebrow">موسمی حکمتِ عملی</div>
-    <h2 class="section-title" id="seasons-title">{ATTRACTION.shortName} کے لیے سہ ماہی / موسمی سفری حکمتِ عملی</h2>
-    <p class="section-lead">
-      ذیل کی جدول عمومی موسمی رجحانات پر مبنی ہے (دیرینہ موسمی مشاہدات کا خلاصہ)۔ یہ قطعی پیشن گوئی نہیں؛ روزمرہ کی صورتحال کے لیے اوپر کا موسم ماڈیول دیکھیں۔
-    </p>
+    <div class="eyebrow">{L.eyebrow}</div>
+    <h2 class="section-title" id="seasons-title">{L.title}</h2>
+    <p class="section-lead">{L.lead}</p>
     <div class="table-wrap">
-      <table class="seasons-table">
+      <table class="compare-table seasons-table">
         <thead>
           <tr>
-            <th>موسم</th>
-            <th>ماہ</th>
-            <th>عمومی صورتحال</th>
-            <th>درجہ حرارت کا رجحان</th>
-            <th>سفری مشورہ</th>
-            <th>درجہ بندی</th>
+            <th>{L.season}</th>
+            <th>{L.months}</th>
+            <th>{L.condition}</th>
+            <th>{L.temp}</th>
+            <th>{L.advice}</th>
+            <th>{L.ratingHeader}</th>
           </tr>
         </thead>
         <tbody>
-          {SEASON_ROWS.map((r) => (
-            <tr>
-              <td data-label="موسم"><strong>{r.season}</strong></td>
-              <td data-label="ماہ">{r.months}</td>
-              <td data-label="صورتحال">{r.condition}</td>
-              <td data-label="درجہ حرارت">{r.tempTrend}</td>
-              <td data-label="مشورہ">{r.advice}</td>
-              <td data-label="درجہ بندی"><span class={`season-tag season-${r.rating}`}>{r.rating}</span></td>
-            </tr>
-          ))}
+          {
+            SEASON_ROWS.map((r) => (
+              <tr>
+                <td data-label={L.season}><strong>{t(r.season, r.seasonEn)}</strong></td>
+                <td data-label={L.months}>{t(r.months, r.monthsEn)}</td>
+                <td data-label={L.condition}>{t(r.condition, r.conditionEn)}</td>
+                <td data-label={L.temp}>{t(r.tempTrend, r.tempTrendEn)}</td>
+                <td data-label={L.advice}>{t(r.advice, r.adviceEn)}</td>
+                <td data-label={L.ratingHeader}><span class={`rating ${r.rating === 'بہترین' ? 'rating-best' : r.rating === 'اچھا' ? 'rating-good' : r.rating === 'معمولی' ? 'rating-fair' : 'rating-caution'}`}>{L.ratings[r.rating]}</span></td>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </div>

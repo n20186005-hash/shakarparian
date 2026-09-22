@@ -1,20 +1,25 @@
 ---
 import { ATTRACTION, SITE_URL } from '../data/site';
+import { localeFromUrl, type Locale } from '../i18n';
 
 interface Props {
   /** ذیلی صفحہ کا موجودہ کرما (نام + رومن نام)۔ خالی رہے تو مقام/ہوم خود موجودہ صفحہ ہے۔ */
   current?: { name: string; nameLatin: string };
 }
 const { current } = Astro.props;
+const locale: Locale = localeFromUrl(Astro.url);
 type Crumb = { label: string; latin: string; href?: string; current?: boolean };
 const trail: Crumb[] = [
-  { label: ATTRACTION.country, latin: ATTRACTION.countryLatin },
-  { label: ATTRACTION.region, latin: ATTRACTION.regionLatin },
-  { label: ATTRACTION.city, latin: ATTRACTION.cityLatin },
+  { label: ATTRACTION.country, latin: ATTRACTION.countryLatin, href: undefined },
+  { label: ATTRACTION.region, latin: ATTRACTION.regionLatin, href: undefined },
+  { label: ATTRACTION.city, latin: ATTRACTION.cityLatin, href: undefined },
   { label: ATTRACTION.fullName, latin: ATTRACTION.fullNameLatin, href: `${SITE_URL}/` },
 ];
 if (current) trail.push({ label: current.name, latin: current.nameLatin, current: true });
 else trail[trail.length - 1].current = true;
+
+const showLatin = locale === 'en';
+const render = (step: Crumb) => (showLatin ? step.latin : `${step.label} (${step.latin})`);
 ---
 <nav class="breadcrumbs" aria-label="جغرافیائی درجہ بندی">
   <ol>
@@ -22,11 +27,11 @@ else trail[trail.length - 1].current = true;
       trail.map((step) => (
         <li aria-current={step.current ? 'page' : undefined}>
           {step.href && !step.current ? (
-            <a class="bc-ur" href={step.href}>{step.label}</a>
+            <a class="bc-ur" href={step.href}>{render(step)}</a>
           ) : (
-            <span class="bc-ur">{step.label}</span>
+            <span class="bc-ur">{render(step)}</span>
           )}
-          <span class="bc-latin" dir="ltr">{step.latin}</span>
+          {!showLatin && <span class="bc-latin" dir="ltr">{step.latin}</span>}
         </li>
       ))
     }

@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SubHero from '../../../components/SubHero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SourcesSection from '../../../components/SourcesSection.astro';
+import RelatedGuides from '../../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
+
+const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+
+const daysEn: Record<string, string> = {
+  Monday: 'Mon', Tuesday: 'Tue', Wednesday: 'Wed', Thursday: 'Thu', Friday: 'Fri', Saturday: 'Sat', Sunday: 'Sun',
+};
+const schedule = ATTRACTION.openingHoursSpecification.map((s) => ({
+  days: s.dayOfWeek.map((d) => daysEn[d as keyof typeof daysEn]).join(', '),
+  opens: s.opens,
+  closes: s.closes,
+}));
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/en/opening-hours/`;
+const crumb = { name: 'اوقات اور بہترین وقت', nameLatin: 'Opening Hours & Best Time' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['What are the general hours of Shakarparian National Park?', `Per the recent Google place listing, the listed hours are ${schedule[0].days} ${schedule[0].opens}–${schedule[0].closes} and ${schedule[1].days} ${schedule[1].opens}–${schedule[1].closes}. These are changing information, especially on festival, official-event, or security-management days.`],
+  ['Do museums have different hours?', 'Yes — the Pakistan Monument and nearby museums’ indoor sections may have hours separate from the open park. Check the current schedule of the relevant institution before you go.'],
+  ['Which weekday is less crowded?', 'Generally the early weekdays (Monday to Thursday, except holidays) are relatively less crowded. Weekends, Sunday, and national holidays can bring larger crowds.'],
+  ['How is it in rain or fog?', 'Because it is an open hillside site, rain, fog, or extreme heat can change the experience. Pick the time by checking the weather, and carry suitable clothing/water.'],
+];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteNameEn('Opening Hours & Best Time (Shakarparian)')}
+  ogTitle={`Opening Hours & Best Time — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+  description={`${ATTRACTION.fullNameLatin} (${ATTRACTION.cityLatin}) general hours, seasonal comparison, and the best time to avoid crowds — a non-commercial English guide.`}
+  image={parkPhoto}
+  imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="Visit planning"
+    title="Opening Hours & Best Time"
+    latin="Opening Hours & Best Time to Visit Shakarparian"
+    lead={`${ATTRACTION.fullNameLatin}'s general hours, a seasonal comparison, and the best moments to avoid crowds — so your visit is more relaxed and less busy.`}
+    image={parkPhoto}
+    imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section-sm" aria-labelledby="hours">
+    <div class="container">
+      <div class="eyebrow">Current general hours</div>
+      <h2 class="section-title" id="hours">{ATTRACTION.fullNameLatin} opening hours</h2>
+      <p class="section-lead">These hours are taken from the recent public Google place listing and are changing information. They can change on festivals, official events, or security-management days.</p>
+      <div class="visit-grid">
+        {schedule.map((row) => (
+          <article class="visit-card">
+            <h3>{row.days}</h3>
+            <div class="hours">
+              <div class="hour-row"><span>Open</span><strong>{row.opens} – {row.closes}</strong></div>
+            </div>
+          </article>
+        ))}
+        <article class="visit-card">
+          <h3>Indoor museums</h3>
+          <p>The hours of the Pakistan Monument and nearby museums’ indoor sections may differ from this table. Check the current schedule of the relevant institution on your travel day.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="best-time">
+    <div class="container">
+      <div class="eyebrow">Best time</div>
+      <h2 class="section-title" id="best-time">Best time by day and season</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">☀</div><h3>Early morning</h3><p>Light coolness, relatively fewer crowds, and best for walking. Soft light is also good for photography.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🌇</div><h3>Before sunset</h3><p>Golden light and the wide city view; keep the return time and gate hours in mind after dusk.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🍃</div><h3>Spring</h3><p>The season of greenery and blossoms is the most lively and attractive for the park.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">❄</div><h3>Winter</h3><p>Clear, light air is comfortable for walking, though early mornings can be quite cold.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🔥</div><h3>Summer</h3><p>Avoid midday heat; go only in the early morning or early evening and carry water.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">👥</div><h3>Avoid crowds</h3><p>Weekends, Sunday, and national holidays draw larger crowds; prefer the early weekdays.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="duration">
+    <div class="container">
+      <div class="eyebrow">How long to stay</div>
+      <h2 class="section-title" id="duration">How much time to keep</h2>
+      <div class="guide-grid">
+        <article class="guide-card"><h3>Park only</h3><p>1.5–3 hours is enough for greenery, the view, and a relaxed walk.</p></article>
+        <article class="guide-card"><h3>With the monument</h3><p>3–4 hours is more comfortable if you include the Pakistan Monument and the indoor museum.</p></article>
+        <article class="guide-card"><h3>Full half day</h3><p>Combining the park, the monument, Lok Virsa, and a meal flows easily through a half day.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="hours-faq">
+    <div class="container">
+      <div class="eyebrow">Common questions</div>
+      <h2 class="section-title" id="hours-faq">Questions about hours & timing</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="opening-hours" />
+  <SourcesSection />
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { withSiteNameEn } from '../../../data/site';
+---
+<BaseLayout title={withSiteNameEn('Cookie Settings')} description="Manage essential, analytics, preference, and marketing cookie choices." noHeader>
+  <section class="legal-hero">
+    <div class="container">
+      <a class="backlink" href="/en/">→ Back to main guide</a>
+      <h1>Cookie Settings</h1>
+      <p>Last updated: August 2026</p>
+    </div>
+  </section>
+  <article class="legal-wrap">
+    <p>We use cookies and similar local browser technologies only for the site’s basic operation, to remember your consent, and — with your permission — to understand aggregate traffic. This non-profit site has no active personalised advertising.</p>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>Essential storage</h3><p>Needed for basic site function, security, and remembering your consent state. It cannot be turned off because it keeps the rest of your preferences in effect.</p></div>
+        <strong>Always active</strong>
+      </div>
+    </div>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>Analytics cookie</h3><p>Helps understand aggregate usage, popular pages, and general traffic trends via Google Analytics. It is off by default and activates only with your consent.</p></div>
+        <label class="switch"><input id="analytics" type="checkbox" /> Enable</label>
+      </div>
+    </div>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>Preference storage</h3><p>Can remember your local site choices. This site uses a single Urdu language and a fixed visual theme, so this category is limited in use.</p></div>
+        <label class="switch"><input id="preferences" type="checkbox" /> Enable</label>
+      </div>
+    </div>
+
+    <div class="cookie-card">
+      <div class="cookie-row">
+        <div><h3>Marketing cookie</h3><p>For personalised ads, commercial retargeting, or campaign measurement. We do not use this category.</p></div>
+        <strong>Disabled</strong>
+      </div>
+    </div>
+
+    <h2>About Google Maps</h2>
+    <p>In the main guide, Google Maps is embedded as an external map. The map loads from Google’s own servers and may have its own cookie/privacy policy. Turning off our analytics consent does not necessarily disable the external map frame’s own technical behaviour; if you do not want it loaded at all, avoid the map section or use your browser’s third-party protections.</p>
+
+    <h2>Managing consent</h2>
+    <p>You can return to this page anytime to change your choice. “Reject all” turns off the analytics and optional preference categories, but the essential consent state remains saved.</p>
+    <div class="cookie-actions">
+      <button class="btn btn-primary" id="save-preferences" type="button">Save preferences</button>
+      <button class="btn" style="border-color:#c9cfc9;background:white;color:#123d33" id="reject-all" type="button">Reject all</button>
+    </div>
+    <p class="cookie-status" id="cookie-status" role="status" aria-live="polite"></p>
+  </article>
+
+  <script is:inline>
+    (() => {
+      const key = 'shakarparian-consent';
+      const analytics = document.getElementById('analytics');
+      const preferences = document.getElementById('preferences');
+      const status = document.getElementById('cookie-status');
+      const save = document.getElementById('save-preferences');
+      const reject = document.getElementById('reject-all');
+      const read = () => {
+        try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; }
+      };
+      const current = read();
+      analytics.checked = current.analytics === true;
+      preferences.checked = current.preferences === true;
+      const commit = (value, message) => {
+        const data = { necessary: true, analytics: !!value.analytics, preferences: !!value.preferences, marketing: false };
+        localStorage.setItem(key, JSON.stringify(data));
+        status.textContent = message;
+        window.dispatchEvent(new CustomEvent('shakarparian-consent-changed', { detail: data }));
+      };
+      save.addEventListener('click', () => commit({analytics: analytics.checked, preferences: preferences.checked}, 'Your cookie preferences have been saved.'));
+      reject.addEventListener('click', () => {
+        analytics.checked = false;
+        preferences.checked = false;
+        commit({analytics:false, preferences:false}, 'Optional cookie preferences have been rejected.');
+      });
+    })();
+  </script>
+</BaseLayout>

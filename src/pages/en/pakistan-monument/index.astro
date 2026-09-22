@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SubHero from '../../../components/SubHero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SourcesSection from '../../../components/SourcesSection.astro';
+import RelatedGuides from '../../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
+
+const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
+const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/en/pakistan-monument/`;
+const crumb = { name: 'پاکستان مونومنٹ اور میوزیم', nameLatin: 'Pakistan Monument & Museum' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['What is the Pakistan Monument?', `The Pakistan Monument is a symbolic national-unity monument on the western hill of Shakarparian. Its petal-like structure represents the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. Beneath it sits a museum presenting the Pakistan Movement and national history.`],
+  ['Are the monument and the museum at the same place?', 'Yes — the museum is in the lower part of the monument. The open monument area and the indoor exhibition are part of the same visitor zone, but the indoor hours may differ from the open park.'],
+  ['Is it part of a Shakarparian National Park visit?', `${ATTRACTION.fullNameLatin}'s main green area and the Pakistan Monument are part of the same recreational landscape. Most visitors combine the greenery, the monument, and nearby museums in a single half day.`],
+  ['What is the best time for photography?', 'Soft morning light and the golden hour before sunset suit the stone structure and the Islamabad backdrop. Crowds can be larger on weekends and holidays.'],
+];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteNameEn('Pakistan Monument & Museum (Islamabad)')}
+  ogTitle={`Pakistan Monument & Museum — ${ATTRACTION.cityLatin} | ${ATTRACTION.fullNameLatin}`}
+  description={`A non-commercial English introduction to the Pakistan Monument (Islamabad, Shakarparian): petal-shaped symbolic monument, museum, location, indoor exhibition, visiting time, and how it pairs with the park.`}
+  image={monumentPhoto}
+  imageAlt={`Pakistan Monument — open cultural view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="National monument & museum"
+    title="Pakistan Monument & Museum"
+    latin="Pakistan Monument & Museum — Shakarparian, Islamabad"
+    lead={`On the western hill of Shakarparian, this symbolic national-unity monument and its museum meet the wide view of ${ATTRACTION.cityLatin}. This page gives non-commercial guidance on the structure, material, indoor exhibition, and practical visiting points.`}
+    image={monumentPhoto}
+    imageAlt={`Pakistan Monument — main view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section-sm" aria-labelledby="about-monument">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <div class="eyebrow">Understand the monument</div>
+        <h2 class="section-title" id="about-monument">Pakistan Monument: a national story folded into petals</h2>
+        <p>
+          The most visible feature of the Pakistan Monument is its flower-like structure whose petals represent the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. The form is a symbol of “staying together” and federal unity.
+        </p>
+        <p>
+          In the lower part of the monument is a museum where the Pakistan Movement, national symbols, and the country’s historical milestones are presented through statues, murals, and audio-visual material. That is why the place matters not only for photography but also for historical awareness.
+        </p>
+        <p>
+          Geographically the monument sits on the far western edge of <strong>{ATTRACTION.fullNameLatin}</strong>'s green area, so it is naturally treated as part of the park visit.
+        </p>
+      </div>
+      <div class="story-image">
+        <img src={heroPhoto} alt={`Main view of the Pakistan Monument — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`} width="1600" height="1067" loading="lazy" />
+        <div class="story-badge">A better half day: greenery → national monument → indoor museum → nearby cultural institutions.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="what-inside">
+    <div class="container">
+      <div class="eyebrow">Indoor exhibition</div>
+      <h2 class="section-title" id="what-inside">What you will find inside the museum</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>Historical milestones</h3><p>The key stages and figures of the Pakistan Movement are presented through murals and statues.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">◎</div><h3>National symbols</h3><p>An exhibition of the country’s cultural and state emblems that completes the concept of the outer monument.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">☼</div><h3>View & sunrise</h3><p>From the monument’s top and open areas you can see the wide Islamabad–Rawalpindi spread and the Margalla backdrop.</p></article>
+      </div>
+      <p class="notice" style="margin-top:1.6rem"><strong>Practical note:</strong> The indoor museum hours may differ from the open park and can change on any festival or official-event day. Check the current schedule of the relevant official site before you go.</p>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="combo">
+    <div class="container">
+      <div class="eyebrow">Pairing with the park</div>
+      <h2 class="section-title" id="combo">Nature and history in one visit</h2>
+      <p class="section-lead">Combining {ATTRACTION.fullNameLatin}'s open green areas, the monument, and nearby institutions (Lok Virsa Museum, etc.) is efficient in both time and energy.</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <h3>Visit order</h3>
+          <p>Start with the greenery and a walk, then go to the monument on the western hill, and finish with the indoor museum while the light is soft.</p>
+        </article>
+        <article class="guide-card">
+          <h3>Time split</h3>
+          <p>One to two hours is enough for the monument alone; a half day is more comfortable with the park and other museums.</p>
+        </article>
+        <article class="guide-card">
+          <h3>Photography</h3>
+          <p>The open plazas around the monument and the hill edge give good angles with the city backdrop; follow security instructions.</p>
+        </article>
+        <article class="guide-card">
+          <h3>Reaching the zone</h3>
+          <p>Tell the driver or map not just “Shakarparian” but the desired visitor zone — the main park area or the Pakistan Monument — because there are different access points on the hill.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="monument-faq">
+    <div class="container">
+      <div class="eyebrow">Common questions</div>
+      <h2 class="section-title" id="monument-faq">Questions about the monument & museum</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="pakistan-monument" />
+  <SourcesSection />
+</BaseLayout>

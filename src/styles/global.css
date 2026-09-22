@@ -63,6 +63,8 @@ button, input { font: inherit; }
 .nav a { text-decoration:none; padding:.45rem .7rem; border-radius:.6rem; font-size:.88rem; color:#34564d; }
 .nav a:hover, .nav a:focus-visible { background:#eef4ef; color:var(--pine); outline:none; }
 .nav .nav-cta { background:var(--pine); color:white; margin-inline-start:.4rem; }
+.nav .nav-lang { border:1px solid rgba(18,61,51,.25); border-radius:999px; font-weight:700; }
+.nav .nav-lang:hover, .nav .nav-lang:focus-visible { background:#eef4ef; color:var(--pine); }
 
 .hero { min-height:760px; display:grid; align-items:end; position:relative; overflow:hidden; background:var(--pine); color:white; }
 .hero-media { position:absolute; inset:0; }
@@ -183,7 +185,7 @@ summary::-webkit-details-marker { display:none; } summary::after{content:"＋";c
 .cookie-card{border:1px solid var(--line);background:white;border-radius:1.1rem;padding:1.2rem;margin:1rem 0}.cookie-row{display:flex;justify-content:space-between;gap:1rem;align-items:start}.cookie-row h3{margin:0}.switch{position:relative;display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap}.switch input{width:1.2rem;height:1.2rem;accent-color:var(--pine)}.cookie-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.5rem}.cookie-status{min-height:1.8rem;color:var(--leaf);font-weight:700}
 
 @media (max-width: 980px){
-  .nav a:not(.nav-cta){display:none}.hero-inner,.story-grid,.about-grid{grid-template-columns:1fr}.hero{min-height:820px}.hero-card{max-width:520px}.quickgrid{grid-template-columns:repeat(2,1fr)}.feature-grid{grid-template-columns:repeat(2,1fr)}.attractions{grid-template-columns:repeat(2,1fr)}.photo-strip{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr}.story-image{min-height:420px}.relgrid{grid-template-columns:1fr}
+  .nav a:not(.nav-cta):not(.nav-lang){display:none}.hero-inner,.story-grid,.about-grid{grid-template-columns:1fr}.hero{min-height:820px}.hero-card{max-width:520px}.quickgrid{grid-template-columns:repeat(2,1fr)}.feature-grid{grid-template-columns:repeat(2,1fr)}.attractions{grid-template-columns:repeat(2,1fr)}.photo-strip{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr}.story-image{min-height:420px}.relgrid{grid-template-columns:1fr}
 }
 @media (max-width: 650px){
   body{font-size:17px}.container{width:min(100% - 1.2rem,1180px)}.section{padding:4rem 0}.hero{min-height:780px}.subhero{min-height:360px}.subhero-inner{padding:4.5rem 0 2rem}.hero-inner{padding:6rem 0 2.5rem;gap:1.5rem}.hero h1{font-size:3.6rem}.hero-media::after{background:linear-gradient(0deg,rgba(6,31,25,.95),rgba(6,31,25,.34) 80%)}.hero-card{padding:1rem}.quickgrid,.feature-grid,.guide-grid,.visit-grid,.attractions{grid-template-columns:1fr}.quickitem{border-inline-start:0;border-bottom:1px solid var(--line)}.quickitem:last-child{border-bottom:0}.story-grid{gap:2rem}.story-image{min-height:330px;border-radius:1.2rem}.photo-panel{min-height:340px}.map-shell iframe{height:430px}.header-row{min-height:64px}.brand-mini span{font-size:.9rem}.brand-mini img{width:40px;height:40px}.nav-cta{font-size:.78rem!important;padding:.42rem .7rem!important}

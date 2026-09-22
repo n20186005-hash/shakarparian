@@ -15,6 +15,12 @@ export function withSiteName(suffix: string): string {
   return `${suffix} | ${SITE_NAME}`;
 }
 
+/** انگریزی سائٹ نام (hreflang=en صفحات کے لیے) */
+export const SITE_NAME_EN = 'Shakarparian National Park, Islamabad — Visitor Guide';
+export function withSiteNameEn(suffix: string): string {
+  return `${suffix} | ${SITE_NAME_EN}`;
+}
+
 export const ATTRACTION = {
   /** سرکاری/مکمل نام — JSON-LD، H1 اور TDK میں استعمال */
   fullName: 'شکرپڑیاں نیشنل پارک',
@@ -76,22 +82,27 @@ export const NEARBY_LANDMARKS = [
 export const OFFICIAL_SOURCES = [
   {
     label: 'کیپیٹل ڈویلپمنٹ اتھارٹی — اسلام آباد کے مقامات / شکرپڑیاں',
+    labelEn: 'Capital Development Authority — Islamabad destinations / Shakarparian',
     href: 'https://cda.gov.pk/destination',
   },
   {
     label: 'کیپیٹل ڈویلپمنٹ اتھارٹی — پبلک ٹرانزٹ روٹ نقشہ',
+    labelEn: 'Capital Development Authority — public transit route map',
     href: 'https://cda.gov.pk/public/metro_routes',
   },
   {
     label: 'محکمہ آثارِ قدیمہ و عجائب گھر — لوک ورثہ میوزیم معلومات',
+    labelEn: 'Department of Archaeology & Museums — Lok Virsa Museum info',
     href: 'https://doam.gov.pk/public/sites/10162',
   },
   {
     label: 'پاکستان ٹورازم ڈویلپمنٹ کارپوریشن — سرکاری سیاحتی پورٹل',
+    labelEn: 'Pakistan Tourism Development Corporation — official tourism portal',
     href: 'https://tourism.gov.pk/',
   },
   {
     label: 'گوگل میپس — شکرپڑیاں نیشنل پارک کی عوامی فہرست (مقام، درجہ بندی، اوقات)',
+    labelEn: 'Google Maps — public listing of Shakarparian National Park (location, rating, hours)',
     href: 'https://maps.app.goo.gl/hYAhHXWvMuAaiCx17',
   },
 ] as const;
