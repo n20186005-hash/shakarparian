@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubHero from '../../components/SubHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourcesSection from '../../components/SourcesSection.astro';
+import RelatedGuides from '../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteName } from '../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../lib/schema';
+
+const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
+const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/pakistan-monument/`;
+const crumb = { name: 'پاکستان مونومنٹ اور میوزیم', nameLatin: 'Pakistan Monument & Museum' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['پاکستان مونومنٹ کیا ہے؟', `پاکستان مونومنٹ شکرپڑیاں کی مغربی پہاڑی پر قومی وحدت کی علامتی یادگار ہے۔ اس کی پنکھڑیوں جیسی ساخت پاکستان کے چار صوبوں اور علاقوں کی نمائندگی کرتی ہے اور اس کے نیچے میوزیم واقع ہے جہاں تحریکِ پاکستان اور قومی تاریخ کو دکھایا گیا ہے۔`],
+  ['کیا مونومنٹ اور میوزیم ایک ہی جگہ ہیں؟', 'ہاں، یادگار کے نچلے حصے میں میوزیم موجود ہے۔ کھلا یادگاری حصہ اور اندرونی نمائش دونوں ایک ہی وزیٹر زون کا حصہ ہیں، مگر اندرونی حصوں کے اوقات کھلے پارک سے مختلف ہو سکتے ہیں۔'],
+  ['کیا یہ شکرپڑیاں نیشنل پارک کے دورے میں شامل ہے؟', `${ATTRACTION.fullName} کا مرکزی سبز علاقہ اور پاکستان مونومنٹ ایک ہی تفریحی منظرنامے کا حصہ ہیں۔ اکثر زائرین ایک ہی نصف دن میں سبزہ، یادگار اور قریبی عجائب گھروں کو ملاتے ہیں۔`],
+  ['تصویر کشی کے لیے بہترین وقت کون سا ہے؟', 'صبح کی نرم روشنی اور شام کا سنہری وقت یادگار کی پتھریلی ساخت اور اسلام آباد کے پس منظر کے لیے موزوں رہتا ہے۔ اختتامِ ہفتہ اور تعطیلات پر ہجوم زیادہ ہو سکتا ہے۔'],
+];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteName('پاکستان مونومنٹ اور میوزیم (اسلام آباد)')}
+  ogTitle={`Pakistan Monument & Museum — ${ATTRACTION.cityLatin} | ${ATTRACTION.fullNameLatin}`}
+  description={`پاکستان مونومنٹ (اسلام آباد، شکرپڑیاں) کی پنکھڑیوں والی علامتی یادگار اور اس کے میوزیم کا غیر تجارتی اردو تعارف: مقام، اندرونی نمائش، دورے کا وقت اور پارک کے ساتھ امتزاج۔`}
+  image={monumentPhoto}
+  imageAlt={`پاکستان مونومنٹ — ${ATTRACTION.fullName}، ${ATTRACTION.city}، ${ATTRACTION.country} کا کھلا ثقافتی منظر`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="قومی یادگار اور عجائب گھر"
+    title="پاکستان مونومنٹ اور میوزیم"
+    latin="Pakistan Monument & Museum — Shakarparian, Islamabad"
+    lead={`شکرپڑیاں کی مغربی پہاڑی پر قومی وحدت کی یہ علامتی یادگار اور اس کا میوزیم ${ATTRACTION.city} کے وسیع منظر کے ساتھ ملتے ہیں۔ یہ صفحہ یادگار کی ساخت، مواد، اندرونی نمائش اور دورے کے عملی نکات پر غیر تجارتی رہنمائی فراہم کرتا ہے۔`}
+    image={monumentPhoto}
+    imageAlt={`پاکستان مونومنٹ — ${ATTRACTION.fullName}، ${ATTRACTION.city}، ${ATTRACTION.country} کا مرکزی منظر`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section-sm" aria-labelledby="about-monument">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <div class="eyebrow">یادگار کو سمجھیں</div>
+        <h2 class="section-title" id="about-monument">پاکستان مونومنٹ: پنکھڑیوں میں لپٹی ہوئی قومی کہانی</h2>
+        <p>
+          پاکستان مونومنٹ کی سب سے نمایاں بات اس کا پھول جیسا ڈھانچہ ہے جس کی پنکھڑیاں پاکستان کے چار صوبوں — پنجاب، سندھ، خیبر پختونخوا اور بلوچستان — کے ساتھ ساتھ گلگت بلتستان اور آزاد کشمیر جیسے علاقوں کی عکاسی کرتی ہیں۔ یہ ساخت “اکٹھے رہنے” اور وفاقی یکجہتی کی علامت ہے۔
+        </p>
+        <p>
+          یادگار کے نچلے حصے میں ایک میوزیم ہے جہاں تحریکِ پاکستان، قومی شعائر اور ملک کی تاریخی منزلوں کو مجسموں، دیواری نقشوں اور آڈیو ویژول مواد کے ذریعے پیش کیا گیا ہے۔ یہی وجہ ہے کہ یہ مقام صرف فوٹوگرافی کے لیے نہیں بلکہ تاریخی شعور کے لیے بھی اہم ہے۔
+        </p>
+        <p>
+          جغرافیائی طور پر یہ یادگار <strong>{ATTRACTION.fullName}</strong> کے سبز علاقے کے بالکل مغربی حصے میں واقع ہے، اس لیے اسے پارک کے دورے کا قدرتی حصہ سمجھا جاتا ہے۔
+        </p>
+      </div>
+      <div class="story-image">
+        <img src={heroPhoto} alt={`پاکستان مونومنٹ کا مرکزی نظارہ — ${ATTRACTION.fullName}، ${ATTRACTION.city}`} width="1600" height="1067" loading="lazy" />
+        <div class="story-badge">ایک بہتر نصف دن: سبزہ → قومی یادگار → اندرونی میوزیم → قریبی ثقافتی ادارے۔</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="what-inside">
+    <div class="container">
+      <div class="eyebrow">اندرونی نمائش</div>
+      <h2 class="section-title" id="what-inside">میوزیم کے اندر کیا ملے گا</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>تاریخی منزلیں</h3><p>تحریکِ پاکستان کی اہم ترین منزلوں اور شخصیات کو دیواری نقشوں اور مجسموں کے ذریعے بیان کیا گیا ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">◎</div><h3>قومی شعائر</h3><p>ملک کے ثقافتی اور ریاستی نشانات کی نمائش، جو یادگار کی بیرونی ساخت کے تصور کو مکمل کرتی ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">☼</div><h3>نظارہ اور طلوع</h3><p>یادگار کی چوٹی اور کھلے حصوں سے اسلام آباد–راولپنڈی کا وسیع منظر اور مارگلہ کا پس منظر دکھائی دیتا ہے۔</p></article>
+      </div>
+      <p class="notice" style="margin-top:1.6rem"><strong>عملی نکتہ:</strong> اندرونی میوزیم کے اوقات کھلے پارک سے مختلف ہو سکتے ہیں اور کسی بھی تہوار یا سرکاری تقریب کے دن بدل سکتے ہیں۔ دورے سے پہلے متعلقہ سرکاری مقام کا موجودہ شیڈول دیکھیں۔</p>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="combo">
+    <div class="container">
+      <div class="eyebrow">پارک کے ساتھ امتزاج</div>
+      <h2 class="section-title" id="combo">ایک ہی دورے میں فطرت اور تاریخ</h2>
+      <p class="section-lead">{ATTRACTION.fullName} کے کھلے سبز حصوں، یادگار اور قریبی اداروں (لوک ورثہ میوزیم وغیرہ) کو ملانا وقت اور توانائی دونوں کے لحاظ سے موزوں رہتا ہے۔</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <h3>سیر کا ترتیب</h3>
+          <p>سبزہ اور چہل قدمی سے آغاز کریں، پھر مغربی پہاڑی پر مونومنٹ تک چلیں، اور آخر میں اندرونی میوزیم دیکھیں جب روشنی نرم ہو۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>وقت کی تقسیم</h3>
+          <p>صرف یادگار کے لیے 1–2 گھنٹے کافی ہیں؛ پارک اور دیگر عجائب گھروں کے ساتھ نصف دن زیادہ آرام دہ رہتا ہے۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>تصویر کشی</h3>
+          <p>یادگار کے گرد کھلے چبوترے اور پہاڑی کے کنارے فوٹوگرافی کے بہترین زاویے دیتے ہیں؛ سکیورٹی ہدایات کا خیال رکھیں۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>رسائی</h3>
+          <p>ڈرائیور یا نقشہ میں صرف “شکرپڑیاں” کے بجائے “پاکستان مونومنٹ” واضح کریں تاکہ صحیح وزیٹر زون تک پہنچ سکیں۔</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="monument-faq">
+    <div class="container">
+      <div class="eyebrow">عمومی سوالات</div>
+      <h2 class="section-title" id="monument-faq">مونومنٹ اور میوزیم سے متعلق سوالات</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="pakistan-monument" />
+  <SourcesSection />
+</BaseLayout>

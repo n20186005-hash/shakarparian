@@ -1,0 +1,43 @@
+---
+import { ATTRACTION } from '../data/site';
+
+interface Props {
+  /** موجودہ صفحہ کا slug تاکہ اسے فہرست میں چھوڑ دیا جائے */
+  exclude?: string;
+  heading?: string;
+  /** کیا "مرکزی رہنما" والا گھر کارڈ دکھائیں (ذیلی صفحات پر درست، ہوم پر غلط) */
+  showHome?: boolean;
+}
+const { exclude = '', heading = 'مزید تفصیلی ذیلی رہنما', showHome = true } = Astro.props;
+const guides = [
+  { slug: 'pakistan-monument', ur: 'پاکستان مونومنٹ اور میوزیم', latin: 'Pakistan Monument & Museum', desc: 'قومی وحدت کی علامتی یادگار اور اندرونی نمائش کا تعارف۔' },
+  { slug: 'opening-hours', ur: 'اوقات اور بہترین وقت', latin: 'Opening Hours & Best Time', desc: 'موجودہ عمومی اوقات، موسموں کا موازنہ اور ہجوم سے بچنے کا بہترین وقت۔' },
+  { slug: 'things-to-do', ur: 'پارک میں کیا کریں اور پکنک', latin: 'Things to Do & Picnic', desc: 'شہر کا نظارہ، یادگاری شجرکاری، فوٹوگرافی اور پکنک کی عملی رہنمائی۔' },
+  { slug: 'getting-there', ur: 'پہنچنا اور پارکنگ', latin: 'Getting There & Parking', desc: 'ہوائی اڈے، میٹروبس، ٹیکسی، نجی گاڑی اور پارکنگ کی تفصیلی وضاحت۔' },
+];
+const shown = guides.filter((g) => g.slug !== exclude);
+---
+<section class="section-sm" aria-labelledby="related-title">
+  <div class="container">
+    <div class="eyebrow">متعلقہ رہنما</div>
+    <h2 class="section-title" id="related-title">{heading}</h2>
+    <div class="relgrid">
+      {
+        shown.map((g) => (
+          <a class="relcard" href={`/${g.slug}/`}>
+            <h3>{g.ur}</h3>
+            <p>{g.desc}</p>
+            <span class="rel-latin" dir="ltr">{g.latin}</span>
+          </a>
+        ))
+      }
+      {showHome && (
+        <a class="relcard" href="/">
+          <h3>مرکزی رہنما: {ATTRACTION.fullName}</h3>
+          <p>مقام، نقشہ، آمدورفت، سہولیات اور عمومی سوالات کا مرکزی صفحہ۔</p>
+          <span class="rel-latin" dir="ltr">{ATTRACTION.fullNameLatin} — Main Guide</span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>

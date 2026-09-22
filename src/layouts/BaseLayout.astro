@@ -2,16 +2,21 @@
 import '../styles/global.css';
 import Brand from '../components/Brand.astro';
 import Footer from '../components/Footer.astro';
+import { ATTRACTION, SITE_NAME } from '../data/site';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
+  ogTitle?: string;
   noHeader?: boolean;
 }
-const { title, description, image = '/brand/favicon.svg', noHeader = false } = Astro.props;
+const { title, description, image = '/brand/favicon.svg', imageAlt, ogTitle, noHeader = false } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 const ogImage = Astro.site && image.startsWith('/') ? new URL(image, Astro.site).toString() : image;
+const socialTitle = ogTitle ?? title;
+const socialImageAlt = imageAlt ?? `${SITE_NAME} — ${title}`;
 ---
 <!doctype html>
 <html lang="ur-PK" dir="rtl">
@@ -24,11 +29,21 @@ const ogImage = Astro.site && image.startsWith('/') ? new URL(image, Astro.site)
     {canonical && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ur_PK" />
-    <meta property="og:title" content={title} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={socialImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
+    <meta name="geo.region" content="PK-IS" />
+    <meta name="geo.placename" content={`${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`} />
+    <meta name="geo.position" content={`${ATTRACTION.latitude};${ATTRACTION.longitude}`} />
+    <meta name="ICBM" content={`${ATTRACTION.latitude}, ${ATTRACTION.longitude}`} />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/brand/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="icon" href="/brand/favicon-16.png" sizes="16x16" type="image/png" />
@@ -80,5 +95,12 @@ const ogImage = Astro.site && image.startsWith('/') ? new URL(image, Astro.site)
     )}
     <main id="main-content"><slot /></main>
     <Footer />
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

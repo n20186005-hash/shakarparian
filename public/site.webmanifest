@@ -1,12 +1,23 @@
 {
-  "name": "شکرپڑیاں اسلام آباد رہنما",
+  "id": "/",
+  "name": "شکرپڑیاں نیشنل پارک اسلام آباد — سیاحتی رہنما",
   "short_name": "شکرپڑیاں",
+  "description": "شکرپڑیاں نیشنل پارک (Shakarparian National Park)، اسلام آباد، پاکستان کا غیر تجارتی اردو سیاحتی رہنما: مقام، نقشہ، اوقات، آمدورفت اور قریبی مقامات۔",
   "lang": "ur-PK",
   "dir": "rtl",
   "display": "standalone",
+  "orientation": "any",
   "start_url": "/",
+  "scope": "/",
+  "background_color": "#fffdf8",
+  "theme_color": "#123d33",
+  "categories": ["travel", "education"],
   "icons": [
-    {"src":"/brand/favicon-32.png","sizes":"32x32","type":"image/png"},
-    {"src":"/brand/apple-touch-icon.png","sizes":"180x180","type":"image/png"}
+    {"src": "/brand/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"},
+    {"src": "/brand/favicon-32.png", "sizes": "32x32", "type": "image/png"},
+    {"src": "/brand/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+    {"src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/brand/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
   ]
 }

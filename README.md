@@ -35,6 +35,12 @@ pnpm deploy
 ## تصاویر
 وزیٹر تصاویر Wikimedia Commons کی CC BY-SA 4.0 تصاویر ہیں۔ تفصیل `public/images/README.md` میں ہے۔ Logo اور favicon مقامی assets ہیں۔
 
+## SEO انٹٹی بائنڈنگ اور PWA
+- مقام (entity) کے تمام حقائق `src/data/site.ts` میں مرکوز ہیں: نام/متبادل نام، پتہ، متناسقات، پلس کوڈ، درجہ بندی، Google Maps share/embed لنک اور سرکاری حوالے۔
+- JSON-LD (`TouristAttraction` + `FAQPage` + `BreadcrumbList`) `src/lib/schema.ts` میں تیار ہوتا ہے؛ `@id` مستقل `https://shakarparian.com/#attraction` ہے۔
+- PWA: `public/site.webmanifest` + `public/sw.js` (صفحات network-first، جامد اثاثے cache-first)؛ registration `BaseLayout.astro` میں۔ آئیکنز `public/brand/icon-192|512(-maskable).png`۔
+- `public/_headers` HSTS اور بنیادی سیکیورٹی ہیڈرز فراہم کرتا ہے؛ `public/robots.txt` sitemap-index کی طرف اشارہ کرتا ہے۔
+
 ## اداریاتی اصول
 - تجارتی اداروں کی سفارش نہیں کی جاتی۔
 - بدلنے والی معلومات (اوقات، فیس، ٹرانسپورٹ) کو روانگی سے پہلے متعلقہ سرکاری/آپریٹنگ ذریعے سے verify کرنے کی ہدایت ہے۔

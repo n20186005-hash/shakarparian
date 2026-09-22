@@ -1,5 +1,25 @@
+# 依赖与构建产物
 node_modules/
 dist/
 .astro/
 .wrangler/
+.wrangler-state.json
+
+# 环境变量与本地密钥
+.env
+.env.*
+.dev.vars
+
+# 日志 / 临时文件
+*.log
+install-log.txt
+build-log.txt
+
+# 系统文件
 .DS_Store
+Thumbs.db
+
+# 编辑器 / IDE
+.idea/
+.vscode/
+*.local

@@ -1,0 +1,111 @@
+---
+import { getWeather, WEATHER_LOCATION } from '../lib/weather';
+import { ATTRACTION } from '../data/site';
+
+const weather = await getWeather();
+const updatedLabel = new Date(weather.updatedAt).toLocaleString('ur-PK', {
+  timeZone: WEATHER_LOCATION.timezone,
+  hour: '2-digit',
+  minute: '2-digit',
+});
+---
+
+<section class="section weather" id="weather" aria-labelledby="weather-title">
+  <div class="container">
+    <div class="eyebrow">مقام کا موسم</div>
+    <h2 class="section-title" id="weather-title">{ATTRACTION.shortName} کا موجودہ موسم اور آنے والے دن</h2>
+    <p class="section-lead">دورے سے پہلے موسم کی صورتحال دیکھیں تاکہ کپڑوں اور ساتھ لے جانے والے سامان کا فیصلہ آسان ہو جائے۔ نیچے دی گئی پیشن گوئی مقامی نقشے کی بنیاد پر ہے اور وقتاً فوقتاً خود بخود تازہ ہو جاتی ہے۔</p>
+
+    <div class="wx-grid">
+      <div class="wx-current">
+        <div class="wx-temp"><span id="wx-temp">{weather.current.temp}</span><span class="wx-unit">°C</span></div>
+        <div class="wx-now"><span id="wx-text">{weather.current.text}</span></div>
+        <ul class="wx-meta">
+          <li>درجہ حرارت (محسوس): <strong id="wx-feels">{weather.current.apparent}°C</strong></li>
+          <li>نمی: <strong id="wx-hum">{weather.current.humidity}%</strong></li>
+          <li>ہوا: <strong id="wx-wind">{weather.current.wind} km/h</strong></li>
+        </ul>
+        <div class="wx-badge" id="wx-umbrella" data-umbrella={weather.current.umbrella}>
+          {weather.current.umbrella ? 'چھتری یا بارش کا لباس ساتھ رکھیں' : 'بارش کا امکان کم ہے'}
+        </div>
+        <p class="wx-outfit" id="wx-outfit">{weather.current.outfit}</p>
+        {weather.current.highUv && <p class="wx-outfit">دھوپ زیادہ ہو سکتی ہے: ٹوپی، شیشے اور سن اسکرین مفید رہتے ہیں۔</p>}
+      </div>
+
+      <div class="wx-forecast" id="wx-days" aria-label="آنے والے سات دن کی پیشن گوئی">
+        {weather.days.map((d) => (
+          <div class="wx-day">
+            <div class="wx-dow">{d.weekday}</div>
+            <div class="wx-dtext">{d.text}</div>
+            <div class="wx-range"><strong>{d.tmax}°</strong> / {d.tmin}°</div>
+            <div class="wx-prob" data-umbrella={d.umbrella}>بارش {d.precipProb}%</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <p class="wx-updated">
+      آخری اپ ڈیٹ: <time id="wx-updated" datetime={weather.updatedAt}>{updatedLabel}</time>
+      <button type="button" id="wx-refresh" class="wx-refresh">تازہ کریں</button>
+    </p>
+  </div>
+</section>
+
+<script is:inline define:vars={{ lat: WEATHER_LOCATION.latitude, lon: WEATHER_LOCATION.longitude }}>
+  (function () {
+    const WMO = {
+      0:'صاف آسمان',1:'زیادہ تر صاف',2:'جزوی ابر آلود',3:'ابر آلود',45:'دھند',48:'جمی ہوئی دھند',
+      51:'ہلکی بوندا باندی',53:'بوندا باندی',55:'تیز بوندا باندی',56:'جمی ہوئی بوندا باندی',57:'جمی ہوئی بوندا باندی',
+      61:'ہلکی بارش',63:'درمیانی بارش',65:'تیز بارش',66:'جمی ہوئی بارش',67:'جمی ہوئی بارش',
+      71:'ہلکی برفباری',73:'درمیانی برفباری',75:'تیز برفباری',77:'برف کے دانے',
+      80:'ہلکی بوندیں',81:'درمیانی بوندیں',82:'تیز بوندیں',85:'ہلکی برفباری',86:'تیز برفباری',
+      95:'گرج چمک طوفان',96:'گرج چمک اور اولے',99:'گرج چمک اور بڑے اولے'
+    };
+    const DOW = ['اتوار','پیر','منگل','بدھ','جمعرات','جمعہ','ہفتہ'];
+    const UMB = new Set([45,48,51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99]);
+    const $ = (id) => document.getElementById(id);
+    async function refresh() {
+      const btn = $('wx-refresh');
+      if (btn) { btn.disabled = true; btn.textContent = '…'; }
+      try {
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon +
+          '&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m' +
+          '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,uv_index_max' +
+          '&timezone=Asia%2FKarachi&forecast_days=7';
+        const r = await fetch(url, { headers: { accept: 'application/json' } });
+        if (!r.ok) return;
+        const j = await r.json();
+        const c = j.current;
+        const code = c.weather_code;
+        if ($('wx-temp')) $('wx-temp').textContent = Math.round(c.temperature_2m);
+        if ($('wx-text')) $('wx-text').textContent = WMO[code] || 'موسم کی تبدیلی';
+        if ($('wx-feels')) $('wx-feels').textContent = Math.round(c.apparent_temperature) + '°C';
+        if ($('wx-hum')) $('wx-hum').textContent = Math.round(c.relative_humidity_2m) + '%';
+        if ($('wx-wind')) $('wx-wind').textContent = Math.round(c.wind_speed_10m) + ' km/h';
+        const umb = $('wx-umbrella');
+        if (umb) { umb.dataset.umbrella = UMB.has(code); umb.textContent = UMB.has(code) ? 'چھتری یا بارش کا لباس ساتھ رکھیں' : 'بارش کا امکان کم ہے'; }
+        const days = j.daily.time.map((date, i) => {
+          const dc = j.daily.weather_code[i];
+          const prob = j.daily.precipitation_probability_max[i] ?? 0;
+          const sum = j.daily.precipitation_sum[i] ?? 0;
+          const isUmb = UMB.has(dc) || prob >= 50 || sum >= 0.3;
+          const d = new Date(date + 'T00:00:00');
+          return '<div class="wx-day"><div class="wx-dow">' + (DOW[d.getDay()] || '') + '</div>' +
+            '<div class="wx-dtext">' + (WMO[dc] || 'موسم کی تبدیلی') + '</div>' +
+            '<div class="wx-range"><strong>' + Math.round(j.daily.temperature_2m_max[i]) + '°</strong> / ' + Math.round(j.daily.temperature_2m_min[i]) + '°</div>' +
+            '<div class="wx-prob" data-umbrella="' + isUmb + '">بارش ' + prob + '%</div></div>';
+        }).join('');
+        const box = $('wx-days');
+        if (box) box.innerHTML = days;
+        const now = new Date();
+        const t = now.toLocaleString('ur-PK', { hour: '2-digit', minute: '2-digit' });
+        const up = $('wx-updated');
+        if (up) { up.textContent = t; up.setAttribute('datetime', now.toISOString()); }
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'تازہ کریں'; }
+      }
+    }
+    const b = $('wx-refresh');
+    if (b) b.addEventListener('click', refresh);
+  })();
+</script>

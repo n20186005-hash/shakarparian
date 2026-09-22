@@ -1,0 +1,25 @@
+---
+import { RESPONSIBILITY_GROUPS } from '../data/visitor';
+import { ATTRACTION } from '../data/site';
+---
+
+<section class="section" id="responsibility" aria-labelledby="responsibility-title">
+  <div class="container">
+    <div class="eyebrow">سائنسی آگاہی اور وزیٹر ذمہ داری</div>
+    <h2 class="section-title" id="responsibility-title">{ATTRACTION.fullName} کے لیے محفوظ اور ذمہ دار وزیٹ کا کوڈ</h2>
+    <p class="section-lead">
+      یہ ایک سرکاری یا تحفظاتی ادارہ نہیں، بلکہ ایک غیر منافع بخش معلوماتی رہنما ہے۔ مقامی ماحول، ثقافتی یادگاروں اور دوسرے زائرین کے احترام کے لیے ذیل کے اصول مفید ہیں۔
+    </p>
+    <div class="resp-grid">
+      {RESPONSIBILITY_GROUPS.map((g) => (
+        <article class="resp-card">
+          <div class="resp-icon" aria-hidden="true">{g.icon}</div>
+          <div>
+            <h3>{g.title}</h3>
+            <p>{g.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

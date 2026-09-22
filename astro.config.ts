@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // پورے منصوبے میں عوامی ڈومین صرف یہیں مقرر کریں۔
 // فرضی یا مقامی ترقیاتی ڈومین مت لکھیں؛ حقیقی ڈومین ملنے تک خالی رہنے دیں۔
-const SITE_URL = '';
+const SITE_URL = 'https://shakarparian.com';
 
 export default defineConfig({
   site: SITE_URL || undefined,

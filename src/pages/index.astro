@@ -1,49 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import SourcesSection from '../components/SourcesSection.astro';
+import { ATTRACTION, NEARBY_LANDMARKS, SITE_URL } from '../data/site';
+import { buildAttractionSchema, buildBreadcrumbSchema, buildFaqSchema } from '../lib/schema';
+import WeatherSection from '../components/WeatherSection.astro';
+import SeasonsSection from '../components/SeasonsSection.astro';
+import FacilitiesSection from '../components/FacilitiesSection.astro';
+import AudienceRoutes from '../components/AudienceRoutes.astro';
+import ItinerarySection from '../components/ItinerarySection.astro';
+import ResponsibilitySection from '../components/ResponsibilitySection.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
 
 const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
 const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
 const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
 const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, '');
-const attractionUrl = siteUrl ? `${siteUrl}/` : undefined;
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const attractionUrl = `${siteUrl}/`;
 
-const attractionSchema = {
-  '@context': 'https://schema.org',
-  '@type': ['TouristAttraction', 'LocalBusiness'],
-  '@id': attractionUrl ? `${attractionUrl}#attraction` : undefined,
-  name: 'شکرپڑیاں نیشنل پارک',
-  alternateName: 'Shakarparian National Park',
-  description: 'اسلام آباد کی شکرپڑیاں پہاڑیوں پر واقع سبز تفریحی علاقہ، جہاں سے شہر کے وسیع مناظر، ریاستی شجرکاری کی روایت اور پاکستان مونومنٹ کے ثقافتی مقامات تک رسائی ملتی ہے۔',
-  url: attractionUrl,
-  image: [heroPhoto, parkPhoto],
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'اسلام آباد ایکسپریس وے',
-    addressLocality: 'اسلام آباد',
-    postalCode: '44000',
-    addressCountry: 'PK',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 33.6899848,
-    longitude: 73.091096,
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.5',
-    ratingCount: 44843,
-    bestRating: '5',
-  },
-  openingHoursSpecification: [
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Thursday','Saturday','Sunday'], opens: '09:30', closes: '20:00' },
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday','Friday'], opens: '09:30', closes: '20:30' },
-  ],
-  isAccessibleForFree: true,
-};
+const attractionSchema = buildAttractionSchema({ url: attractionUrl, images: [heroPhoto, parkPhoto] });
+const breadcrumbSchema = buildBreadcrumbSchema(attractionUrl);
 
-const faqs = [
+const faqs: [string, string][] = [
+  ['شکرپڑیاں نیشنل پارک کہاں واقع ہے؟', `${ATTRACTION.fullName} اسلام آباد ایکسپریس وے پر، ${ATTRACTION.city}، ${ATTRACTION.region}، ${ATTRACTION.country} میں واقع ہے۔ پلس کوڈ ${ATTRACTION.plusCode} اور متناسقات ${ATTRACTION.latitude}، ${ATTRACTION.longitude} ہیں؛ یہ دارالحکومت کے مرکزی حصے کے قریب شکرپڑیاں کی پہاڑیوں پر پھیلا ہوا سبز تفریحی علاقہ ہے۔`],
   ['کیا شکرپڑیاں نیشنل پارک میں داخلہ مفت ہے؟', 'پارک کے عمومی کھلے حصوں میں داخلہ عموماً مفت سمجھا جاتا ہے، تاہم پاکستان مونومنٹ میوزیم یا دوسرے عجائب گھروں کے الگ ٹکٹ، سکیورٹی قواعد اور اوقات ہو سکتے ہیں۔ روانگی سے پہلے متعلقہ سرکاری مقام کے موجودہ قواعد ضرور دیکھیں۔'],
   ['شکرپڑیاں دیکھنے کے لیے کتنا وقت رکھنا چاہیے؟', 'صرف سبزہ، نظارے اور آرام دہ چہل قدمی کے لیے تقریباً ڈیڑھ سے تین گھنٹے مناسب ہیں۔ پاکستان مونومنٹ اور قریبی عجائب گھروں کو بھی شامل کریں تو نصف دن زیادہ آرام دہ رہتا ہے۔'],
   ['بہترین وقت کون سا ہے؟', 'گرمی سے بچنے اور نرم روشنی کے لیے صبح کا ابتدائی حصہ یا شام سے پہلے کا وقت بہتر رہتا ہے۔ اختتامِ ہفتہ اور قومی تعطیلات پر ہجوم بڑھ سکتا ہے۔ بارش، دھند یا شدید گرمی میں کھلے مقامات کا تجربہ بدل سکتا ہے۔'],
@@ -54,32 +35,28 @@ const faqs = [
   ['کیا رات کے وقت جانا مناسب ہے؟', 'پارک اور متعلقہ کمپلیکس کے داخلہ اوقات اور سکیورٹی حدود پر عمل کریں۔ اندھیرے کے بعد کم روشن یا سنسان راستوں سے گریز، نشان زدہ عوامی علاقوں تک محدود رہنا اور واپسی کی ٹرانسپورٹ پہلے طے کرنا زیادہ مناسب ہے۔'],
 ];
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(([name, text]) => ({
-    '@type': 'Question',
-    name,
-    acceptedAnswer: { '@type': 'Answer', text },
-  })),
-};
+const faqSchema = buildFaqSchema(faqs);
 ---
 <BaseLayout
-  title="شکرپڑیاں نیشنل پارک اسلام آباد | آزاد سیاحتی و تاریخی رہنما"
-  description="شکرپڑیاں نیشنل پارک کے نظارے، تاریخ، پاکستان مونومنٹ، اوقات، فیس، پارکنگ، پبلک ٹرانسپورٹ، ہوائی اڈے سے آمدورفت، سہولیات اور قریبی ثقافتی مقامات پر غیر تجارتی اردو رہنما۔"
+  title={`${ATTRACTION.fullName} (${ATTRACTION.city}) | ${ATTRACTION.fullNameLatin} Islamabad — Visitor Guide & Location`}
+  ogTitle={`${ATTRACTION.fullNameLatin} — ${ATTRACTION.cityLatin} Travel Guide | ${ATTRACTION.fullName}`}
+  description={`${ATTRACTION.fullName} (${ATTRACTION.fullNameLatin}) ${ATTRACTION.city}، ${ATTRACTION.region}، ${ATTRACTION.country}: مقام اور نقشہ، اوقات، داخلہ، پاکستان مونومنٹ، لوک ورثہ، آمدورفت، پارکنگ، سہولیات اور قریبی ثقافتی مقامات پر غیر تجارتی اردو سیاحتی رہنما۔`}
   image={heroPhoto}
+  imageAlt={`${ATTRACTION.fullName} — ${ATTRACTION.city}، ${ATTRACTION.country} کا مرکزی منظر`}
 >
   <script type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-media">
-      <img src={heroPhoto} alt="شکرپڑیاں کی مغربی پہاڑی پر پاکستان مونومنٹ" width="1920" height="1080" fetchpriority="high" />
+      <img src={heroPhoto} alt={`${ATTRACTION.fullName} (${ATTRACTION.fullNameLatin}) — ${ATTRACTION.city}، ${ATTRACTION.country} کی مغربی پہاڑی پر پاکستان مونومنٹ کا مرکزی منظر`} width="1920" height="1080" fetchpriority="high" />
     </div>
     <div class="container hero-inner">
       <div>
         <div class="hero-kicker">اسلام آباد کی پہاڑی، یادگار اور شہری سبز منظرنامہ</div>
-        <h1 id="hero-title">شکرپڑیاں</h1>
+        <h1 id="hero-title">{ATTRACTION.fullName} <span class="hero-city">({ATTRACTION.city})</span></h1>
+        <p class="hero-latin" dir="ltr">{ATTRACTION.fullNameLatin} — {ATTRACTION.cityLatin}, {ATTRACTION.regionLatin}, {ATTRACTION.countryLatin}</p>
         <p>
           اسلام آباد کے قلب میں بلند سبز پہاڑیاں، جہاں شہر کا پینوراما، ریاستی مہمانوں کی شجرکاری کی روایت، باغات اور پاکستان مونومنٹ ایک ہی ثقافتی منظرنامے میں ملتے ہیں۔ یہ رہنما دورے سے پہلے وہ عملی معلومات اکٹھی کرتا ہے جو موقع پر واقعی کام آتی ہیں۔
         </p>
@@ -89,12 +66,52 @@ const faqSchema = {
         </div>
       </div>
       <aside class="hero-card" aria-label="فوری معلومات">
-        <div class="hero-stat"><span>گوگل مقام کی درجہ بندی</span><strong>4.5 / 5</strong></div>
+        <div class="hero-stat"><span>گوگل مقام کی درجہ بندی</span><strong>{ATTRACTION.ratingValue} / 5 ({ATTRACTION.ratingCountLabel} آراء)</strong></div>
         <div class="hero-stat"><span>نمایاں بلندی</span><strong>تقریباً 609 میٹر</strong></div>
         <div class="hero-stat"><span>عام وزٹ ونڈو</span><strong>صبح 9:30 کے بعد</strong></div>
         <div class="hero-stat"><span>موزوں دورانیہ</span><strong>1.5–3 گھنٹے</strong></div>
-        <div class="hero-stat"><span>مقام</span><strong>اسلام آباد، 44000</strong></div>
+        <div class="hero-stat"><span>مقام</span><strong>{ATTRACTION.city}، {ATTRACTION.postalCode}</strong></div>
+        <div class="hero-stat"><span>پلس کوڈ</span><strong dir="ltr" style="font-size:.92rem">{ATTRACTION.plusCode}</strong></div>
         <div class="photo-credit">تصویر: Fawad4real — <a href="https://commons.wikimedia.org/wiki/File:Pakistan_Islamabad_monument_03.jpg" rel="license noopener noreferrer">CC BY-SA 4.0</a></div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs />
+  </div>
+
+  <section class="section-sm" id="about" aria-labelledby="about-title">
+    <div class="container about-grid">
+      <div>
+        <div class="eyebrow">مقام کی پہچان</div>
+        <h2 class="section-title" id="about-title">{ATTRACTION.fullName} کے بارے میں</h2>
+        <p>
+          <strong>{ATTRACTION.fullName}</strong> — جسے روزمرہ استعمال میں <strong>{ATTRACTION.shortName}</strong> کہا جاتا ہے اور انگریزی فہرستوں میں
+          <strong dir="ltr">{ATTRACTION.fullNameLatin}</strong> درج ہے — {ATTRACTION.city}، {ATTRACTION.region}، {ATTRACTION.country} کے قلب میں واقع سبز تفریحی اور
+          ثقافتی پہاڑی علاقہ ہے۔ زائرین عموماً اسی مقام کو مختصر طور پر “{ATTRACTION.shortName}” کے نام سے تلاش کرتے ہیں؛ دونوں نام ایک ہی پارک کی طرف اشارہ کرتے ہیں۔
+        </p>
+        <p class="entity-trail">
+          جغرافیائی تعلق:
+          <span>{ATTRACTION.fullName}</span> → <span>{ATTRACTION.city}</span> → <span>{ATTRACTION.region}</span> → <span>{ATTRACTION.country}</span>
+        </p>
+        <p>
+          {ATTRACTION.fullName} کے دورے کے دوران زائرین گرد و نواح کے تاریخی اور ثقافتی نشانات بھی آسانی سے دیکھ سکتے ہیں، جن میں
+          <strong>{NEARBY_LANDMARKS[0].name}</strong> ({NEARBY_LANDMARKS[0].nameLatin}) اور <strong>{NEARBY_LANDMARKS[1].name}</strong> ({NEARBY_LANDMARKS[1].nameLatin})
+          خاص طور پر نمایاں ہیں۔ یہی وجہ ہے کہ ایک ہی نصف دن میں فطرت، قومی تاریخ اور دستکاری سب ایک ساتھ دیکھی جا سکتی ہے۔
+        </p>
+      </div>
+      <aside class="entity-card" aria-label="مقام کی تکنیکی تفصیلات">
+        <h3>مقام کا ریکارڈ</h3>
+        <dl>
+          <div><dt>مکمل نام</dt><dd>{ATTRACTION.fullName}<small dir="ltr">{ATTRACTION.fullNameLatin}</small></dd></div>
+          <div><dt>متبادل نام</dt><dd>{ATTRACTION.shortName}<small dir="ltr">{ATTRACTION.shortNameLatin} · {ATTRACTION.cityLatin} {ATTRACTION.fullNameLatin}</small></dd></div>
+          <div><dt>پتہ</dt><dd>{ATTRACTION.streetAddress}<small dir="ltr">{ATTRACTION.streetAddressLatin}, {ATTRACTION.cityLatin} {ATTRACTION.postalCode}</small></dd></div>
+          <div><dt>متناسقات</dt><dd dir="ltr">{ATTRACTION.latitude}, {ATTRACTION.longitude}<small dir="ltr">latitude, longitude</small></dd></div>
+          <div><dt>پلس کوڈ</dt><dd dir="ltr">{ATTRACTION.plusCode}</dd></div>
+          <div><dt>گوگل درجہ بندی</dt><dd>{ATTRACTION.ratingValue} / 5<small>{ATTRACTION.ratingCountLabel} آراء</small></dd></div>
+        </dl>
+        <a class="entity-maplink" href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">گوگل میپس پر {ATTRACTION.fullName} کی فہرست دیکھیں</a>
       </aside>
     </div>
   </section>
@@ -108,6 +125,9 @@ const faqSchema = {
     </div>
   </div>
 
+  <WeatherSection />
+  <SeasonsSection />
+
   <section class="section" id="history">
     <div class="container story-grid">
       <div class="story-image">
@@ -116,7 +136,7 @@ const faqSchema = {
       </div>
       <div class="story-copy">
         <div class="eyebrow">جگہ کو سمجھیں</div>
-        <h2 class="section-title">صرف پارک نہیں، دارالحکومت کی ایک تہہ دار کہانی</h2>
+        <h2 class="section-title">{ATTRACTION.fullName} کی تاریخ اور اہمیت: صرف پارک نہیں، دارالحکومت کی ایک تہہ دار کہانی</h2>
         <p>
           شکرپڑیاں اسلام آباد کی منصوبہ بند شہری شناخت کے ابتدائی سبز مناظر میں شمار ہوتی ہے۔ کیپیٹل ڈویلپمنٹ اتھارٹی اسے تاریخی اہمیت والی پہاڑی تفریح گاہ کے طور پر بیان کرتی ہے اور یہاں تقریباً 609 میٹر کی بلندی سے شہر کے وسیع مناظر کا ذکر کرتی ہے۔
         </p>
@@ -129,6 +149,13 @@ const faqSchema = {
           <li><strong>قومی ثقافتی محور:</strong> پاکستان مونومنٹ، لوک ورثہ اور عجائب گھروں کے باعث یہ علاقہ فطرت کے ساتھ قومی تاریخ اور ثقافت کا مشترک وزیٹر زون بن گیا۔</li>
           <li><strong>آج کا کردار:</strong> سی ڈی اے اب بھی شکرپڑیاں کے سبز علاقوں، صفائی اور شہری تفریحی استعمال کی دیکھ بھال میں کردار ادا کرتا ہے۔</li>
         </ul>
+        <h3 class="history-sub">نام کی کہانی اور مقامی روایتیں</h3>
+        <p>
+          نام “شکرپڑیاں” ایک دلچسپ لسانی ملغوبہ ہے۔ مقامی تشریح کے مطابق یہ دو حصوں کا مجموعہ سمجھا جاتا ہے — “شکر” (میٹھاپن) اور “پڑیاں/پریان” (پریوں کا گروہ) — جس سے ایک روایتی تصور “میٹھی پہاڑیاں” یا “پریوں کا مسکن” ابھرتا ہے۔ ایک اور عوامی روایت اسے خوشگوار چراگاہ سے جوڑتی ہے جہاں مویشیوں کا دودھ میٹھا سمجھا جاتا تھا۔ یہ تشریحات تاریخی دستاویز سے زیادہ مقامی زبان اور روایت کا حصہ ہیں، مگر یہی وجہ ہے کہ نام میں ایک شاعرانہ رنگ موجود ہے۔
+        </p>
+        <p>
+          جغرافیائی طور پر شکرپڑیاں مارگلہ کی پہاڑیوں کی جنوبی ڈھلوانوں پر واقع ہے اور اس کے دامن میں راول جھیل اور اسلام آباد ایکسپریس وے کا وسیع نظام ہے۔ یہی محلِ وقوع اسے “شہر کے اوپر سے شہر دیکھنے” والا نایاب پوائنٹ بناتا ہے۔
+        </p>
       </div>
     </div>
   </section>
@@ -136,7 +163,7 @@ const faqSchema = {
   <section class="section-sm" aria-labelledby="why-title">
     <div class="container">
       <div class="eyebrow">موقع پر کیا دیکھیں</div>
-      <h2 class="section-title" id="why-title">چار وجوہ جو شکرپڑیاں کو الگ بناتی ہیں</h2>
+      <h2 class="section-title" id="why-title">چھ وجوہ جو {ATTRACTION.fullName} کو الگ بناتی ہیں</h2>
       <div class="feature-grid">
         <article class="feature"><div class="icon" aria-hidden="true">◉</div><h3>شہر کا بلند منظر</h3><p>درختوں اور کھلے مقامات کے بیچ سے اسلام آباد–راولپنڈی کے شہری پھیلاؤ اور مارگلہ کے پس منظر کو مختلف زاویوں سے دیکھنے کا موقع ملتا ہے۔</p></article>
         <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>پاکستان مونومنٹ</h3><p>پھول کی پنکھڑیوں جیسی ساخت والی قومی یادگار مغربی شکرپڑیاں کی شناخت بن چکی ہے اور قومی وحدت کی علامتی تشریح پیش کرتی ہے۔</p></article>
@@ -151,7 +178,7 @@ const faqSchema = {
   <section class="section deep-green" id="transport">
     <div class="container">
       <div class="eyebrow">تفصیلی آمدورفت</div>
-      <h2 class="section-title">ہوائی اڈے، بس، ٹیکسی اور اپنی گاڑی سے کیسے پہنچیں</h2>
+      <h2 class="section-title">{ATTRACTION.fullName} تک رسائی: ہوائی اڈے، بس، ٹیکسی اور اپنی گاڑی سے کیسے پہنچیں</h2>
       <p class="section-lead">شکرپڑیاں شہر کے مرکزی حصے کے قریب ہے، مگر آخری رسائی پہاڑی سڑکوں اور بڑے روڈ جنکشنز سے ہوتی ہے۔ درج ذیل طریقے تجارتی سفارش نہیں بلکہ سفری اقسام کی غیر جانب دار وضاحت ہیں۔</p>
       <div class="guide-grid">
         <article class="guide-card">
@@ -174,13 +201,59 @@ const faqSchema = {
         </article>
       </div>
       <div class="notice"><strong>روانگی سے پہلے:</strong> سرکاری ٹرانزٹ نقشہ، موسم، سکیورٹی/تقریب کی بندش اور عجائب گھر کے الگ اوقات دیکھیں۔ قومی دن، عید اور بڑے پروگراموں میں ٹریفک مینجمنٹ معمول سے مختلف ہو سکتی ہے۔</div>
+
+      <h3 class="compare-head">آمدورفت کا موازنہ</h3>
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr><th>طریقہ</th><th>سب سے موزوں</th><th>فائدہ</th><th>نقصان / احتیاط</th><th>لاگت کا رجحان</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="طریقہ"><strong>ہوائی اڈے سے ٹرانسفر</strong></td>
+              <td data-label="موزوں">پہلی بار آنے والے، سامان کے ساتھ</td>
+              <td data-label="فائدہ">سیدھا مقام تک، کم رہنمائی درکار</td>
+              <td data-label="نقصان">شہر کے پار فاصلہ اور ٹریفک</td>
+              <td data-label="لاگت">درمیانہ سے زیادہ</td>
+            </tr>
+            <tr>
+              <td data-label="طریقہ"><strong>ٹیکسی / رائیڈ ہیلنگ</strong></td>
+              <td data-label="موزوں">چھوٹے گروپ، لچکدار وقت</td>
+              <td data-label="فائدہ">دروازے سے دروازے تک، نشان زدہ زون بتائیں</td>
+              <td data-label="نقصان">اوقات میں رش اور سگنل مسائل</td>
+              <td data-label="لاگت">درمیانہ</td>
+            </tr>
+            <tr>
+              <td data-label="طریقہ"><strong>میٹروبس / فیڈر بس</strong></td>
+              <td data-label="موزوں">بجٹ سفر، ماحول دوست</td>
+              <td data-label="فائدہ">سستا، مرکزی کوریڈورز سے جڑتا ہے</td>
+              <td data-label="نقصان">آخری حصہ پیدل یا مختصر ٹیکسی سے طے کریں</td>
+              <td data-label="لاگت">کم</td>
+            </tr>
+            <tr>
+              <td data-label="طریقہ"><strong>نجی گاڑی</strong></td>
+              <td data-label="موزوں">خاندان، سامان، آزادی</td>
+              <td data-label="فائدہ">پارکنگ زون تک آسانی، واپسی لچکدار</td>
+              <td data-label="نقصان">اختتامِ ہفتہ پارکنگ محدود</td>
+              <td data-label="لاگت">ایندھن + پارکنگ</td>
+            </tr>
+            <tr>
+              <td data-label="طریقہ"><strong>سائیکل / پیدل</strong></td>
+              <td data-label="موزوں">قریبی رہائش سے</td>
+              <td data-label="فائدہ">سبز اور سستا</td>
+              <td data-label="نقصان">بڑے ایکسپریس وے سے دور رہیں</td>
+              <td data-label="لاگت">مفت</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
   <section class="section" id="visit">
     <div class="container">
       <div class="eyebrow">عملی وزیٹر معلومات</div>
-      <h2 class="section-title">اوقات، فیس، قیام اور بنیادی سہولیات</h2>
+      <h2 class="section-title">{ATTRACTION.fullName} کے دورے کے اوقات، فیس، قیام اور بنیادی سہولیات</h2>
       <p class="section-lead">کھلے شہری پارک، قومی یادگار اور عجائب گھر ایک ہی چیز نہیں ہیں؛ ہر مقام کے قواعد الگ ہو سکتے ہیں۔ اس لیے نیچے “پارک” اور “قریبی اداروں” کی معلومات الگ رکھی گئی ہیں۔</p>
       <div class="visit-grid">
         <article class="visit-card">
@@ -213,26 +286,20 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section-sm" aria-labelledby="facilities-title">
-    <div class="container">
-      <div class="eyebrow">آپ کے روزمرہ سوالات</div>
-      <h2 class="section-title" id="facilities-title">بیت الخلا، پانی، کھانا، رہائش، خریداری اور ایندھن</h2>
-      <div class="feature-grid">
-        <article class="feature"><div class="icon">بیت</div><h3>بیت الخلا</h3><p>سی ڈی اے عوامی مقامات کی صفائی اور عوامی بیت الخلا کی دیکھ بھال کے فرائض انجام دیتا ہے۔ مخصوص بلاک کی حالت یا کھلنے کی دستیابی بدل سکتی ہے؛ مرکزی وزیٹر زون میں نشانیاں دیکھیں اور بنیادی ذاتی سامان ساتھ رکھیں۔</p></article>
-        <article class="feature"><div class="icon">◌</div><h3>پانی اور ریفریشمنٹ</h3><p>بڑے وزیٹر حصوں کے قریب بنیادی ریفریشمنٹ مل سکتی ہے، مگر اسے یقینی نہ سمجھیں۔ خاص طور پر گرمی میں اپنی بوتل ساتھ لانا بہتر ہے۔</p></article>
-        <article class="feature"><div class="icon">♨</div><h3>کھانا</h3><p>ہم کسی مخصوص کاروبار کی سفارش نہیں کرتے۔ قریبی شہری علاقوں میں پاکستانی کھانے، خاندانی ریسٹورنٹ، کیفے، چائے اور فوری اسنیکس کی مختلف اقسام ملتی ہیں۔</p></article>
-        <article class="feature"><div class="icon">⌂</div><h3>رہائش</h3><p>پارک کے اندر سیاحتی ہوٹل کا تصور نہیں۔ مرکزی اسلام آباد میں ہوٹل، گیسٹ ہاؤس، سروسڈ اپارٹمنٹ اور بجٹ رہائش کی اقسام موجود ہیں؛ اپنی حفاظت، بجٹ اور نقل و حمل کے مطابق زمرہ منتخب کریں۔</p></article>
-        <article class="feature"><div class="icon">▣</div><h3>گروسری / ضروری خریداری</h3><p>قریبی شہری سیکٹرز میں سپرمارکیٹ، گروسری اور کنوینینس اسٹور کی اقسام دستیاب ہیں۔ پارک کے اندر مکمل خریداری کی توقع نہ رکھیں؛ پانی، دوا اور دھوپ سے بچاؤ کی چیزیں پہلے لے آئیں۔</p></article>
-        <article class="feature"><div class="icon">⛽</div><h3>ایندھن اور چارجنگ</h3><p>اسلام آباد کی بڑی رسائی سڑکوں پر پٹرول/ڈیزل اسٹیشن کی اقسام موجود ہیں۔ کسی مخصوص آپریٹر کی سفارش نہیں کی جاتی۔ برقی گاڑی کے لیے شہر میں قابلِ اعتماد چارجر پہلے تلاش کریں؛ پارک میں چارجر فرض نہ کریں۔</p></article>
-      </div>
-    </div>
-  </section>
+  <FacilitiesSection />
+  <AudienceRoutes />
+  <ItinerarySection />
+  <ResponsibilitySection />
 
   <section class="section" id="nearby">
     <div class="container">
       <div class="eyebrow">قریبی عوامی مقامات</div>
-      <h2 class="section-title">ایک ہی علاقے میں تاریخ، ثقافت اور باغ</h2>
-      <p class="section-lead">یہ فہرست تجارتی کاروبار نہیں بلکہ عوامی/ثقافتی مقامات کی جغرافیائی رہنمائی ہے۔ ہر ادارے کے داخلہ اوقات اور فیس الگ ہو سکتے ہیں۔</p>
+      <h2 class="section-title">{ATTRACTION.shortName} کے گرد تاریخی نشانات اور قریبی مقامات</h2>
+      <p class="section-lead">
+        {ATTRACTION.fullName} کے دورے میں زائرین ارد گرد کے تاریخی نشانات اور دلچسپ مقامات باآسانی دیکھ سکتے ہیں، جن میں <strong>{NEARBY_LANDMARKS[0].name}</strong> اور
+        <strong>{NEARBY_LANDMARKS[1].name}</strong> سب سے نمایاں ہیں۔ یہ فہرست تجارتی کاروبار نہیں بلکہ عوامی/ثقافتی مقامات کی جغرافیائی رہنمائی ہے۔ ہر ادارے کے
+        داخلہ اوقات اور فیس الگ ہو سکتے ہیں۔
+      </p>
       <div class="attractions">
         <article class="attraction"><b>پاکستان مونومنٹ</b><small>شکرپڑیاں کی مغربی پہاڑی پر قومی وحدت کی علامتی یادگار؛ پارک کے دورے کے ساتھ قدرتی امتزاج۔</small></article>
         <article class="attraction"><b>پاکستان مونومنٹ میوزیم</b><small>قومی تاریخ اور تحریکِ پاکستان کے موضوعات پر نمائشی جگہ؛ اندرونی اوقات الگ چیک کریں۔</small></article>
@@ -242,6 +309,8 @@ const faqSchema = {
       </div>
     </div>
   </section>
+
+  <RelatedGuides showHome={false} heading="مفصل ذیلی رہنما" />
 
   <section class="section-sm" aria-labelledby="food-title">
     <div class="container story-grid">
@@ -257,7 +326,7 @@ const faqSchema = {
         </ul>
       </div>
       <div class="story-image" style="min-height:430px">
-        <img src={monumentPhoto} alt="پاکستان مونومنٹ اور شکرپڑیاں کا کھلا ثقافتی منظر" width="1600" height="1067" loading="lazy" />
+        <img src={monumentPhoto} alt={`پاکستان مونومنٹ — ${ATTRACTION.fullName}، ${ATTRACTION.city}، ${ATTRACTION.country} کا کھلا ثقافتی منظر`} width="1600" height="1067" loading="lazy" />
         <div class="story-badge">ایک بہتر نصف دن: سبزہ → قومی یادگار → ایک عجائب گھر → شہر میں کھانا۔</div>
       </div>
     </div>
@@ -266,29 +335,38 @@ const faqSchema = {
   <section class="section" id="map">
     <div class="container">
       <div class="eyebrow">مقام اور راستہ</div>
-      <h2 class="section-title">شکرپڑیاں نیشنل پارک کا نقشہ</h2>
+      <h2 class="section-title">{ATTRACTION.fullName} کا نقشہ اور مقام</h2>
       <p class="section-lead">نقشہ اردو/پاکستان علاقائی ترتیبات کے ساتھ سرایت کیا گیا ہے۔ نقشہ لوڈ ہونے پر گوگل کی اپنی رازداری اور کوکی پالیسیاں لاگو ہو سکتی ہیں۔</p>
       <div class="map-shell" style="margin-top:2rem">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5913.273879471171!2d73.0910959773476!3d33.68998477329565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfc00721e44139%3A0xc76180e59480ec37!2z6IiN56eR5biV6YeM5piC5bGx!5e1!3m2!1sur!2sPK!4v1787621372278!5m2!1sur!2sPK"
-          width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="شکرپڑیاں نیشنل پارک — گوگل نقشہ"
+          src={ATTRACTION.mapsEmbedSrc}
+          width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title={`${ATTRACTION.fullName} — گوگل نقشہ`}
         ></iframe>
-        <div class="map-caption"><span>پتہ: اسلام آباد ایکسپریس وے، اسلام آباد 44000، پاکستان</span><span>نقشہ: گوگل میپس</span></div>
+        <div class="map-caption">
+          <span>پتہ: {ATTRACTION.streetAddress}، {ATTRACTION.city} {ATTRACTION.postalCode}، {ATTRACTION.country}</span>
+          <span dir="ltr">{ATTRACTION.latitude}, {ATTRACTION.longitude} · {ATTRACTION.plusCode}</span>
+        </div>
       </div>
+      <p class="authority-link">
+        سرکاری اپ ڈیٹس اور علاقائی سیاحتی معلومات کے لیے دیکھیں:
+        <a href="https://cda.gov.pk/destination" target="_blank" rel="noopener noreferrer">کیپیٹل ڈویلپمنٹ اتھارٹی — اسلام آباد کے مقامات</a>،
+        <a href="https://tourism.gov.pk/" target="_blank" rel="noopener noreferrer">پاکستان ٹورازم ڈویلپمنٹ کارپوریشن (سرکاری سیاحتی پورٹل)</a>
+        اور <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">گوگل میپس پر {ATTRACTION.fullName} کی فہرست</a>۔
+      </p>
     </div>
   </section>
 
   <section class="section-sm" aria-labelledby="photos-title">
     <div class="container">
       <div class="eyebrow">اصل فوٹوگرافی</div>
-      <h2 class="section-title" id="photos-title">شکرپڑیاں کا زمینی مزاج</h2>
+      <h2 class="section-title" id="photos-title">{ATTRACTION.fullName} کا زمینی مزاج</h2>
       <div class="photo-strip">
         <figure class="photo-panel">
-          <img src={parkingPhoto} alt="شکرپڑیاں کے وزیٹر علاقے میں پارکنگ اور سبز پہاڑی منظر" width="1600" height="900" loading="lazy" />
+          <img src={parkingPhoto} alt={`${ATTRACTION.fullName} کے وزیٹر علاقے میں پارکنگ اور سبز پہاڑی منظر، ${ATTRACTION.city}`} width="1600" height="900" loading="lazy" />
           <figcaption class="caption">تصویر: Irfa9mahmood — CC BY-SA 4.0، وکیمیڈیا کامنز</figcaption>
         </figure>
         <figure class="photo-panel">
-          <img src={parkPhoto} alt="شکرپڑیاں کا باغیچہ اور یادگاری شجرکاری کا حصہ" width="1200" height="675" loading="lazy" />
+          <img src={parkPhoto} alt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری کا حصہ، ${ATTRACTION.city}، ${ATTRACTION.country}`} width="1200" height="675" loading="lazy" />
           <figcaption class="caption">تصویر: Irfa9mahmood — CC BY-SA 4.0، وکیمیڈیا کامنز</figcaption>
         </figure>
       </div>
@@ -310,18 +388,5 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section-sm">
-    <div class="container source-box">
-      <h3>اداریاتی طریقہ اور بنیادی ماخذ</h3>
-      <p>یہ ایک غیر سرکاری، غیر منافع بخش معلوماتی صفحہ ہے۔ تاریخی، شہری اور ٹرانسپورٹ پس منظر کو سرکاری/عوامی اداروں کے مواد سے تقابل کیا گیا ہے۔ بدلنے والی معلومات کے لیے ہم تاریخِ “آخری تصدیق” جیسا مصنوعی دعویٰ نہیں کرتے؛ روانگی کے دن اصل ادارے سے موجودہ حالت دیکھیں۔</p>
-      <ul>
-        <li><a href="https://cda.gov.pk/destination" rel="noopener noreferrer">کیپیٹل ڈویلپمنٹ اتھارٹی — اسلام آباد مقامات / شکرپڑیاں</a></li>
-        <li><a href="https://cda.gov.pk/public/metro_routes" rel="noopener noreferrer">کیپیٹل ڈویلپمنٹ اتھارٹی — پبلک ٹرانزٹ روٹ نقشہ</a></li>
-        <li><a href="https://doam.gov.pk/public/sites/10162" rel="noopener noreferrer">محکمہ آثارِ قدیمہ و عجائب گھر — لوک ورثہ میوزیم معلومات</a></li>
-        <li><a href="https://tourism.gov.pk/" rel="noopener noreferrer">پاکستان ٹورازم ڈویلپمنٹ کارپوریشن</a></li>
-        <li>مقام، درجہ بندی اور درج عمومی اوقات: فراہم کردہ گوگل میپس مقام اور عوامی نقشہ فہرست۔</li>
-      </ul>
-      <p>تصاویر: Wikimedia Commons پر Fawad4real اور Irfa9mahmood کی CC BY-SA 4.0 فوٹوگرافی؛ مکمل فائل/لائسنس روابط اوپر فوٹو کریڈٹ اور منصوبے کی تصویری manifest میں موجود ہیں۔</p>
-    </div>
-  </section>
+  <SourcesSection />
 </BaseLayout>

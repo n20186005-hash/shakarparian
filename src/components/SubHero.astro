@@ -1,0 +1,22 @@
+---
+interface Props {
+  kicker: string;
+  title: string;
+  latin: string;
+  lead: string;
+  image: string;
+  imageAlt: string;
+}
+const { kicker, title, latin, lead, image, imageAlt } = Astro.props;
+---
+<section class="subhero" aria-labelledby="subhero-title">
+  <div class="subhero-media">
+    <img src={image} alt={imageAlt} width="1920" height="1080" fetchpriority="high" />
+  </div>
+  <div class="container subhero-inner">
+    <div class="eyebrow">{kicker}</div>
+    <h1 id="subhero-title">{title}</h1>
+    <p class="subhero-latin" dir="ltr">{latin}</p>
+    <p class="subhero-lead">{lead}</p>
+  </div>
+</section>

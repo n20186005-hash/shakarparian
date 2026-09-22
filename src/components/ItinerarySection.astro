@@ -1,0 +1,24 @@
+---
+import { ITINERARIES } from '../data/visitor';
+import { ATTRACTION } from '../data/site';
+---
+
+<section class="section-sm" id="itinerary" aria-labelledby="itinerary-title">
+  <div class="container">
+    <div class="eyebrow">عمومی سفری منصوبہ</div>
+    <h2 class="section-title" id="itinerary-title">{ATTRACTION.shortName} کے لیے عمومی جائزے — نصف دن یا پورا دن</h2>
+    <p class="section-lead">وقت اور دلچسپی کے مطابق ایک خاکہ منتخب کریں۔ دونوں میں چہل قدمی، یادگار اور ثقافتی ادارے شامل ہیں۔</p>
+    <div class="itinerary-grid">
+      {ITINERARIES.map((it) => (
+        <article class="itinerary-card">
+          <div class="itinerary-head"><span class="route-icon" aria-hidden="true">{it.icon}</span><h3>{it.title}</h3></div>
+          <p class="itinerary-meta">⏱️ {it.duration} · {it.pace}</p>
+          <ul class="itinerary-spots">
+            {it.spots.map((s) => <li>{s}</li>)}
+          </ul>
+          <p class="route-tip">📌 {it.notes}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

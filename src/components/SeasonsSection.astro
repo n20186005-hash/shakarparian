@@ -1,0 +1,40 @@
+---
+import { SEASON_ROWS } from '../data/visitor';
+import { ATTRACTION } from '../data/site';
+---
+
+<section class="section-sm" id="seasons" aria-labelledby="seasons-title">
+  <div class="container">
+    <div class="eyebrow">موسمی حکمتِ عملی</div>
+    <h2 class="section-title" id="seasons-title">{ATTRACTION.shortName} کے لیے سہ ماہی / موسمی سفری حکمتِ عملی</h2>
+    <p class="section-lead">
+      ذیل کی جدول عمومی موسمی رجحانات پر مبنی ہے (دیرینہ موسمی مشاہدات کا خلاصہ)۔ یہ قطعی پیشن گوئی نہیں؛ روزمرہ کی صورتحال کے لیے اوپر کا موسم ماڈیول دیکھیں۔
+    </p>
+    <div class="table-wrap">
+      <table class="seasons-table">
+        <thead>
+          <tr>
+            <th>موسم</th>
+            <th>ماہ</th>
+            <th>عمومی صورتحال</th>
+            <th>درجہ حرارت کا رجحان</th>
+            <th>سفری مشورہ</th>
+            <th>درجہ بندی</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SEASON_ROWS.map((r) => (
+            <tr>
+              <td data-label="موسم"><strong>{r.season}</strong></td>
+              <td data-label="ماہ">{r.months}</td>
+              <td data-label="صورتحال">{r.condition}</td>
+              <td data-label="درجہ حرارت">{r.tempTrend}</td>
+              <td data-label="مشورہ">{r.advice}</td>
+              <td data-label="درجہ بندی"><span class={`season-tag season-${r.rating}`}>{r.rating}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

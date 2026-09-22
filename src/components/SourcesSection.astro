@@ -1,0 +1,39 @@
+---
+import { ATTRACTION, OFFICIAL_SOURCES } from '../data/site';
+
+interface Props {
+  sources?: readonly { readonly label: string; readonly href: string }[];
+}
+const { sources = OFFICIAL_SOURCES } = Astro.props;
+---
+<section class="section-sm" id="sources" aria-labelledby="sources-title">
+  <div class="container source-box">
+    <div class="eyebrow">حوالہ جات اور مآخذ</div>
+    <h2 class="section-title" id="sources-title">اداریاتی طریقہ اور بنیادی ماخذ</h2>
+    <p>
+      یہ ایک غیر سرکاری، غیر منافع بخش معلوماتی صفحہ ہے۔ تاریخی، شہری اور ٹرانسپورٹ پس منظر کو سرکاری/عوامی اداروں کے
+      مواد سے تقابل کیا گیا ہے۔ بدلنے والی معلومات کے لیے ہم تاریخِ “آخری تصدیق” جیسا مصنوعی دعویٰ نہیں کرتے؛ روانگی کے
+      دن اصل ادارے سے موجودہ حالت دیکھیں۔
+    </p>
+    <ol class="source-list">
+      {
+        sources.map((source) => (
+          <li>
+            <a href={source.href} target="_blank" rel="noopener noreferrer">
+              {source.label}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="source-meta">
+      مقام، درجہ بندی ({ATTRACTION.ratingValue} / 5، {ATTRACTION.ratingCountLabel} آراء) اور درج عمومی اوقات: فراہم کردہ
+      <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">گوگل میپس مقام</a>
+      اور عوامی نقشہ فہرست۔ پلس کوڈ: <span dir="ltr">{ATTRACTION.plusCode}</span>
+    </p>
+    <p>
+      تصاویر: Wikimedia Commons پر Fawad4real اور Irfa9mahmood کی CC BY-SA 4.0 فوٹوگرافی؛ مکمل فائل/لائسنس روابط اوپر
+      فوٹو کریڈٹ اور منصوبے کی تصویری manifest میں موجود ہیں۔
+    </p>
+  </div>
+</section>

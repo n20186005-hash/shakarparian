@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withSiteName } from '../../data/site';
 ---
-<BaseLayout title="کوکی ترتیبات | شکرپڑیاں اسلام آباد رہنما" description="ضروری، تجزیاتی، ترجیحی اور مارکیٹنگ کوکی انتخاب منظم کریں۔">
+<BaseLayout title={withSiteName('کوکی ترتیبات')} description="ضروری، تجزیاتی، ترجیحی اور مارکیٹنگ کوکی انتخاب منظم کریں۔">
   <section class="legal-hero">
     <div class="container">
       <a class="backlink" href="/">→ مرکزی رہنما پر واپس جائیں</a>

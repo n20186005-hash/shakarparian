@@ -1,0 +1,24 @@
+---
+import { FACILITY_GROUPS } from '../data/visitor';
+import { ATTRACTION } from '../data/site';
+---
+
+<section class="section" id="facilities" aria-labelledby="facilities-title">
+  <div class="container">
+    <div class="eyebrow">وزیٹر سہولیات — قسم کے لحاظ سے جائزہ</div>
+    <h2 class="section-title" id="facilities-title">{ATTRACTION.shortName} کے ارد گرد سہولیات اور بنیادی خدمات</h2>
+    <p class="section-lead">
+      یہ رہنما کسی خاص کاروبار یا برانڈ کی سفارش نہیں کرتا۔ ذیل میں ہر قسم کی سہولت کا عام خاکہ دیا گیا ہے تاکہ دورے کی منصوبہ بندی آسان ہو۔
+      حتمی دستیابی، اوقات اور فیس روانگی کے دن متعلقہ مقام سے تصدیق کر لیں۔
+    </p>
+    <div class="facility-grid">
+      {FACILITY_GROUPS.map((f) => (
+        <article class="facility">
+          <div class="facility-icon" aria-hidden="true">{f.icon}</div>
+          <h3>{f.title}</h3>
+          <p>{f.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

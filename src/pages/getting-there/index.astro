@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubHero from '../../components/SubHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourcesSection from '../../components/SourcesSection.astro';
+import RelatedGuides from '../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteName } from '../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../lib/schema';
+
+const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/getting-there/`;
+const crumb = { name: 'پہنچنا اور پارکنگ', nameLatin: 'Getting There & Parking' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['اسلام آباد ایئرپورٹ سے شکرپڑیاں کیسے پہنچیں؟', 'لائسنس یافتہ ٹیکسی یا رائیڈ ہیلنگ سے سیدھا “شکرپڑیاں نیشنل پارک / پاکستان مونومنٹ زون” تلاش کریں۔ ٹریفک کے مطابق شہر کے پار ایک درمیانی فاصلے کا سفر بنتا ہے۔'],
+  ['کیا پبلک ٹرانسپورٹ دستیاب ہے؟', 'سی ڈی اے کے پبلک ٹرانزٹ نقشے میں شکرپڑیاں سے گزرنے والا فیڈر روٹ درج ہے (مثلاً ایس ٹی-02)۔ شیڈول اور فریکوئنسی بدل سکتے ہیں، اس لیے روانگی کے دن موجودہ نقشہ دیکھیں۔'],
+  ['کیا پارکنگ مل جاتی ہے؟', 'مرکزی وزیٹر علاقوں کے قریب مخصوص پارکنگ زون موجود ہیں۔ اختتامِ ہفتہ اور تقریبات میں جگہ محدود ہو سکتی ہے، اس لیے جلد پہنچنا بہتر ہے۔'],
+  ['ڈرائیور کو کیا پتہ بتائیں؟', 'صرف “شکرپڑیاں” کہنے کے بجائے مطلوبہ وزیٹر زون واضح کریں — پارک کا مرکزی حصہ یا پاکستان مونومنٹ — کیونکہ پہاڑی پر مختلف رسائی پوائنٹس ہیں۔'],
+];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteName('پہنچنا اور پارکنگ (شکرپڑیاں)')}
+  ogTitle={`Getting There & Parking — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+  description={`${ATTRACTION.fullName} (${ATTRACTION.city}) تک ہوائی اڈے، میٹروبس، ٹیکسی، نجی گاڑی اور پارکنگ کے ذریعے پہنچنے کی غیر تجارتی اردو رہنمائی۔`}
+  image={parkingPhoto}
+  imageAlt={`${ATTRACTION.fullName} کے وزیٹر علاقے میں پارکنگ اور سبز پہاڑی منظر، ${ATTRACTION.city}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="آمدورفت اور پارکنگ"
+    title="پہنچنا اور پارکنگ"
+    latin="Getting There & Parking — Shakarparian, Islamabad"
+    lead={`${ATTRACTION.fullName} شہر کے مرکزی حصے کے قریب ہے، مگر آخری رسائی پہاڑی سڑکوں سے ہوتی ہے۔ ہوائی اڈے، پبلک ٹرانسپورٹ، ٹیکسی، نجی گاڑی اور پارکنگ کے طریقے یہاں بیان ہیں۔`}
+    image={parkingPhoto}
+    imageAlt={`${ATTRACTION.fullName} کے وزیٹر علاقے میں پارکنگ اور سبز پہاڑی منظر، ${ATTRACTION.city}`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section" aria-labelledby="modes">
+    <div class="container">
+      <div class="eyebrow">رسائی کے طریقے</div>
+      <h2 class="section-title" id="modes">{ATTRACTION.fullName} تک رسائی کے طریقے</h2>
+      <p class="section-lead">درج ذیل طریقے تجارتی سفارش نہیں بلکہ سفری اقسام کی غیر جانب دار وضاحت ہیں۔</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <h3>اسلام آباد انٹرنیشنل ایئرپورٹ سے</h3>
+          <p><strong>آسان طریقہ:</strong> لائسنس یافتہ ٹیکسی یا رائیڈ ہیلنگ سے سیدھا “شکرپڑیاں نیشنل پارک / پاکستان مونومنٹ زون” تلاش کریں۔</p>
+          <p><strong>پبلک ٹرانسپورٹ:</strong> ایئرپورٹ سے میٹروبس/شہری ٹرانزٹ کے ذریعے مرکزی اسلام آباد کی سمت آئیں، پھر مناسب انٹرچینج سے فیڈر یا ٹیکسی کے ذریعے آخری حصہ طے کریں۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>میٹروبس اور شہری بس سے</h3>
+          <p>سی ڈی اے کے پبلک ٹرانزٹ نقشے میں <strong>ایس ٹی-02</strong> روٹ پی آئی ایم ایس سے شکرپڑیاں پارک کے راستے چلنے والے فیڈر کے طور پر درج ہے۔ روٹ، آپریٹنگ دن اور فریکوئنسی بدل سکتے ہیں۔</p>
+          <p>عملی حکمتِ عملی: پہلے مرکزی کوریڈور سے پی آئی ایم ایس تک پہنچیں، پھر موجودہ فیڈر یا مختصر ٹیکسی سفر اختیار کریں۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>ٹیکسی اور رائیڈ ہیلنگ</h3>
+          <p>ڈرائیور کو صرف “شکرپڑیاں” کہنے کے بجائے مطلوبہ وزیٹر زون واضح کریں۔ واپسی کے وقت موبائل سگنل اور گاڑی کی دستیابی پہلے چیک کرنا مفید ہے۔</p>
+        </article>
+        <article class="guide-card">
+          <h3>نجی گاڑی، سائیکل اور پیدل</h3>
+          <p>نجی گاڑی کے لیے نشان زدہ پارکنگ زون تک جائیں اور ٹریفک کنٹرول کی ہدایات پر عمل کریں۔ پہاڑی کے اندر مختصر چہل قدمی خوشگوار ہے، مگر بڑے ایکسپریس وے سے دور سے پیدل آمد ہر مسافر کے لیے آرام دہ نہیں۔</p>
+        </article>
+      </div>
+      <div class="notice"><strong>روانگی سے پہلے:</strong> سرکاری ٹرانزٹ نقشہ، موسم، سکیورٹی/تقریب کی بندش اور عجائب گھر کے الگ اوقات دیکھیں۔</div>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="compare">
+    <div class="container">
+      <div class="eyebrow">موازنہ</div>
+      <h2 class="section-title" id="compare">آمدورفت کا موازنہ</h2>
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr><th>طریقہ</th><th>سب سے موزوں</th><th>فائدہ</th><th>نقصان / احتیاط</th><th>لاگت کا رجحان</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="طریقہ"><strong>ہوائی اڈے سے ٹرانسفر</strong></td><td data-label="موزوں">پہلی بار آنے والے، سامان کے ساتھ</td><td data-label="فائدہ">سیدھا مقام تک، کم رہنمائی درکار</td><td data-label="نقصان">شہر کے پار فاصلہ اور ٹریفک</td><td data-label="لاگت">درمیانہ سے زیادہ</td></tr>
+            <tr><td data-label="طریقہ"><strong>ٹیکسی / رائیڈ ہیلنگ</strong></td><td data-label="موزوں">چھوٹے گروپ، لچکدار وقت</td><td data-label="فائدہ">دروازے سے دروازے تک، نشان زدہ زون بتائیں</td><td data-label="نقصان">اوقات میں رش اور سگنل مسائل</td><td data-label="لاگت">درمیانہ</td></tr>
+            <tr><td data-label="طریقہ"><strong>میٹروبس / فیڈر بس</strong></td><td data-label="موزوں">بجٹ سفر، ماحول دوست</td><td data-label="فائدہ">سستا، مرکزی کوریڈورز سے جڑتا ہے</td><td data-label="نقصان">آخری حصہ پیدل یا مختصر ٹیکسی سے طے کریں</td><td data-label="لاگت">کم</td></tr>
+            <tr><td data-label="طریقہ"><strong>نجی گاڑی</strong></td><td data-label="موزوں">خاندان، سامان، آزادی</td><td data-label="فائدہ">پارکنگ زون تک آسانی، واپسی لچکدار</td><td data-label="نقصان">اختتامِ ہفتہ پارکنگ محدود</td><td data-label="لاگت">ایندھن + پارکنگ</td></tr>
+            <tr><td data-label="طریقہ"><strong>سائیکل / پیدل</strong></td><td data-label="موزوں">قریبی رہائش سے</td><td data-label="فائدہ">سبز اور سستا</td><td data-label="نقصان">بڑے ایکسپریس وے سے دور رہیں</td><td data-label="لاگت">مفت</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="parking">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <div class="eyebrow">پارکنگ</div>
+        <h2 class="section-title" id="parking">گاڑی کہاں کھڑی کریں</h2>
+        <p>مرکزی وزیٹر علاقوں کے قریب مخصوص پارکنگ زون موجود ہیں۔ اختتامِ ہفتہ، تعطیلات اور تقریبات میں جلد پہنچنا بہتر ہے تاکہ جگہ مل سکے۔</p>
+        <p>سڑک کنارے غیر مجاز پارکنگ سے گریز کریں کیونکہ سکیورٹی اور ٹریفک انتظام اچانک سخت ہو سکتا ہے۔ برقی گاڑی کے لیے پارک کے اندر مستقل عوامی چارجر کی تصدیق معتبر سرکاری ماخذ سے نہیں ملی، اس لیے شہر میں دستیاب چارجنگ مقام پر پہلے چارج مکمل کریں۔</p>
+      </div>
+      <div class="story-image">
+        <img src={parkPhoto} alt={`${ATTRACTION.fullName} کا باغیچہ اور وزیٹر علاقہ، ${ATTRACTION.city}`} width="1600" height="900" loading="lazy" />
+        <div class="story-badge">نشان زدہ پارکنگ زون استعمال کریں اور سکیورٹی ہدایات پر عمل کریں۔</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="there-faq">
+    <div class="container">
+      <div class="eyebrow">عمومی سوالات</div>
+      <h2 class="section-title" id="there-faq">پہنچنے اور پارکنگ سے متعلق سوالات</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="getting-there" />
+  <SourcesSection />
+</BaseLayout>

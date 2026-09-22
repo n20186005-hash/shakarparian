@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubHero from '../../components/SubHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourcesSection from '../../components/SourcesSection.astro';
+import RelatedGuides from '../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteName } from '../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../lib/schema';
+
+const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+
+const daysUrdu: Record<string, string> = {
+  Monday: 'پیر', Tuesday: 'منگل', Wednesday: 'بدھ', Thursday: 'جمعرات', Friday: 'جمعہ', Saturday: 'ہفتہ', Sunday: 'اتوار',
+};
+const schedule = ATTRACTION.openingHoursSpecification.map((s) => ({
+  days: s.dayOfWeek.map((d) => daysUrdu[d as keyof typeof daysUrdu]).join('، '),
+  opens: s.opens,
+  closes: s.closes,
+}));
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/opening-hours/`;
+const crumb = { name: 'اوقات اور بہترین وقت', nameLatin: 'Opening Hours & Best Time' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['شکرپڑیاں نیشنل پارک کے عمومی اوقات کیا ہیں؟', `گوگل مقام کی حالیہ فہرست کے مطابق عام اوقات ${schedule[0].days} کو ${schedule[0].opens}–${schedule[0].closes} اور ${schedule[1].days} کو ${schedule[1].opens}–${schedule[1].closes} ہیں۔ یہ بدلنے والی معلومات ہیں، خاص طور پر تہوار یا سکیورٹی انتظام کے دن۔`],
+  ['کیا عجائب گھر کے اوقات مختلف ہوتے ہیں؟', 'ہاں، پاکستان مونومنٹ اور قریبی عجائب گھروں کے اندرونی حصوں کے اوقات کھلے پارک سے الگ ہو سکتے ہیں۔ روانگی سے پہلے متعلقہ ادارے کا موجودہ شیڈول دیکھیں۔'],
+  ['ہفتے میں کون سا دن کم ہجوم رہتا ہے؟', 'عام طور پر ہفتے کے ابتدائی دن (پیر سے جمعرات تک، سوائے تعطیلات کے) نسبتاً کم ہجوم والے ہوتے ہیں۔ اختتامِ ہفتہ، اتوار اور قومی تعطیلات پر زیادہ بھیڑ ہو سکتی ہے۔'],
+  ['بارش یا دھند میں جانا کیسا رہے گا؟', 'کھلے پہاڑی مقام کی وجہ سے بارش، دھند یا شدید گرمی میں تجربہ بدل سکتا ہے۔ موسم کا حال دیکھ کر وقت چنیں اور مناسب لباس/پانی ساتھ رکھیں۔'],
+];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteName('اوقات اور بہترین وقت (شکرپڑیاں)')}
+  ogTitle={`Opening Hours & Best Time — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+  description={`${ATTRACTION.fullName} (${ATTRACTION.city}) کے عمومی اوقات، موسموں کا موازنہ اور ہجوم سے بچنے کا بہترین وقت — غیر تجارتی اردو رہنما۔`}
+  image={parkPhoto}
+  imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="دورے کی منصوبہ بندی"
+    title="اوقات اور بہترین وقت"
+    latin="Opening Hours & Best Time to Visit Shakarparian"
+    lead={`${ATTRACTION.fullName} کے عمومی اوقات، موسموں کے مطابق موازنہ اور ہجوم سے بچنے کے بہترین لمحات — تاکہ آپ کا دورہ زیادہ آرام دہ اور کم رش والا ہو۔`}
+    image={parkPhoto}
+    imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section-sm" aria-labelledby="hours">
+    <div class="container">
+      <div class="eyebrow">موجودہ عمومی اوقات</div>
+      <h2 class="section-title" id="hours">{ATTRACTION.fullName} کے کھلنے کے اوقات</h2>
+      <p class="section-lead">یہ اوقات گوگل مقام کی حالیہ عوامی فہرست سے لیے گئے ہیں اور بدلنے والی معلومات ہیں۔ تہوار، سرکاری تقریب یا سکیورٹی انتظام والے دن یہ تبدیل ہو سکتے ہیں۔</p>
+      <div class="visit-grid">
+        {schedule.map((row) => (
+          <article class="visit-card">
+            <h3>{row.days}</h3>
+            <div class="hours">
+              <div class="hour-row"><span>کھلا ہے</span><strong>{row.opens} – {row.closes}</strong></div>
+            </div>
+          </article>
+        ))}
+        <article class="visit-card">
+          <h3>اندرونی عجائب گھر</h3>
+          <p>پاکستان مونومنٹ اور قریبی میوزیم کے اندرونی حصوں کے اوقات اس جدول سے مختلف ہو سکتے ہیں۔ روانگی کے دن متعلقہ ادارے کا موجودہ شیڈول دیکھیں۔</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="best-time">
+    <div class="container">
+      <div class="eyebrow">بہترین وقت</div>
+      <h2 class="section-title" id="best-time">دن اور موسم کے لحاظ سے بہترین وقت</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">☀</div><h3>صبح کا ابتدائی حصہ</h3><p>ہلکی ٹھنڈک، نسبتاً کم ہجوم اور چہل قدمی کے لیے سب سے موزوں۔ نرم روشنی فوٹوگرافی کے لیے بھی اچھی ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🌇</div><h3>شام سے پہلے</h3><p>گرتے ہوئے سورج کی سنہری روشنی اور شہر کے وسیع منظر کے لیے موزوں؛ غروب کے بعد واپسی کا وقت ذہن میں رکھیں۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🍃</div><h3>بہار</h3><p>سبزہ اور پھولوں کا موسم پارک کے لیے سب سے زندہ اور دلکش رہتا ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">❄</div><h3>سردی</h3><p>صاف اور ہلکی فضا چہل قدمی کے لیے آرام دہ ہوتی ہے، مگر صبح جلدی ٹھنڈ زیادہ ہو سکتی ہے۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🔥</div><h3>گرمی</h3><p>دوپہر کی شدت سے بچیں؛ صرف صبح اور شام کے ابتدائی حصے میں جائیں اور پانی ساتھ رکھیں۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">👥</div><h3>ہجوم سے بچیں</h3><p>اختتامِ ہفتہ، اتوار اور قومی تعطیلات پر بھیڑ زیادہ ہوتی ہے؛ ہفتے کے ابتدائی دن ترجیح دیں۔</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="duration">
+    <div class="container">
+      <div class="eyebrow">قیام کا دورانیہ</div>
+      <h2 class="section-title" id="duration">کتنا وقت رکھنا چاہیے</h2>
+      <div class="guide-grid">
+        <article class="guide-card"><h3>صرف پارک</h3><p>سبزہ، نظارے اور آرام دہ چہل قدمی کے لیے 1.5–3 گھنٹے کافی ہیں۔</p></article>
+        <article class="guide-card"><h3>یادگار کے ساتھ</h3><p>پاکستان مونومنٹ اور اندرونی میوزیم شامل کریں تو 3–4 گھنٹے زیادہ آرام دہ رہتے ہیں۔</p></article>
+        <article class="guide-card"><h3>مکمل نصف دن</h3><p>پارک، یادگار، لوک ورثہ اور کھانے کو ملائیں تو نصف دن باآسانی گزر جاتا ہے۔</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="hours-faq">
+    <div class="container">
+      <div class="eyebrow">عمومی سوالات</div>
+      <h2 class="section-title" id="hours-faq">اوقات اور وقت سے متعلق سوالات</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="opening-hours" />
+  <SourcesSection />
+</BaseLayout>

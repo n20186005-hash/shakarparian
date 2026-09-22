@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubHero from '../../components/SubHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourcesSection from '../../components/SourcesSection.astro';
+import RelatedGuides from '../../components/RelatedGuides.astro';
+import { ATTRACTION, SITE_URL, withSiteName } from '../../data/site';
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../lib/schema';
+
+const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
+const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+
+const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
+const pageUrl = `${siteUrl}/things-to-do/`;
+const crumb = { name: 'پارک میں کیا کریں اور پکنک', nameLatin: 'Things to Do & Picnic' };
+const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
+
+const faqs: [string, string][] = [
+  ['شکرپڑیاں میں کرنے کے لیے بہترین کیا ہے؟', `سبزے میں چہل قدمی، شہر کے بلند نظارے، پاکستان مونومنٹ کی دیکھ بھال، یادگاری شجرکاری کو دیکھنا اور خاندانی پکنک — یہاں کے اہم تجربات ہیں۔`],
+  ['کیا پکنک کی اجازت ہے؟', 'اجازت یافتہ اور نشان زدہ حصوں میں بیٹھنا اور ہلکا کھانا لے جانا عام طور پر چلتا ہے، مگر کھلے سبز یا جنگلی علاقے میں آگ یا کھلا شعلہ سختی سے ناپسندیدہ ہے۔ کچرا واپس ساتھ لے جائیں۔'],
+  ['فوٹوگرافی کے لیے کون سا وقت موزوں ہے؟', 'صبح کی نرم روشنی اور شام کا سنہری وقت یادگار، سبزے اور شہر کے پس منظر کے لیے بہترین رہتا ہے۔'],
+  ['کیا بچوں اور بوڑھوں کے لیے موزوں ہے؟', 'مرکزی وزیٹر حصوں میں پختہ راستے ہیں، مگر یہ ایک پہاڑی علاقہ ہے اور بعض راستوں میں ڈھلوان یا طویل فاصلہ آ سکتا ہے۔ مخصوص رسائی کی ضرورت ہو تو اسی دن مقام سے تصدیق کریں۔'],
+];
+const faqSchema = buildFaqSchema(faqs);
+---
+<BaseLayout
+  title={withSiteName('پارک میں کیا کریں اور پکنک (شکرپڑیاں)')}
+  ogTitle={`Things to Do & Picnic — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
+  description={`${ATTRACTION.fullName} (${ATTRACTION.city}) میں نظارے، یادگاری شجرکاری، فوٹوگرافی اور خاندانی پکنک کی غیر تجارتی اردو رہنمائی۔`}
+  image={parkPhoto}
+  imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <SubHero
+    kicker="پارک کا تجربہ"
+    title="پارک میں کیا کریں اور پکنک"
+    latin="Things to Do & Picnic at Shakarparian"
+    lead={`${ATTRACTION.fullName} میں صرف گھومنا نہیں بلکہ شہر کا نظارہ دیکھنا، یادگاری شجرکاری کو پڑھنا، فوٹوگرافی کرنا اور خاندانی پکنک کرنا شامل ہے۔ یہ صفحہ عملی مشورے دیتا ہے۔`}
+    image={parkPhoto}
+    imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+  />
+
+  <div class="container breadcrumb-bar">
+    <Breadcrumbs current={crumb} />
+  </div>
+
+  <section class="section-sm" aria-labelledby="activities">
+    <div class="container">
+      <div class="eyebrow">مقام پر کیا کریں</div>
+      <h2 class="section-title" id="activities">{ATTRACTION.fullName} میں چھ سرگرمیاں</h2>
+      <div class="feature-grid">
+        <article class="feature"><div class="icon" aria-hidden="true">◉</div><h3>شہر کا بلند نظارہ</h3><p>پہاڑی کے کناروں سے اسلام آباد–راولپنڈی کا وسیع منظر اور مارگلہ کا پس منظر دیکھیں۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>پاکستان مونومنٹ</h3><p>مغربی شکرپڑیاں پر قومی یادگار کی ساخت اور اندرونی میوزیم دیکھیں۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">♧</div><h3>یادگاری شجرکاری</h3><p>ریاستی اور سفارتی مہمانوں کی لگائی ہوئی درختوں کی قطاروں کو پڑھیں — ایک زندہ آرکائیو۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">📷</div><h3>فوٹوگرافی</h3><p>کھلے چبوترے، سبزے اور یادگار کے زاویے فوٹوگرافی کے شوقینوں کے لیے موزوں ہیں۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">🚶</div><h3>چہل قدمی</h3><p>پختہ راستوں پر آہستہ چلنا اور آرام کی نشستیں تازگی کے لیے بہترین ہیں۔</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">👨‍👩‍👧</div><h3>خاندانی وقت</h3><p>بیٹھنے، منظر دیکھنے اور تاریخ پڑھنے کے لیے یہ “تیز چیک لسٹ” والا مقام نہیں ہے۔</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="picnic">
+    <div class="container story-grid">
+      <div class="story-image">
+        <img src={parkingPhoto} alt={`${ATTRACTION.fullName} کا وزیٹر علاقہ اور سبز پہاڑی منظر، ${ATTRACTION.city}`} width="1600" height="900" loading="lazy" />
+        <div class="story-badge">پکنک کے لیے نشان زدہ حصے استعمال کریں، کچرا واپس لے جائیں، کھلا شعلہ نہ جلائیں۔</div>
+      </div>
+      <div class="story-copy">
+        <div class="eyebrow">پکنک کی رہنمائی</div>
+        <h2 class="section-title" id="picnic">پکنک کیسے کریں: اجازت، احتیاط اور آداب</h2>
+        <p>اجازت یافتہ اور نشان زدہ حصوں میں بیٹھنا اور ہلکا کھانا لے جانا عام طور پر قابلِ قبول ہے، لیکن یہاں چند اصول یاد رکھیں:</p>
+        <ul>
+          <li><strong>نشان زدہ جگہ:</strong> صرف اجازت یافتہ وزیٹر/گرین علاقوں میں بیٹھیں؛ راستوں یا حفاظتی زونز سے گریز کریں۔</li>
+          <li><strong>کچرا واپس:</strong> استعمال شدہ ڈبے اور پلاسٹک ساتھ واپس لے جائیں تاکہ سبزہ صاف رہے۔</li>
+          <li><strong>کھلا شعلہ نہیں:</strong> کھلے سبز یا جنگلی علاقے میں آگ، باربی کیو یا کھلی آگ سے سختی سے پرہیز کریں۔</li>
+          <li><strong>پانی:</strong> پانی ساتھ رکھنا مفید ہے کیونکہ دستیابی مستقل نہیں مانی جانی چاہیے۔</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm deep-green" aria-labelledby="photo-tips">
+    <div class="container">
+      <div class="eyebrow">فوٹوگرافی کے نکات</div>
+      <h2 class="section-title" id="photo-tips">بہترین شاٹس کے لیے عملی مشورے</h2>
+      <div class="guide-grid">
+        <article class="guide-card"><h3>روشنی</h3><p>صبح کے ابتدائی گھنٹوں یا شام سے پہلے کی نرم روشنی پتھریلی ساخت اور سبزے کے لیے بہترین ہے۔</p></article>
+        <article class="guide-card"><h3>زاویہ</h3><p>یادگار کے گرد کھلے چبوترے اور پہاڑی کے کنارے شہر کے پس منظر کے ساتھ پینورامک فریم دیتے ہیں۔</p></article>
+        <article class="guide-card"><h3>ہجوم</h3><p>اختتامِ ہفتہ کی بھیڑ سے بچنے کے لیے ہفتے کے ابتدائی دن یا جلد صبح کا وقت چنیں۔</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" aria-labelledby="todo-faq">
+    <div class="container">
+      <div class="eyebrow">عمومی سوالات</div>
+      <h2 class="section-title" id="todo-faq">سرگرمیوں اور پکنک سے متعلق سوالات</h2>
+      <div class="faq-list">
+        {faqs.map(([question, answer]) => (
+          <details>
+            <summary>{question}</summary>
+            <p>{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides exclude="things-to-do" />
+  <SourcesSection />
+</BaseLayout>
