@@ -7,9 +7,8 @@ import RelatedGuides from '../../components/RelatedGuides.astro';
 import { ATTRACTION, SITE_URL, withSiteName } from '../../data/site';
 import { buildBreadcrumbSchema, buildFaqSchema } from '../../lib/schema';
 
-const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
-const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
-const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+const parkPhoto = '/images/monument-05.jpg';
+const parkingPhoto = '/images/monument-03.jpg';
 
 const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
 const pageUrl = `${siteUrl}/things-to-do/`;
@@ -29,10 +28,10 @@ const faqSchema = buildFaqSchema(faqs);
   ogTitle={`Things to Do & Picnic — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
   description={`${ATTRACTION.fullName} (${ATTRACTION.city}) میں نظارے، یادگاری شجرکاری، فوٹوگرافی اور خاندانی پکنک کی غیر تجارتی اردو رہنمائی۔`}
   image={parkPhoto}
-  imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+  imageAlt="پاکستان مونومنٹ، 2018؛ پارک کی فہرست سے الگ مقام"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <SubHero
     kicker="پارک کا تجربہ"
@@ -40,7 +39,7 @@ const faqSchema = buildFaqSchema(faqs);
     latin="Things to Do & Picnic at Shakarparian"
     lead={`${ATTRACTION.fullName} میں صرف گھومنا نہیں بلکہ شہر کا نظارہ دیکھنا، یادگاری شجرکاری کو پڑھنا، فوٹوگرافی کرنا اور خاندانی پکنک کرنا شامل ہے۔ یہ صفحہ عملی مشورے دیتا ہے۔`}
     image={parkPhoto}
-    imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+    imageAlt="پاکستان مونومنٹ، 2018؛ پارک کی فہرست سے الگ مقام"
   />
 
   <div class="container breadcrumb-bar">
@@ -65,7 +64,7 @@ const faqSchema = buildFaqSchema(faqs);
   <section class="section" aria-labelledby="picnic">
     <div class="container story-grid">
       <div class="story-image">
-        <img src={parkingPhoto} alt={`${ATTRACTION.fullName} کا وزیٹر علاقہ اور سبز پہاڑی منظر، ${ATTRACTION.city}`} width="1600" height="900" loading="lazy" />
+        <img src={parkingPhoto} alt="پاکستان مونومنٹ کی پتھریلی پنکھڑیاں اور سیڑھیاں، 2018 کی تصویر" width="1600" height="900" loading="lazy" />
         <div class="story-badge">پکنک کے لیے نشان زدہ حصے استعمال کریں، کچرا واپس لے جائیں، کھلا شعلہ نہ جلائیں۔</div>
       </div>
       <div class="story-copy">

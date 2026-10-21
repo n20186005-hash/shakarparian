@@ -12,10 +12,10 @@ import ItinerarySection from '../components/ItinerarySection.astro';
 import ResponsibilitySection from '../components/ResponsibilitySection.astro';
 import RelatedGuides from '../components/RelatedGuides.astro';
 
-const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
-const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
-const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
-const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+const heroPhoto = '/images/monument-03.jpg';
+const parkPhoto = '/images/monument-05.jpg';
+const monumentPhoto = '/images/monument-05.jpg';
+const parkingPhoto = '/images/monument-03.jpg';
 
 const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
 const attractionUrl = `${siteUrl}/`;
@@ -24,13 +24,13 @@ const attractionSchema = buildAttractionSchema({ url: attractionUrl, images: [he
 const breadcrumbSchema = buildBreadcrumbSchema(attractionUrl);
 
 const faqs: [string, string][] = [
-  ['شکرپڑیاں نیشنل پارک کہاں واقع ہے؟', `${ATTRACTION.fullName} اسلام آباد ایکسپریس وے پر، ${ATTRACTION.city}، ${ATTRACTION.region}، ${ATTRACTION.country} میں واقع ہے۔ پلس کوڈ ${ATTRACTION.plusCode} اور متناسقات ${ATTRACTION.latitude}، ${ATTRACTION.longitude} ہیں؛ یہ دارالحکومت کے مرکزی حصے کے قریب شکرپڑیاں کی پہاڑیوں پر پھیلا ہوا سبز تفریحی علاقہ ہے۔`],
-  ['کیا شکرپڑیاں نیشنل پارک میں داخلہ مفت ہے؟', 'پارک کے عمومی کھلے حصوں میں داخلہ عموماً مفت سمجھا جاتا ہے، تاہم پاکستان مونومنٹ میوزیم یا دوسرے عجائب گھروں کے الگ ٹکٹ، سکیورٹی قواعد اور اوقات ہو سکتے ہیں۔ روانگی سے پہلے متعلقہ سرکاری مقام کے موجودہ قواعد ضرور دیکھیں۔'],
+  ['شکرپڑیاں نیشنل پارک کہاں واقع ہے؟', `${ATTRACTION.fullName} اسلام آباد ایکسپریس وے پر، ${ATTRACTION.city}، ${ATTRACTION.region}، ${ATTRACTION.country} میں واقع ہے۔ نقشے کا پن ${ATTRACTION.pinReference} اور متناسقات ${ATTRACTION.latitude}، ${ATTRACTION.longitude} ہیں؛ یہ دارالحکومت کے مرکزی حصے کے قریب شکرپڑیاں کی پہاڑیوں پر پھیلا ہوا سبز تفریحی علاقہ ہے۔`],
+  ['کیا شکرپڑیاں نیشنل پارک میں داخلہ مفت ہے؟', 'پارک کے موجودہ داخلہ اخراجات کی الگ تصدیق نہیں ہوئی؛ پاکستان مونومنٹ میوزیم یا دوسرے عجائب گھروں کے الگ ٹکٹ، سکیورٹی قواعد اور اوقات ہو سکتے ہیں۔ روانگی سے پہلے متعلقہ سرکاری مقام کے موجودہ قواعد ضرور دیکھیں۔'],
   ['شکرپڑیاں دیکھنے کے لیے کتنا وقت رکھنا چاہیے؟', 'صرف سبزہ، نظارے اور آرام دہ چہل قدمی کے لیے تقریباً ڈیڑھ سے تین گھنٹے مناسب ہیں۔ پاکستان مونومنٹ اور قریبی عجائب گھروں کو بھی شامل کریں تو نصف دن زیادہ آرام دہ رہتا ہے۔'],
   ['بہترین وقت کون سا ہے؟', 'گرمی سے بچنے اور نرم روشنی کے لیے صبح کا ابتدائی حصہ یا شام سے پہلے کا وقت بہتر رہتا ہے۔ اختتامِ ہفتہ اور قومی تعطیلات پر ہجوم بڑھ سکتا ہے۔ بارش، دھند یا شدید گرمی میں کھلے مقامات کا تجربہ بدل سکتا ہے۔'],
-  ['کیا گاڑی کی پارکنگ دستیاب ہے؟', 'شکرپڑیاں اور پاکستان مونومنٹ کے وزیٹر زون میں مخصوص پارکنگ علاقے موجود ہیں۔ مصروف دنوں میں جگہ محدود ہو سکتی ہے؛ سکیورٹی ہدایات اور موقع پر موجود نشانات کو ترجیح دیں۔'],
+  ['کیا گاڑی کی پارکنگ دستیاب ہے؟', 'مطلوبہ داخلی مقام کی پارکنگ، قیمت اور دستیابی الگ معلوم کریں۔ مصروف دنوں میں جگہ محدود ہو سکتی ہے؛ سکیورٹی ہدایات اور موقع پر موجود نشانات کو ترجیح دیں۔'],
   ['کیا پبلک ٹرانسپورٹ سے پہنچا جا سکتا ہے؟', 'سی ڈی اے کے روٹ نیٹ ورک میں شکرپڑیاں سے گزرنے والا فیڈر روٹ درج ہے۔ شہر کے میٹروبس یا بڑے ٹرانزٹ پوائنٹ تک پہنچ کر فیڈر، ٹیکسی یا رائیڈ ہیلنگ کے ذریعے آخری مرحلہ طے کیا جا سکتا ہے۔ شیڈول بدل سکتا ہے، اس لیے روانگی کے دن سی ڈی اے کا موجودہ روٹ نقشہ دیکھیں۔'],
-  ['کیا وہیل چیئر یا کم نقل و حرکت والے افراد کے لیے جگہ آسان ہے؟', 'مرکزی یادگاری اور وزیٹر حصوں میں پختہ راستے موجود ہیں، لیکن شکرپڑیاں ایک پہاڑی علاقہ ہے اور بعض راستوں میں ڈھلوان، سیڑھیاں یا طویل فاصلہ آ سکتا ہے۔ مخصوص رسائی کی ضرورت ہو تو اسی دن متعلقہ مقام سے تصدیق بہتر ہے۔'],
+  ['کیا وہیل چیئر یا کم نقل و حرکت والے افراد کے لیے جگہ آسان ہے؟', 'فہرست کا قابل رسائی داخلی نشان پورے راستے کی جانچ نہیں۔ روانگی سے پہلے بغیر سیڑھی راستہ، ڈھلوان، بیت الخلا اور مدد مطلوبہ داخلی مقام کے لیے معلوم کریں۔'],
   ['کیا کھانا اور پانی مل جاتا ہے؟', 'بڑے وزیٹر زون کے آس پاس چائے، اسنیکس یا بنیادی ریفریشمنٹ کی سہولت مل سکتی ہے، مگر دستیابی مستقل نہیں مانی جانی چاہیے۔ پانی ساتھ رکھنا مفید ہے؛ مکمل کھانے کے لیے شہری علاقوں میں ریسٹورنٹ اور فوڈ زون کی متعدد اقسام دستیاب ہیں۔'],
   ['کیا رات کے وقت جانا مناسب ہے؟', 'پارک اور متعلقہ کمپلیکس کے داخلہ اوقات اور سکیورٹی حدود پر عمل کریں۔ اندھیرے کے بعد کم روشن یا سنسان راستوں سے گریز، نشان زدہ عوامی علاقوں تک محدود رہنا اور واپسی کی ٹرانسپورٹ پہلے طے کرنا زیادہ مناسب ہے۔'],
 ];
@@ -42,11 +42,11 @@ const faqSchema = buildFaqSchema(faqs);
   ogTitle={`${ATTRACTION.fullNameLatin} — ${ATTRACTION.cityLatin} Travel Guide | ${ATTRACTION.fullName}`}
   description={`${ATTRACTION.fullName} (${ATTRACTION.fullNameLatin}) ${ATTRACTION.city}، ${ATTRACTION.region}، ${ATTRACTION.country}: مقام اور نقشہ، اوقات، داخلہ، پاکستان مونومنٹ، لوک ورثہ، آمدورفت، پارکنگ، سہولیات اور قریبی ثقافتی مقامات پر غیر تجارتی اردو سیاحتی رہنما۔`}
   image={heroPhoto}
-  imageAlt={`${ATTRACTION.fullName} — ${ATTRACTION.city}، ${ATTRACTION.country} کا مرکزی منظر`}
+  imageAlt="پاکستان مونومنٹ، 2018؛ پارک کی فہرست سے الگ مقام"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-media">
@@ -66,12 +66,12 @@ const faqSchema = buildFaqSchema(faqs);
         </div>
       </div>
       <aside class="hero-card" aria-label="فوری معلومات">
-        <div class="hero-stat"><span>گوگل مقام کی درجہ بندی</span><strong>{ATTRACTION.ratingValue} / 5 ({ATTRACTION.ratingCountLabel} آراء)</strong></div>
+        <div class="hero-stat"><span>گوگل درجہ بندی · 20 اکتوبر 2026</span><strong>{ATTRACTION.ratingValue} / 5 ({ATTRACTION.ratingCountLabel} آراء)</strong></div>
         <div class="hero-stat"><span>نمایاں بلندی</span><strong>تقریباً 609 میٹر</strong></div>
         <div class="hero-stat"><span>عام وزٹ ونڈو</span><strong>صبح 9:30 کے بعد</strong></div>
         <div class="hero-stat"><span>موزوں دورانیہ</span><strong>1.5–3 گھنٹے</strong></div>
         <div class="hero-stat"><span>مقام</span><strong>{ATTRACTION.city}، {ATTRACTION.postalCode}</strong></div>
-        <div class="hero-stat"><span>پلس کوڈ</span><strong dir="ltr" style="font-size:.92rem">{ATTRACTION.plusCode}</strong></div>
+        <div class="hero-stat"><span>نقشے کا پن</span><strong dir="ltr" style="font-size:.92rem">{ATTRACTION.pinReference}</strong></div>
         <div class="photo-credit">تصویر: Fawad4real — <a href="https://commons.wikimedia.org/wiki/File:Pakistan_Islamabad_monument_03.jpg" rel="license noopener noreferrer">CC BY-SA 4.0</a></div>
       </aside>
     </div>
@@ -108,8 +108,8 @@ const faqSchema = buildFaqSchema(faqs);
           <div><dt>متبادل نام</dt><dd>{ATTRACTION.shortName}<small dir="ltr">{ATTRACTION.shortNameLatin} · {ATTRACTION.cityLatin} {ATTRACTION.fullNameLatin}</small></dd></div>
           <div><dt>پتہ</dt><dd>{ATTRACTION.streetAddress}<small dir="ltr">{ATTRACTION.streetAddressLatin}, {ATTRACTION.cityLatin} {ATTRACTION.postalCode}</small></dd></div>
           <div><dt>متناسقات</dt><dd dir="ltr">{ATTRACTION.latitude}, {ATTRACTION.longitude}<small dir="ltr">latitude, longitude</small></dd></div>
-          <div><dt>پلس کوڈ</dt><dd dir="ltr">{ATTRACTION.plusCode}</dd></div>
-          <div><dt>گوگل درجہ بندی</dt><dd>{ATTRACTION.ratingValue} / 5<small>{ATTRACTION.ratingCountLabel} آراء</small></dd></div>
+          <div><dt>نقشے کا پن</dt><dd dir="ltr">{ATTRACTION.pinReference}</dd></div>
+          <div><dt>گوگل درجہ بندی · 20 اکتوبر 2026</dt><dd>{ATTRACTION.ratingValue} / 5<small>{ATTRACTION.ratingCountLabel} آراء</small></dd></div>
         </dl>
         <a class="entity-maplink" href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">گوگل میپس پر {ATTRACTION.fullName} کی فہرست دیکھیں</a>
       </aside>
@@ -118,7 +118,7 @@ const faqSchema = buildFaqSchema(faqs);
 
   <div class="quickbar">
     <div class="container quickgrid" aria-label="دورے کی مختصر جھلک">
-      <div class="quickitem"><small>داخلہ</small><strong>پارک کے عمومی حصے عموماً مفت</strong></div>
+      <div class="quickitem"><small>داخلہ</small><strong>داخلے کی شرائط معلوم کریں</strong></div>
       <div class="quickitem"><small>بہترین وقت</small><strong>صبح یا شام سے پہلے</strong></div>
       <div class="quickitem"><small>مزاج</small><strong>خاندان، تاریخ، فوٹوگرافی، چہل قدمی</strong></div>
       <div class="quickitem"><small>اہم احتیاط</small><strong>عجائب گھر کے اوقات الگ ہو سکتے ہیں</strong></div>
@@ -131,7 +131,7 @@ const faqSchema = buildFaqSchema(faqs);
   <section class="section" id="history">
     <div class="container story-grid">
       <div class="story-image">
-        <img src={parkPhoto} alt="شکرپڑیاں کے باغیچے میں یادگاری تختی اور سبزہ" width="1600" height="900" loading="lazy" />
+        <img src={parkPhoto} alt="پاکستان مونومنٹ کی پتھریلی پنکھڑیاں اور سیڑھیاں، 2018 کی تصویر" width="1600" height="900" loading="lazy" />
         <div class="story-badge">شکرپڑیاں کی ایک نمایاں روایت: مختلف ممالک کے سربراہانِ ریاست اور معزز مہمانوں کی لگائی ہوئی یادگاری شجرکاری۔</div>
       </div>
       <div class="story-copy">
@@ -149,14 +149,7 @@ const faqSchema = buildFaqSchema(faqs);
           <li><strong>قومی ثقافتی محور:</strong> پاکستان مونومنٹ، لوک ورثہ اور عجائب گھروں کے باعث یہ علاقہ فطرت کے ساتھ قومی تاریخ اور ثقافت کا مشترک وزیٹر زون بن گیا۔</li>
           <li><strong>آج کا کردار:</strong> سی ڈی اے اب بھی شکرپڑیاں کے سبز علاقوں، صفائی اور شہری تفریحی استعمال کی دیکھ بھال میں کردار ادا کرتا ہے۔</li>
         </ul>
-        <h3 class="history-sub">نام کی کہانی اور مقامی روایتیں</h3>
-        <p>
-          نام “شکرپڑیاں” ایک دلچسپ لسانی ملغوبہ ہے۔ مقامی تشریح کے مطابق یہ دو حصوں کا مجموعہ سمجھا جاتا ہے — “شکر” (میٹھاپن) اور “پڑیاں/پریان” (پریوں کا گروہ) — جس سے ایک روایتی تصور “میٹھی پہاڑیاں” یا “پریوں کا مسکن” ابھرتا ہے۔ ایک اور عوامی روایت اسے خوشگوار چراگاہ سے جوڑتی ہے جہاں مویشیوں کا دودھ میٹھا سمجھا جاتا تھا۔ یہ تشریحات تاریخی دستاویز سے زیادہ مقامی زبان اور روایت کا حصہ ہیں، مگر یہی وجہ ہے کہ نام میں ایک شاعرانہ رنگ موجود ہے۔
-        </p>
-        <p>
-          جغرافیائی طور پر شکرپڑیاں مارگلہ کی پہاڑیوں کی جنوبی ڈھلوانوں پر واقع ہے اور اس کے دامن میں راول جھیل اور اسلام آباد ایکسپریس وے کا وسیع نظام ہے۔ یہی محلِ وقوع اسے “شہر کے اوپر سے شہر دیکھنے” والا نایاب پوائنٹ بناتا ہے۔
-        </p>
-      </div>
+        </div>
     </div>
   </section>
 
@@ -258,16 +251,16 @@ const faqSchema = buildFaqSchema(faqs);
       <div class="visit-grid">
         <article class="visit-card">
           <h3>موجودہ عمومی اوقات</h3>
-          <p>گوگل مقام کی حالیہ فہرست میں شکرپڑیاں نیشنل پارک کے درج اوقات یہ ہیں۔ یہ بدلنے والی معلومات ہیں، خاص طور پر تہوار، سرکاری تقریب یا سکیورٹی انتظام کے دن۔</p>
+          <p>20 اکتوبر 2026 کو دیکھی گئی گوگل پارک کی فہرست میں شکرپڑیاں نیشنل پارک کے درج اوقات یہ ہیں۔ یہ بدلنے والی معلومات ہیں، خاص طور پر تہوار، سرکاری تقریب یا سکیورٹی انتظام کے دن۔</p>
           <div class="hours">
             <div class="hour-row"><span>پیر، منگل، جمعرات، ہفتہ، اتوار</span><strong>9:30 صبح – 8:00 شام</strong></div>
             <div class="hour-row"><span>بدھ، جمعہ</span><strong>9:30 صبح – 8:30 شام</strong></div>
           </div>
-          <p style="font-size:.82rem;margin-bottom:0">عجائب گھر اور پاکستان مونومنٹ کے اندرونی حصوں کے اوقات اس جدول سے مختلف ہو سکتے ہیں۔</p>
+          <p style="font-size:.82rem;margin-bottom:0">یہ پارک کی فہرست مونومنٹ یا کسی میوزیم کے اوقات کی تصدیق نہیں کرتی۔</p>
         </article>
         <article class="visit-card">
           <h3>ٹکٹ / اخراجات</h3>
-          <p><strong>پارک:</strong> عمومی سبز اور کھلے تفریحی حصوں میں داخلہ عموماً مفت ہے۔</p>
+          <p><strong>پارک:</strong> مطلوبہ حصے کے داخلے کی موجودہ شرائط اور اخراجات معلوم کریں۔</p>
           <p><strong>عجائب گھر:</strong> قریبی عجائب گھروں یا اندرونی نمائشی حصوں کے الگ ٹکٹ ہو سکتے ہیں؛ چونکہ فیس بدل سکتی ہے، اس رہنما میں غیر تصدیق شدہ رقم درج نہیں کی گئی۔</p>
           <p><strong>بجٹ:</strong> اصل متغیر خرچ آمدورفت، پارکنگ (اگر موقع پر فیس نافذ ہو)، پانی/کھانا اور الگ ثقافتی اداروں کے ٹکٹ ہیں۔</p>
         </article>
@@ -279,7 +272,7 @@ const faqSchema = buildFaqSchema(faqs);
         </article>
         <article class="visit-card">
           <h3>پارکنگ</h3>
-          <p>مرکزی وزیٹر علاقوں کے قریب مخصوص پارکنگ زون موجود ہیں۔ اختتامِ ہفتہ، تعطیلات اور تقریبات میں جلد پہنچنا بہتر ہے۔ سڑک کنارے غیر مجاز پارکنگ سے گریز کریں کیونکہ سکیورٹی اور ٹریفک انتظام اچانک سخت ہو سکتا ہے۔</p>
+          <p>مطلوبہ داخلی مقام کے لیے پارکنگ کی جگہ، دستیابی اور قیمت پہلے معلوم کریں؛ اس رہنما نے ان کی تصدیق نہیں کی۔ اختتامِ ہفتہ، تعطیلات اور تقریبات میں جلد پہنچنا بہتر ہے۔ سڑک کنارے غیر مجاز پارکنگ سے گریز کریں کیونکہ سکیورٹی اور ٹریفک انتظام اچانک سخت ہو سکتا ہے۔</p>
           <p><strong>برقی گاڑی:</strong> پارک کے اندر مستقل عوامی چارجر کی تصدیق اس رہنما کو معتبر سرکاری ماخذ سے نہیں ملی؛ اس لیے شہر میں دستیاب عوامی چارجنگ مقام پر پہلے چارج مکمل کرنا زیادہ محفوظ منصوبہ ہے۔</p>
         </article>
       </div>
@@ -344,7 +337,7 @@ const faqSchema = buildFaqSchema(faqs);
         ></iframe>
         <div class="map-caption">
           <span>پتہ: {ATTRACTION.streetAddress}، {ATTRACTION.city} {ATTRACTION.postalCode}، {ATTRACTION.country}</span>
-          <span dir="ltr">{ATTRACTION.latitude}, {ATTRACTION.longitude} · {ATTRACTION.plusCode}</span>
+          <span dir="ltr">{ATTRACTION.latitude}, {ATTRACTION.longitude} · {ATTRACTION.pinReference}</span>
         </div>
       </div>
       <p class="authority-link">
@@ -362,12 +355,12 @@ const faqSchema = buildFaqSchema(faqs);
       <h2 class="section-title" id="photos-title">{ATTRACTION.fullName} کا زمینی مزاج</h2>
       <div class="photo-strip">
         <figure class="photo-panel">
-          <img src={parkingPhoto} alt={`${ATTRACTION.fullName} کے وزیٹر علاقے میں پارکنگ اور سبز پہاڑی منظر، ${ATTRACTION.city}`} width="1600" height="900" loading="lazy" />
-          <figcaption class="caption">تصویر: Irfa9mahmood — CC BY-SA 4.0، وکیمیڈیا کامنز</figcaption>
+          <img src={parkingPhoto} alt="پاکستان مونومنٹ کی پتھریلی پنکھڑیاں اور سیڑھیاں، 2018 کی تصویر" width="1600" height="900" loading="lazy" />
+          <figcaption class="caption">پاکستان مونومنٹ، 2018 · Fawad4real · <a href="#photo-credits">اصل فائل، لائسنس اور تبدیلیاں</a></figcaption>
         </figure>
         <figure class="photo-panel">
-          <img src={parkPhoto} alt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری کا حصہ، ${ATTRACTION.city}، ${ATTRACTION.country}`} width="1200" height="675" loading="lazy" />
-          <figcaption class="caption">تصویر: Irfa9mahmood — CC BY-SA 4.0، وکیمیڈیا کامنز</figcaption>
+          <img src={parkPhoto} alt="پاکستان مونومنٹ کی پتھریلی پنکھڑیاں اور سیڑھیاں، 2018 کی تصویر" width="1200" height="675" loading="lazy" />
+          <figcaption class="caption">پاکستان مونومنٹ، 2018 · Fawad4real · <a href="#photo-credits">اصل فائل، لائسنس اور تبدیلیاں</a></figcaption>
         </figure>
       </div>
     </div>

@@ -1,0 +1,7 @@
+# Visitor content review — 20 October 2026
+
+Preserve the sixteen Urdu and English guide/legal routes. Dated Google place snapshot: park rating 4.5 / 45,468; Islamabad Expy, Islamabad 44000; pin 33.6899848,73.0936709. The listed park hours are Mon/Tue/Thu/Sat/Sun09:30–20:00 and Wed/Fri09:30–20:30. These are third-party park-listing observations, not operator confirmation, entrance-route access, monument/museum hours or fees. Do not encode the snapshot as aggregateRating or recurring openingHours in schema.
+
+Primary sources read: [CDA destinations](https://cda.gov.pk/destination), [CDA transit map](https://ftp.cda.gov.pk/cdaTransitMap), and [Lok Virsa](https://lokvirsa.org.pk/). CDA supports the609m viewpoint, state-tree tradition, distinct monument and Lok Virsa destinations; its transit table listsST-02 via Shakarparian Park. Exact journey duration, current running service and access should be reconfirmed. Lok Virsa separately advertises Heritage Museum all week10:00–20:00 and Pakistan Monument Museum Tue–Sun10:00–20:00; these are not park hours or a ticket quote.
+
+Removed erroneous Lahore Museum reference, free-entry guarantee, unsupported name-origin passage and live-weather fallback. Facilities and accessibility are planning questions rather than confirmed amenities. Images use only two source-identified monument photographs with visible licence attribution; see public/images/README.md.

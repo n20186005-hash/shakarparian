@@ -36,18 +36,16 @@ export const ATTRACTION = {
   countryLatin: 'Pakistan',
   countryCode: 'PK',
   postalCode: '44000',
-  streetAddress: 'اسلام آباد ایکسپریس وے، شکرپڑیاں',
-  streetAddressLatin: 'Islamabad Expressway, Shakarparian',
+  streetAddress: 'اسلام آباد ایکسپریس وے',
+  streetAddressLatin: 'Islamabad Expy',
   latitude: 33.6899848,
-  longitude: 73.091096,
-  plusCode: 'M3QV+XF اسلام آباد',
+  longitude: 73.0936709,
+  pinReference: '33.6899848, 73.0936709',
   ratingValue: '4.5',
-  ratingCount: 45400,
-  ratingCountLabel: '45,400',
-  isAccessibleForFree: true,
+  ratingCount: 45468,
+  ratingCountLabel: '45,468',
   mapsShareUrl: 'https://maps.app.goo.gl/hYAhHXWvMuAaiCx17',
-  mapsEmbedSrc:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5913.273879471171!2d73.0910959773476!3d33.68998477329565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfc00721e44139%3A0xc76180e59480ec37!2z6IiN56eR5biV6YeM5piC5bGx!5e1!3m2!1sur!2sPK!4v1787621372278!5m2!1sur!2sPK',
+  mapsEmbedSrc: 'https://maps.google.com/maps?q=33.6899848,73.0936709&z=14&output=embed',
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -88,12 +86,12 @@ export const OFFICIAL_SOURCES = [
   {
     label: 'کیپیٹل ڈویلپمنٹ اتھارٹی — پبلک ٹرانزٹ روٹ نقشہ',
     labelEn: 'Capital Development Authority — public transit route map',
-    href: 'https://cda.gov.pk/public/metro_routes',
+    href: 'https://ftp.cda.gov.pk/cdaTransitMap',
   },
   {
-    label: 'محکمہ آثارِ قدیمہ و عجائب گھر — لوک ورثہ میوزیم معلومات',
-    labelEn: 'Department of Archaeology & Museums — Lok Virsa Museum info',
-    href: 'https://doam.gov.pk/public/sites/10162',
+    label: 'لوک ورثہ — ہیریٹیج میوزیم اور پاکستان مونومنٹ میوزیم',
+    labelEn: 'Lok Virsa — Heritage Museum and Pakistan Monument Museum',
+    href: 'https://lokvirsa.org.pk/',
   },
   {
     label: 'پاکستان ٹورازم ڈویلپمنٹ کارپوریشن — سرکاری سیاحتی پورٹل',

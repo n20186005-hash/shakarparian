@@ -7,8 +7,7 @@ import RelatedGuides from '../../components/RelatedGuides.astro';
 import { ATTRACTION, SITE_URL, withSiteName } from '../../data/site';
 import { buildBreadcrumbSchema, buildFaqSchema } from '../../lib/schema';
 
-const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
-const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const parkPhoto = '/images/monument-05.jpg';
 
 const daysUrdu: Record<string, string> = {
   Monday: 'پیر', Tuesday: 'منگل', Wednesday: 'بدھ', Thursday: 'جمعرات', Friday: 'جمعہ', Saturday: 'ہفتہ', Sunday: 'اتوار',
@@ -25,7 +24,7 @@ const crumb = { name: 'اوقات اور بہترین وقت', nameLatin: 'Openi
 const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
 
 const faqs: [string, string][] = [
-  ['شکرپڑیاں نیشنل پارک کے عمومی اوقات کیا ہیں؟', `گوگل مقام کی حالیہ فہرست کے مطابق عام اوقات ${schedule[0].days} کو ${schedule[0].opens}–${schedule[0].closes} اور ${schedule[1].days} کو ${schedule[1].opens}–${schedule[1].closes} ہیں۔ یہ بدلنے والی معلومات ہیں، خاص طور پر تہوار یا سکیورٹی انتظام کے دن۔`],
+  ['شکرپڑیاں نیشنل پارک کے عمومی اوقات کیا ہیں؟', `20 اکتوبر 2026 کو دیکھی گئی گوگل پارک کی فہرست کے مطابق عام اوقات ${schedule[0].days} کو ${schedule[0].opens}–${schedule[0].closes} اور ${schedule[1].days} کو ${schedule[1].opens}–${schedule[1].closes} ہیں۔ یہ بدلنے والی معلومات ہیں، خاص طور پر تہوار یا سکیورٹی انتظام کے دن۔`],
   ['کیا عجائب گھر کے اوقات مختلف ہوتے ہیں؟', 'ہاں، پاکستان مونومنٹ اور قریبی عجائب گھروں کے اندرونی حصوں کے اوقات کھلے پارک سے الگ ہو سکتے ہیں۔ روانگی سے پہلے متعلقہ ادارے کا موجودہ شیڈول دیکھیں۔'],
   ['ہفتے میں کون سا دن کم ہجوم رہتا ہے؟', 'عام طور پر ہفتے کے ابتدائی دن (پیر سے جمعرات تک، سوائے تعطیلات کے) نسبتاً کم ہجوم والے ہوتے ہیں۔ اختتامِ ہفتہ، اتوار اور قومی تعطیلات پر زیادہ بھیڑ ہو سکتی ہے۔'],
   ['بارش یا دھند میں جانا کیسا رہے گا؟', 'کھلے پہاڑی مقام کی وجہ سے بارش، دھند یا شدید گرمی میں تجربہ بدل سکتا ہے۔ موسم کا حال دیکھ کر وقت چنیں اور مناسب لباس/پانی ساتھ رکھیں۔'],
@@ -37,10 +36,10 @@ const faqSchema = buildFaqSchema(faqs);
   ogTitle={`Opening Hours & Best Time — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
   description={`${ATTRACTION.fullName} (${ATTRACTION.city}) کے عمومی اوقات، موسموں کا موازنہ اور ہجوم سے بچنے کا بہترین وقت — غیر تجارتی اردو رہنما۔`}
   image={parkPhoto}
-  imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+  imageAlt="پاکستان مونومنٹ، 2018؛ پارک کی فہرست سے الگ مقام"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <SubHero
     kicker="دورے کی منصوبہ بندی"
@@ -48,7 +47,7 @@ const faqSchema = buildFaqSchema(faqs);
     latin="Opening Hours & Best Time to Visit Shakarparian"
     lead={`${ATTRACTION.fullName} کے عمومی اوقات، موسموں کے مطابق موازنہ اور ہجوم سے بچنے کے بہترین لمحات — تاکہ آپ کا دورہ زیادہ آرام دہ اور کم رش والا ہو۔`}
     image={parkPhoto}
-    imageAlt={`${ATTRACTION.fullName} کا باغیچہ اور یادگاری شجرکاری، ${ATTRACTION.city}، ${ATTRACTION.country}`}
+    imageAlt="پاکستان مونومنٹ، 2018؛ پارک کی فہرست سے الگ مقام"
   />
 
   <div class="container breadcrumb-bar">
@@ -59,7 +58,7 @@ const faqSchema = buildFaqSchema(faqs);
     <div class="container">
       <div class="eyebrow">موجودہ عمومی اوقات</div>
       <h2 class="section-title" id="hours">{ATTRACTION.fullName} کے کھلنے کے اوقات</h2>
-      <p class="section-lead">یہ اوقات گوگل مقام کی حالیہ عوامی فہرست سے لیے گئے ہیں اور بدلنے والی معلومات ہیں۔ تہوار، سرکاری تقریب یا سکیورٹی انتظام والے دن یہ تبدیل ہو سکتے ہیں۔</p>
+      <p class="section-lead">یہ اوقات 20 اکتوبر 2026 کی گوگل پارک کی فہرست سے لیے گئے ہیں اور بدلنے والی معلومات ہیں۔ تہوار، سرکاری تقریب یا سکیورٹی انتظام والے دن یہ تبدیل ہو سکتے ہیں۔</p>
       <div class="visit-grid">
         {schedule.map((row) => (
           <article class="visit-card">
@@ -119,6 +118,7 @@ const faqSchema = buildFaqSchema(faqs);
     </div>
   </section>
 
+<p class="notice">گوگل پارک کی فہرست 20 اکتوبر 2026 کو دیکھی گئی؛ جدول صرف اسی فہرست کے لیے ہے۔ لوک ورثہ کی اپنی ویب سائٹ الگ سے ہیریٹیج میوزیم پورا ہفتہ 10:00–20:00، پاکستان مونومنٹ میوزیم منگل تا اتوار 10:00–20:00 دکھاتی ہے۔ یہ الگ اندرونی ادارے ہیں؛ موجودہ ٹکٹ، تاریخ اور رسائی <a href="https://lokvirsa.org.pk/">لوک ورثہ</a> سے معلوم کریں۔</p>
   <RelatedGuides exclude="opening-hours" />
   <SourcesSection />
 </BaseLayout>

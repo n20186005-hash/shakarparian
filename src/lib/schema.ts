@@ -1,4 +1,4 @@
-import { ATTRACTION, CDA_URL, GOVT_TOURISM_URL, SITE_URL } from '../data/site';
+import { ATTRACTION, SITE_URL } from '../data/site';
 
 /** نالج گراف میں اس مقام کا مستقل اینکر */
 export const ATTRACTION_ID = `${SITE_URL}/#attraction`;
@@ -6,16 +6,17 @@ export const ATTRACTION_ID = `${SITE_URL}/#attraction`;
 type Faq = readonly [question: string, answer: string];
 
 /**
- * TouristAttraction (+ LocalBusiness) JSON-LD۔
+ * TouristAttraction JSON-LD۔
  * مقام کا نام، متبادل نام، پتہ، متناسقات، نقشہ، تصاویر اور سرکاری حوالے ایک ہی نodet میں باندھتا ہے۔
  */
 export function buildAttractionSchema(options: { url: string; images: string[] }) {
   const { url, images } = options;
+  const en = new URL(url).pathname.startsWith('/en/');
   return {
     '@context': 'https://schema.org',
-    '@type': ['TouristAttraction', 'LocalBusiness'],
+    '@type': 'TouristAttraction',
     '@id': ATTRACTION_ID,
-    name: ATTRACTION.fullName,
+    name: en ? ATTRACTION.fullNameLatin : ATTRACTION.fullName,
     alternateName: [
       ATTRACTION.fullNameLatin,
       ATTRACTION.shortName,
@@ -25,7 +26,7 @@ export function buildAttractionSchema(options: { url: string; images: string[] }
     description:
       'اسلام آباد کی شکرپڑیاں پہاڑیوں پر واقع سبز تفریحی علاقہ، جہاں سے شہر کے وسیع مناظر، ریاستی شجرکاری کی روایت اور پاکستان مونومنٹ کے ثقافتی مقامات تک رسائی ملتی ہے۔',
     url,
-    image: images,
+    image: images.map((image) => new URL(image, SITE_URL).href),
     address: {
       '@type': 'PostalAddress',
       streetAddress: `${ATTRACTION.streetAddressLatin} / ${ATTRACTION.streetAddress}`,
@@ -40,15 +41,7 @@ export function buildAttractionSchema(options: { url: string; images: string[] }
       longitude: ATTRACTION.longitude,
     },
     hasMap: ATTRACTION.mapsShareUrl,
-    sameAs: [ATTRACTION.mapsShareUrl, CDA_URL, GOVT_TOURISM_URL],
-    isAccessibleForFree: ATTRACTION.isAccessibleForFree,
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: ATTRACTION.ratingValue,
-      ratingCount: ATTRACTION.ratingCount,
-      bestRating: '5',
-    },
-    openingHoursSpecification: ATTRACTION.openingHoursSpecification,
+    sameAs: [ATTRACTION.mapsShareUrl],
   };
 }
 
@@ -71,7 +64,7 @@ export function buildFaqSchema(faqs: readonly Faq[]) {
  * بغیر terminal کے آخری کرما مقام (ہوم) خود موجودہ صفحہ ہوگا۔
  */
 export function buildBreadcrumbSchema(terminalUrl: string, terminal?: { name: string; nameLatin: string }) {
-  const trail = [
+  const trail: { name: string; nameLatin: string; item: string | undefined }[] = [
     { name: ATTRACTION.country, nameLatin: ATTRACTION.countryLatin, item: undefined as string | undefined },
     { name: ATTRACTION.region, nameLatin: ATTRACTION.regionLatin, item: undefined as string | undefined },
     { name: ATTRACTION.city, nameLatin: ATTRACTION.cityLatin, item: undefined as string | undefined },

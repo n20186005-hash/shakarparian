@@ -7,9 +7,8 @@ import RelatedGuides from '../../../components/RelatedGuides.astro';
 import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
 import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
 
-const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
-const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
-const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const heroPhoto = '/images/monument-03.jpg';
+const monumentPhoto = '/images/monument-05.jpg';
 
 const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
 const pageUrl = `${siteUrl}/en/pakistan-monument/`;
@@ -17,8 +16,8 @@ const crumb = { name: 'پاکستان مونومنٹ اور میوزیم', nameL
 const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
 
 const faqs: [string, string][] = [
-  ['What is the Pakistan Monument?', `The Pakistan Monument is a symbolic national-unity monument on the western hill of Shakarparian. Its petal-like structure represents the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. Beneath it sits a museum presenting the Pakistan Movement and national history.`],
-  ['Are the monument and the museum at the same place?', 'Yes — the museum is in the lower part of the monument. The open monument area and the indoor exhibition are part of the same visitor zone, but the indoor hours may differ from the open park.'],
+  ['What is the Pakistan Monument?', `The Pakistan Monument is a symbolic national-unity monument on the western hill of Shakarparian. Its petal-like structure represents the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. The nearby Pakistan Monument Museum is a separate indoor visit managed by Lok Virsa.`],
+  ['Are the monument and the museum at the same place?', 'The nearby Pakistan Monument Museum is a separate indoor institution managed by Lok Virsa. Confirm its entrance, ticket and hours independently of the park and open monument.'],
   ['Is it part of a Shakarparian National Park visit?', `${ATTRACTION.fullNameLatin}'s main green area and the Pakistan Monument are part of the same recreational landscape. Most visitors combine the greenery, the monument, and nearby museums in a single half day.`],
   ['What is the best time for photography?', 'Soft morning light and the golden hour before sunset suit the stone structure and the Islamabad backdrop. Crowds can be larger on weekends and holidays.'],
 ];
@@ -29,10 +28,10 @@ const faqSchema = buildFaqSchema(faqs);
   ogTitle={`Pakistan Monument & Museum — ${ATTRACTION.cityLatin} | ${ATTRACTION.fullNameLatin}`}
   description={`A non-commercial English introduction to the Pakistan Monument (Islamabad, Shakarparian): petal-shaped symbolic monument, museum, location, indoor exhibition, visiting time, and how it pairs with the park.`}
   image={monumentPhoto}
-  imageAlt={`Pakistan Monument — open cultural view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+  imageAlt="Pakistan Monument in 2018; separate from the park listing"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <SubHero
     kicker="National monument & museum"
@@ -40,7 +39,7 @@ const faqSchema = buildFaqSchema(faqs);
     latin="Pakistan Monument & Museum — Shakarparian, Islamabad"
     lead={`On the western hill of Shakarparian, this symbolic national-unity monument and its museum meet the wide view of ${ATTRACTION.cityLatin}. This page gives non-commercial guidance on the structure, material, indoor exhibition, and practical visiting points.`}
     image={monumentPhoto}
-    imageAlt={`Pakistan Monument — main view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+    imageAlt="Pakistan Monument in 2018; separate from the park listing"
   />
 
   <div class="container breadcrumb-bar">
@@ -56,7 +55,7 @@ const faqSchema = buildFaqSchema(faqs);
           The most visible feature of the Pakistan Monument is its flower-like structure whose petals represent the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. The form is a symbol of “staying together” and federal unity.
         </p>
         <p>
-          In the lower part of the monument is a museum where the Pakistan Movement, national symbols, and the country’s historical milestones are presented through statues, murals, and audio-visual material. That is why the place matters not only for photography but also for historical awareness.
+          The nearby Pakistan Monument Museum is a separate institution where the Pakistan Movement, national symbols, and the country’s historical milestones are presented through statues, murals, and audio-visual material. That is why the place matters not only for photography but also for historical awareness.
         </p>
         <p>
           Geographically the monument sits on the far western edge of <strong>{ATTRACTION.fullNameLatin}</strong>'s green area, so it is naturally treated as part of the park visit.
