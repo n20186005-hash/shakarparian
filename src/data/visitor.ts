@@ -232,8 +232,8 @@ export const ITINERARIES: Itinerary[] = [
     icon: '🌿',
     title: 'نصف دن — سبزہ اور یادگار',
     titleEn: 'Half day — greenery & monument',
-    duration: 'تقریباً 3 گھنٹے',
-    durationEn: 'About 3 hours',
+    duration: 'مثال: تقریباً 3 گھنٹے',
+    durationEn: 'Example: about 3 hours',
     pace: 'آرام دہ',
     paceEn: 'Relaxed',
     spots: [
@@ -255,8 +255,8 @@ export const ITINERARIES: Itinerary[] = [
     icon: '🗺️',
     title: 'پورا دن — قدرت + ثقافت',
     titleEn: 'Full day — nature + culture',
-            duration: 'تقریباً 6–7 گھنٹے',
-    durationEn: 'About 6–7 hours',
+            duration: 'مثال: تقریباً 6–7 گھنٹے',
+    durationEn: 'Example: about 6–7 hours',
     pace: 'معمولی',
     paceEn: 'Moderate',
     spots: [

@@ -26,7 +26,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(attractionUrl);
 const faqs: [string, string][] = [
   ['Where is Shakarparian National Park located?', `${ATTRACTION.fullNameLatin} is on the Islamabad Expressway in ${ATTRACTION.cityLatin}, ${ATTRACTION.regionLatin}, ${ATTRACTION.countryLatin}. Map pin ${ATTRACTION.pinReference} and coordinates ${ATTRACTION.latitude}, ${ATTRACTION.longitude}; it is a green recreation area spread across the Shakarparian hills near the centre of the capital.`],
   ['Is entry to Shakarparian National Park free?', 'Current park entry costs have not been independently confirmed; the Pakistan Monument Museum or other museums may have separate tickets, security rules, and hours. Always check the current rules of the relevant official site before you go.'],
-  ['How much time should I keep for Shakarparian?', 'As a planning example, allow about 1.5 to 3 hours for the greenery, the viewpoint, and a relaxed walk. If you also include the Pakistan Monument and nearby museums, a half day is more comfortable.'],
+  ['How much time should I keep for Shakarparian?', 'As a planning example, allow about 1.5 to 3 hours for the greenery, the viewpoint, and a relaxed walk. A half-day plan including the Pakistan Monument and nearby museums is only an example if each destination is open and the routes are confirmed; adjust it to your pace.'],
   ['What is the best time to visit?', 'The early morning or the time just before sunset is better to avoid heat and for soft light. Crowds can grow on weekends and national holidays. Rain, fog, or extreme heat can change the open-site experience.'],
   ['Is car parking available?', 'Ask the operator about parking for your intended entrance; spaces, charges and opening have not been independently confirmed. Follow security guidance and on-site signs.'],
   ['Can I reach it by public transport?', 'The CDA route network lists a feeder route passing through Shakarparian. You can reach the city metrobus or a major transit point and then cover the final leg by feeder, taxi, or ride-hailing. Schedules can change, so check the current CDA route map on your travel day.'],
@@ -69,7 +69,7 @@ const faqSchema = buildFaqSchema(faqs);
         <div class="hero-stat"><span>Google place rating · 20 October 2026</span><strong>{ATTRACTION.ratingValue} / 5 ({ATTRACTION.ratingCountLabel} reviews)</strong></div>
         <div class="hero-stat"><span>Notable elevation</span><strong>about 609 m</strong></div>
         <div class="hero-stat"><span>Typical visit window</span><strong>after 9:30 AM</strong></div>
-        <div class="hero-stat"><span>Suggested time budget</span><strong>1.5–3 hours</strong></div>
+        <div class="hero-stat"><span>Planning example, not a measured duration</span><strong>1.5–3 hours</strong></div>
         <div class="hero-stat"><span>Location</span><strong>{ATTRACTION.cityLatin}, {ATTRACTION.postalCode}</strong></div>
         <div class="hero-stat"><span>Map pin</span><strong dir="ltr" style="font-size:.92rem">{ATTRACTION.pinReference}</strong></div>
         <div class="photo-credit">Photo: Fawad4real — <a href="https://commons.wikimedia.org/wiki/File:Pakistan_Islamabad_monument_03.jpg" rel="license noopener noreferrer">CC BY-SA 4.0</a></div>
@@ -267,7 +267,7 @@ const faqSchema = buildFaqSchema(faqs);
           <h3>Best time and duration</h3>
           <p><strong>Morning:</strong> Light coolness, relatively fewer crowds, better for walking.</p>
           <p><strong>Before sunset:</strong> Soft light and the wide city view; keep the return time and gate hours in mind after dusk.</p>
-          <p><strong>Duration:</strong> Park 1.5–3 hours; with museums and the national monument 3–5 hours or a half day.</p>
+          <p><strong>Duration:</strong> Planning examples, not measured completion times: park 1.5–3 hours; with museums and the national monument 3–5 hours or a half day, subject to each destination’s opening, tickets, confirmed routes and your pace.</p>
         </article>
         <article class="visit-card">
           <h3>Parking</h3>
