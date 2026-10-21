@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Brand from '../components/Brand.astro';
 import Footer from '../components/Footer.astro';
-import { ATTRACTION, SITE_NAME } from '../data/site';
+import { ATTRACTION, SITE_NAME, SITE_NAME_EN } from '../data/site';
 import { localeFromUrl, hreflangAlternates, localizedPath, type Locale } from '../i18n';
 
 interface Props {
@@ -12,8 +12,9 @@ interface Props {
   imageAlt?: string;
   ogTitle?: string;
   noHeader?: boolean;
+  noindex?: boolean;
 }
-const { title, description, image = '/brand/favicon.svg', imageAlt, ogTitle, noHeader = false } = Astro.props;
+const { title, description, image = '/brand/favicon.svg', imageAlt, ogTitle, noHeader = false, noindex = false } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 const ogImage = Astro.site && image.startsWith('/') ? new URL(image, Astro.site).toString() : image;
 const socialTitle = ogTitle ?? title;
@@ -37,15 +38,16 @@ const navAria = locale === 'en' ? 'Primary navigation' : 'مرکزی نیویگ�
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="description" content={description} />
     <meta name="theme-color" content="#123d33" />
     {canonical && <link rel="canonical" href={canonical} />}
-    {alternates.map((a) => (
+    {!noindex && alternates.map((a) => (
       <link rel="alternate" hreflang={a.hreflang} href={a.href} />
     ))}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={ogLocale} />
-    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:site_name" content={locale === 'en' ? SITE_NAME_EN : SITE_NAME} />
     <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
@@ -65,32 +67,7 @@ const navAria = locale === 'en' ? 'Primary navigation' : 'مرکزی نیویگ�
     <link rel="icon" href="/brand/favicon-16.png" sizes="16x16" type="image/png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <script is:inline>
-      (() => {
-        const GA_ID = 'G-HXM22WWPKP';
-        const key = 'shakarparian-consent';
-        const loadAnalytics = () => {
-          if (document.querySelector('script[data-ga-loader]')) return;
-          const s = document.createElement('script');
-          s.async = true;
-          s.dataset.gaLoader = 'true';
-          s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-          document.head.appendChild(s);
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments)}
-          window.gtag = gtag;
-          gtag('js', new Date());
-          gtag('config', GA_ID, { anonymize_ip: true });
-        };
-        try {
-          const prefs = JSON.parse(localStorage.getItem(key) || '{}');
-          if (prefs.analytics === true) loadAnalytics();
-        } catch {}
-        window.addEventListener('shakarparian-consent-changed', (event) => {
-          if (event.detail?.analytics === true) loadAnalytics();
-        });
-      })();
-    </script>
+
   </head>
   <body>
     <a class="skip-link" href="#main-content">{skipText}</a>
@@ -98,7 +75,8 @@ const navAria = locale === 'en' ? 'Primary navigation' : 'مرکزی نیویگ�
       <header class="site-header">
         <div class="container header-row">
           <Brand compact href={locale === 'en' ? '/en/' : '/'} />
-          <nav class="nav" aria-label={navAria}>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">{locale === 'en' ? 'Menu' : 'فہرست'}</button>
+          <nav id="main-nav" class="nav" aria-label={navAria}>
             <a href={navHref('/#history')}>{locale === 'en' ? 'Background' : 'پس منظر'}</a>
             <a href={navHref('/#visit')}>{locale === 'en' ? 'Plan your visit' : 'دورے کی منصوبہ بندی'}</a>
             <a href={navHref('/#transport')}>{locale === 'en' ? 'Getting there' : 'آمدورفت'}</a>
@@ -111,12 +89,28 @@ const navAria = locale === 'en' ? 'Primary navigation' : 'مرکزی نیویگ�
       </header>
     )}
     <main id="main-content"><slot /></main>
+    <section class="container photo-attribution" id="photo-credits" aria-label={locale === 'en' ? 'Photo credits' : 'تصویری انتساب'}>
+      <h2>{locale === 'en' ? 'Photo sources and licence' : 'تصاویر کے ماخذ اور لائسنس'}</h2>
+      <p>{locale === 'en' ? 'Pakistan Monument photographs by Fawad4real, 7 September 2018. These show the monument, not the park entrance or current facilities. Images resized and recompressed; display may crop them. Adapted images remain CC BY-SA 4.0.' : 'پاکستان مونومنٹ کی تصاویر: Fawad4real، 7 ستمبر 2018۔ یہ یادگار دکھاتی ہیں، پارک کا داخلی مقام یا موجودہ سہولیات نہیں۔ تصاویر کا حجم اور کمپریشن بدلا اور نمائش میں تراش ممکن ہے۔ تبدیل شدہ تصاویر بھی CC BY-SA 4.0 ہیں۔'}</p>
+      <ul><li><a href="https://commons.wikimedia.org/wiki/File:Pakistan_Islamabad_monument_03.jpg">Pakistan Islamabad monument 03.jpg — Fawad4real</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li><li><a href="https://commons.wikimedia.org/wiki/File:Pakistan_Islamabad_monument_05.jpg">Pakistan Islamabad monument 05.jpg — Fawad4real</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li></ul>
+    </section>
     <Footer locale={locale} />
+    <aside id="cookie-banner" data-open="false" class="cookie-banner" aria-label={locale === 'en' ? 'Analytics choice' : 'تجزیاتی انتخاب'}><p>{locale === 'en' ? 'Optional Google Analytics stays off until you allow it. Maps load separately from Google.' : 'آپ کی اجازت تک اختیاری گوگل اینالیٹکس بند ہے۔ نقشہ گوگل سے الگ لوڈ ہوتا ہے۔'}</p><button id="cookies-essential" type="button">{locale === 'en' ? 'Reject analytics' : 'تجزیات مسترد'}</button><button id="cookies-accept" type="button">{locale === 'en' ? 'Allow analytics' : 'تجزیات قبول'}</button><a href={locale === 'en' ? '/en/cookies/' : '/cookies/'}>{locale === 'en' ? 'Settings' : 'ترتیبات'}</a><p id="cookie-banner-status" role="status"></p></aside>
+    <script is:inline src="/consent.js" defer></script>
     <script is:inline>
+      document.querySelector('.menu-toggle')?.addEventListener('click', (event) => {
+        const button = event.currentTarget;
+        const open = button.getAttribute('aria-expanded') !== 'true';
+        button.setAttribute('aria-expanded', String(open));
+        document.getElementById('main-nav')?.classList.toggle('is-open', open);
+      });
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
-        });
+        navigator.serviceWorker.getRegistrations().then((items) => {
+          for (const item of items) {
+            if (item.active && new URL(item.active.scriptURL).pathname === '/sw.js') item.unregister();
+          }
+        }).catch(() => {});
+        if ('caches' in window) caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith('shakarparian-')).map((key) => caches.delete(key)))).catch(() => {});
       }
     </script>
   </body>

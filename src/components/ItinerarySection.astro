@@ -6,11 +6,11 @@ const locale: Locale = localeFromUrl(Astro.url);
 const L = locale === 'en' ? {
   eyebrow: 'Suggested itineraries',
   title: 'Itineraries for half and full day',
-  lead: 'Two easy plans based on how much time you have — keep museum hours in mind for the full-day option.',
+  lead: 'Two planning examples, not measured completion times. First confirm each destination’s opening, tickets and current route; adapt the stops and duration to your pace.',
 } : {
   eyebrow: 'تجویز کردہ سفری منصوبے',
   title: 'نصف اور پورے دن کے لیے منصوبے',
-  lead: 'آپ کے پاس وقت کے حساب سے دو آسان منصوبے — پورے دن کے لیے عجائب گھروں کے اوقات ذہن میں رکھیں۔',
+  lead: 'یہ منصوبے کی دو مثالیں ہیں، ناپے ہوئے تکمیلی اوقات نہیں۔ پہلے ہر مقام کے کھلنے، ٹکٹ اور موجودہ راستے کی تصدیق کریں؛ مقامات اور دورانیہ اپنی رفتار کے مطابق بدلیں۔',
 };
 const t = (ur: string, en: string) => (locale === 'en' ? en : ur);
 const spotsOf = (it: typeof ITINERARIES[number]) => (locale === 'en' ? it.spotsEn : it.spots);

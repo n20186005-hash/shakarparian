@@ -5,12 +5,12 @@ import { localeFromUrl, type Locale } from '../i18n';
 const locale: Locale = localeFromUrl(Astro.url);
 const L = locale === 'en' ? {
   eyebrow: 'Visitor facilities',
-  title: 'Facilities available during the visit',
-  lead: 'Shakarparian is a public green area, so facilities are basic. The list below is compiled from public material; availability can vary by point, so confirm on the day.',
+  title: 'Facilities to ask about before visiting',
+  lead: 'Shakarparian is a public green area, so facilities are basic. The following are planning questions, not a verified inventory; ask the relevant operator.',
 } : {
   eyebrow: 'زائرین کی سہولیات',
-  title: 'دورے کے دوران دستیاب سہولیات',
-  lead: 'شکرپڑیاں ایک عوامی سبز علاقہ ہے، اس لیے سہولیات بنیادی نوعیت کی ہیں۔ ذیل کی فہرست عوامی مواد سے مرتب ہے؛ دستیابی پوائنٹ کے لحاظ سے مختلف ہو سکتی ہے، اس لیے دن میں تصدیق کر لیں۔',
+  title: 'روانگی سے پہلے سہولیات معلوم کریں',
+  lead: 'شکرپڑیاں ایک عوامی سبز علاقہ ہے، اس لیے سہولیات بنیادی نوعیت کی ہیں۔ ذیل کے نکات منصوبہ بندی کے سوالات ہیں، تصدیق شدہ فہرست نہیں؛ متعلقہ ادارے سے معلوم کریں۔',
 };
 ---
 <section class="section-sm" aria-labelledby="facilities-title">

@@ -7,9 +7,8 @@ import RelatedGuides from '../../../components/RelatedGuides.astro';
 import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
 import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
 
-const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
-const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
-const parkingPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Shakar_Parian_Islamabad_Car_Parking.jpg';
+const parkPhoto = '/images/monument-05.jpg';
+const parkingPhoto = '/images/monument-03.jpg';
 
 const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
 const pageUrl = `${siteUrl}/en/things-to-do/`;
@@ -28,10 +27,10 @@ const faqSchema = buildFaqSchema(faqs);
   ogTitle={`Things to Do & Picnic — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
   description={`What to do in ${ATTRACTION.fullNameLatin} (${ATTRACTION.cityLatin}): viewpoints, memorial planting, photography, and a family picnic — a non-commercial English guide.`}
   image={parkPhoto}
-  imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+  imageAlt="Pakistan Monument in 2018; separate from the park listing"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <SubHero
     kicker="Park experience"
@@ -39,7 +38,7 @@ const faqSchema = buildFaqSchema(faqs);
     latin="Things to Do & Picnic at Shakarparian"
     lead={`In ${ATTRACTION.fullNameLatin} you do more than walk around: see the city view, read the memorial planting, take photographs, and enjoy a family picnic. This page gives practical advice.`}
     image={parkPhoto}
-    imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+    imageAlt="Pakistan Monument in 2018; separate from the park listing"
   />
 
   <div class="container breadcrumb-bar">
@@ -64,7 +63,7 @@ const faqSchema = buildFaqSchema(faqs);
   <section class="section" aria-labelledby="picnic">
     <div class="container story-grid">
       <div class="story-image">
-        <img src={parkingPhoto} alt={`Visitor area and green hill view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`} width="1600" height="900" loading="lazy" />
+        <img src={parkingPhoto} alt="Pakistan Monument: stone petals and steps, photographed in 2018" width="1600" height="900" loading="lazy" />
         <div class="story-badge">Use marked areas for picnics, take litter back, and do not light open flames.</div>
       </div>
       <div class="story-copy">

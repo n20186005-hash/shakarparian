@@ -2,12 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { withSiteName } from '../../data/site';
 ---
-<BaseLayout title={withSiteName('کوکی ترتیبات')} description="ضروری، تجزیاتی، ترجیحی اور مارکیٹنگ کوکی انتخاب منظم کریں۔">
+<BaseLayout title={withSiteName('کوکی ترتیبات')} description="اختیاری گوگل اینالیٹکس اور مقامی رضامندی کے ذخیرے کا انتظام۔">
   <section class="legal-hero">
     <div class="container">
       <a class="backlink" href="/">→ مرکزی رہنما پر واپس جائیں</a>
       <h1>کوکی ترتیبات</h1>
-      <p>آخری اپ ڈیٹ: اگست 2026</p>
+      <p>آخری اپ ڈیٹ: 20 اکتوبر 2026</p>
     </div>
   </section>
   <article class="legal-wrap">
@@ -42,10 +42,10 @@ import { withSiteName } from '../../data/site';
     </div>
 
     <h2>گوگل میپس کے بارے میں</h2>
-    <p>مرکزی رہنما میں گوگل میپس ایک بیرونی نقشے کے طور پر سرایت شدہ ہے۔ نقشہ خود گوگل کے سرور سے لوڈ ہوتا ہے اور اس کی اپنی کوکی/رازداری پالیسی ہو سکتی ہے۔ ہماری تجزیاتی رضامندی بند کرنے سے گوگل میپس کے بیرونی فریم کی اپنی تکنیکی کارروائی لازماً بند نہیں ہوتی؛ اگر آپ اسے مکمل طور پر نہیں لوڈ کرنا چاہتے تو نقشے والے حصے سے گریز یا براؤزر کی تیسرے فریق حفاظتی ترتیبات استعمال کریں۔</p>
+    <p>مرکزی رہنما میں گوگل میپس ایک بیرونی نقشے کے طور پر سرایت شدہ ہے۔ نقشہ خود گوگل کے سرور سے لوڈ ہوتا ہے اور اس کی اپنی کوکی/رازداری پالیسی ہو سکتی ہے۔ ہماری تجزیاتی رضامندی بند کرنے سے گوگل میپس کے بیرونی فریم کی اپنی تکنیکی کارروائی لازماً بند نہیں ہوتی؛ اگر آپ اسے مکمل طور پر نہیں لوڈ کرنا چاہتے تو براؤزر کی تیسرے فریق حفاظتی ترتیبات استعمال کریں؛ اس حصے سے دور رہنے سے پہلے لوڈ نقشے کا رابطہ نہیں رکتا۔</p>
 
     <h2>رضامندی کا انتظام</h2>
-    <p>آپ کسی بھی وقت اسی صفحے پر واپس آ کر انتخاب بدل سکتے ہیں۔ “سب مسترد کریں” تجزیاتی اور اختیاری ترجیحی زمرے بند کر دیتا ہے، مگر بنیادی رضامندی حالت محفوظ رہتی ہے۔</p>
+    <p>آپ کسی بھی وقت اسی صفحے پر واپس آ کر انتخاب بدل سکتے ہیں۔ “سب مسترد کریں” فوراً اس سائٹ کے تجزیات بند کرتا ہے۔ انتخاب محفوظ کرنے کی کوشش ہوتی ہے؛ ناکامی کی صورت میں پیغام اس کی حد بتاتا ہے۔</p>
     <div class="cookie-actions">
       <button class="btn btn-primary" id="save-preferences" type="button">ترجیحات محفوظ کریں</button>
       <button class="btn" style="border-color:#c9cfc9;background:white;color:#123d33" id="reject-all" type="button">سب مسترد کریں</button>
@@ -53,32 +53,5 @@ import { withSiteName } from '../../data/site';
     <p class="cookie-status" id="cookie-status" role="status" aria-live="polite"></p>
   </article>
 
-  <script is:inline>
-    (() => {
-      const key = 'shakarparian-consent';
-      const analytics = document.getElementById('analytics');
-      const preferences = document.getElementById('preferences');
-      const status = document.getElementById('cookie-status');
-      const save = document.getElementById('save-preferences');
-      const reject = document.getElementById('reject-all');
-      const read = () => {
-        try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; }
-      };
-      const current = read();
-      analytics.checked = current.analytics === true;
-      preferences.checked = current.preferences === true;
-      const commit = (value, message) => {
-        const data = { necessary: true, analytics: !!value.analytics, preferences: !!value.preferences, marketing: false };
-        localStorage.setItem(key, JSON.stringify(data));
-        status.textContent = message;
-        window.dispatchEvent(new CustomEvent('shakarparian-consent-changed', { detail: data }));
-      };
-      save.addEventListener('click', () => commit({analytics: analytics.checked, preferences: preferences.checked}, 'آپ کی کوکی ترجیحات محفوظ ہو گئی ہیں۔'));
-      reject.addEventListener('click', () => {
-        analytics.checked = false;
-        preferences.checked = false;
-        commit({analytics:false, preferences:false}, 'اختیاری کوکی ترجیحات مسترد کر دی گئی ہیں۔');
-      });
-    })();
-  </script>
+
 </BaseLayout>

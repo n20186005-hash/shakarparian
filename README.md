@@ -1,47 +1,21 @@
-# شکرپڑیاں اسلام آباد — غیر سرکاری معلوماتی رہنما
+# Shakarparian visitor guide
 
-Astro + Tailwind CSS + TypeScript پر بنا ایک غیر منافع بخش، اردو، single-attraction visitor guide۔ Cloudflare Workers static assets کے لیے تیار کیا گیا ہے۔
+Independent Urdu and English Astro guide for Shakarparian, Islamabad. Sixteen original guide/legal routes are preserved, with a noindex404 page. Facts and dated listing values are in `src/data/site.ts`; snapshots do not establish operator schedules, ticket prices or accessibility.
 
-## ٹیکنالوجی
-- Astro 7.2.6
-- Tailwind CSS 4.3.3 + @tailwindcss/vite 4.3.3
-- TypeScript 5.9.3
-- @astrojs/check 0.9.10
-- @astrojs/sitemap 3.7.3
-- Wrangler 4.125.0
-- Node.js 24.19.0
-- pnpm 11.23.0
+## Local validation
 
-تمام versions `package.json` میں exact ہیں۔
+Node24 is required. Install the frozen pnpm lockfile, then run `pnpm check`, `pnpm build`, `pnpm verify:dist`, `node scripts/behavior-test.mjs` and `node scripts/audit.mjs`. Build output `dist/` is ignored and is rebuilt by deployment.
 
-## ڈومین
-`astro.config.ts` میں `SITE_URL` واحد public-site configuration ہے۔ اسے خالی چھوڑنے پر build چلنا چاہیے، canonical absolute URL omit ہو جاتا ہے اور sitemap integration load نہیں ہوتی۔ حقیقی ڈومین ملنے پر صرف اسی constant کو بھریں۔
+## Deployment
 
-## مقامی ترقی
-```bash
-corepack enable
-CI=1 corepack pnpm install --frozen-lockfile
-pnpm check
-pnpm build
-pnpm verify:dist
-```
+Cloudflare's existing production project is `shakarparian`, reflected in `wrangler.jsonc`. The Worker binds `ASSETS`, preserves path/query in HTTP/www canonical redirects and returns genuine404 responses with noindex. Confirm the target production build and existing domain bindings before publishing; the repo does not change security or Access settings.
 
-## Cloudflare Workers
-```bash
-pnpm deploy
-```
-`wrangler.jsonc` صرف static assets (`dist`) deploy کرتا ہے؛ database، login یا CMS شامل نہیں۔
+## Images and privacy
 
-## تصاویر
-وزیٹر تصاویر Wikimedia Commons کی CC BY-SA 4.0 تصاویر ہیں۔ تفصیل `public/images/README.md` میں ہے۔ Logo اور favicon مقامی assets ہیں۔
+Only two verified Pakistan Monument photos are used, both Fawad4real, CC BY-SA4.0, with source/date/licence/modification links visible on every page. See `public/images/README.md`. They illustrate the separate monument, not today's park entrance or facilities.
 
-## SEO انٹٹی بائنڈنگ اور PWA
-- مقام (entity) کے تمام حقائق `src/data/site.ts` میں مرکوز ہیں: نام/متبادل نام، پتہ، متناسقات، پلس کوڈ، درجہ بندی، Google Maps share/embed لنک اور سرکاری حوالے۔
-- JSON-LD (`TouristAttraction` + `FAQPage` + `BreadcrumbList`) `src/lib/schema.ts` میں تیار ہوتا ہے؛ `@id` مستقل `https://shakarparian.com/#attraction` ہے۔
-- PWA: `public/site.webmanifest` + `public/sw.js` (صفحات network-first، جامد اثاثے cache-first)؛ registration `BaseLayout.astro` میں۔ آئیکنز `public/brand/icon-192|512(-maskable).png`۔
-- `public/_headers` HSTS اور بنیادی سیکیورٹی ہیڈرز فراہم کرتا ہے؛ `public/robots.txt` sitemap-index کی طرف اشارہ کرتا ہے۔
+Google Analytics is optional and disabled until explicit consent. Denial disables measurement immediately, including when local-storage writes fail; a same-tab veto prevents stale-grant recovery where available. Maps loads separately from Google. Privacy and cookie pages describe actual behavior. The former service-worker cache is retired to avoid preserving old consent logic and visitor content.
 
-## اداریاتی اصول
-- تجارتی اداروں کی سفارش نہیں کی جاتی۔
-- بدلنے والی معلومات (اوقات، فیس، ٹرانسپورٹ) کو روانگی سے پہلے متعلقہ سرکاری/آپریٹنگ ذریعے سے verify کرنے کی ہدایت ہے۔
-- بنیادی ماخذ: Capital Development Authority (CDA)، Islamabad Capital Territory Administration (ICTA)، Pakistan Tourism Development Corporation (PTDC)، Department of Archaeology & Museums / Lok Virsa، اور مقام/اوقات کے لیے Google Maps listing۔
+## Sources
+
+See `CONTENT-REVIEW.md` and each guide's public source section. Private analytics exports and diagnostics belong outside this repository.

@@ -7,9 +7,8 @@ import RelatedGuides from '../../../components/RelatedGuides.astro';
 import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
 import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
 
-const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
-const monumentPhoto = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Pakistan_Islamabad_monument_05.jpg';
-const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const heroPhoto = '/images/monument-03.jpg';
+const monumentPhoto = '/images/monument-05.jpg';
 
 const siteUrl = (Astro.site?.toString().replace(/\/$/, '') || SITE_URL).replace(/\/$/, '');
 const pageUrl = `${siteUrl}/en/pakistan-monument/`;
@@ -17,10 +16,10 @@ const crumb = { name: 'پاکستان مونومنٹ اور میوزیم', nameL
 const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
 
 const faqs: [string, string][] = [
-  ['What is the Pakistan Monument?', `The Pakistan Monument is a symbolic national-unity monument on the western hill of Shakarparian. Its petal-like structure represents the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. Beneath it sits a museum presenting the Pakistan Movement and national history.`],
-  ['Are the monument and the museum at the same place?', 'Yes — the museum is in the lower part of the monument. The open monument area and the indoor exhibition are part of the same visitor zone, but the indoor hours may differ from the open park.'],
-  ['Is it part of a Shakarparian National Park visit?', `${ATTRACTION.fullNameLatin}'s main green area and the Pakistan Monument are part of the same recreational landscape. Most visitors combine the greenery, the monument, and nearby museums in a single half day.`],
-  ['What is the best time for photography?', 'Soft morning light and the golden hour before sunset suit the stone structure and the Islamabad backdrop. Crowds can be larger on weekends and holidays.'],
+  ['What is the Pakistan Monument?', `The Pakistan Monument is a symbolic national-unity monument on the western hill of Shakarparian. Its petal-like structure represents the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. The nearby Pakistan Monument Museum is a separate indoor visit managed by Lok Virsa.`],
+  ['Are the monument and the museum at the same place?', 'The nearby Pakistan Monument Museum is a separate indoor institution managed by Lok Virsa. Confirm its entrance, ticket and hours independently of the park and open monument.'],
+  ['Is it part of a Shakarparian National Park visit?', `${ATTRACTION.fullNameLatin}'s main green area and the Pakistan Monument are part of the same recreational landscape. A half-day combination is a planning example, conditional on each destination’s opening, tickets, confirmed routes and your pace.`],
+  ['What is the best time for photography?', 'Morning or pre-sunset light is a photography planning preference, subject to confirmed entry hours, weather and security restrictions; sunrise or monument-top access is not verified.'],
 ];
 const faqSchema = buildFaqSchema(faqs);
 ---
@@ -29,10 +28,10 @@ const faqSchema = buildFaqSchema(faqs);
   ogTitle={`Pakistan Monument & Museum — ${ATTRACTION.cityLatin} | ${ATTRACTION.fullNameLatin}`}
   description={`A non-commercial English introduction to the Pakistan Monument (Islamabad, Shakarparian): petal-shaped symbolic monument, museum, location, indoor exhibition, visiting time, and how it pairs with the park.`}
   image={monumentPhoto}
-  imageAlt={`Pakistan Monument — open cultural view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+  imageAlt="Pakistan Monument in 2018; separate from the park listing"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <SubHero
     kicker="National monument & museum"
@@ -40,7 +39,7 @@ const faqSchema = buildFaqSchema(faqs);
     latin="Pakistan Monument & Museum — Shakarparian, Islamabad"
     lead={`On the western hill of Shakarparian, this symbolic national-unity monument and its museum meet the wide view of ${ATTRACTION.cityLatin}. This page gives non-commercial guidance on the structure, material, indoor exhibition, and practical visiting points.`}
     image={monumentPhoto}
-    imageAlt={`Pakistan Monument — main view of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+    imageAlt="Pakistan Monument in 2018; separate from the park listing"
   />
 
   <div class="container breadcrumb-bar">
@@ -56,29 +55,30 @@ const faqSchema = buildFaqSchema(faqs);
           The most visible feature of the Pakistan Monument is its flower-like structure whose petals represent the four provinces of Pakistan — Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan — along with regions such as Gilgit Baltistan and Azad Kashmir. The form is a symbol of “staying together” and federal unity.
         </p>
         <p>
-          In the lower part of the monument is a museum where the Pakistan Movement, national symbols, and the country’s historical milestones are presented through statues, murals, and audio-visual material. That is why the place matters not only for photography but also for historical awareness.
+          Lok Virsa’s official museum introduction describes the Pakistan Movement and national history. This identifies the museum’s subject, rather than confirming which galleries or displays are open on your travel day.
         </p>
         <p>
-          Geographically the monument sits on the far western edge of <strong>{ATTRACTION.fullNameLatin}</strong>'s green area, so it is naturally treated as part of the park visit.
+          The monument and <strong>{ATTRACTION.fullNameLatin}</strong> are separate visitor destinations in the Shakarparian area; their geographic relationship does not establish an open connecting route.
         </p>
       </div>
       <div class="story-image">
         <img src={heroPhoto} alt={`Main view of the Pakistan Monument — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`} width="1600" height="1067" loading="lazy" />
-        <div class="story-badge">A better half day: greenery → national monument → indoor museum → nearby cultural institutions.</div>
+        <div class="story-badge">Half-day planning example: greenery → national monument → indoor museum → nearby cultural institutions; first confirm each destination’s opening, tickets and route, and adapt to your pace.</div>
       </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="what-inside">
     <div class="container">
-      <div class="eyebrow">Indoor exhibition</div>
-      <h2 class="section-title" id="what-inside">What you will find inside the museum</h2>
+      <div class="eyebrow">Museum context and access</div>
+      <h2 class="section-title" id="what-inside">Museum themes and what to confirm</h2>
+      <p>Source checked on 20 October 2026: <a href="https://lokvirsa.org.pk/pakistan-monument-museum/">Lok Virsa’s Pakistan Monument Museum introduction</a>. Its description covers national history, independence and later achievements; it is not a dated inventory of today’s accessible exhibits.</p>
       <div class="feature-grid">
-        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>Historical milestones</h3><p>The key stages and figures of the Pakistan Movement are presented through murals and statues.</p></article>
-        <article class="feature"><div class="icon" aria-hidden="true">◎</div><h3>National symbols</h3><p>An exhibition of the country’s cultural and state emblems that completes the concept of the outer monument.</p></article>
-        <article class="feature"><div class="icon" aria-hidden="true">☼</div><h3>View & sunrise</h3><p>From the monument’s top and open areas you can see the wide Islamabad–Rawalpindi spread and the Margalla backdrop.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>Historical themes</h3><p>Use the official introduction for the museum’s historical focus. Ask Lok Virsa which galleries and individual exhibits are currently available.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">◎</div><h3>Museum visit</h3><p>Confirm the museum entrance, tickets, hours and any available audio-visual programme directly; the park’s listing does not confirm them.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">☼</div><h3>Viewpoint access</h3><p><a href="https://www.cda.gov.pk/destination">CDA’s destination guide</a> describes the Shakarparian city panorama, not permission to climb the monument. Monument-top access and sunrise entry are unverified; use only areas staff confirm are open.</p></article>
       </div>
-      <p class="notice" style="margin-top:1.6rem"><strong>Practical note:</strong> The indoor museum hours may differ from the open park and can change on any festival or official-event day. Check the current schedule of the relevant official site before you go.</p>
+      <p class="notice" style="margin-top:1.6rem"><strong>On the day:</strong> Ask each operator about current opening, exhibition availability, ticket conditions and security restrictions before travel.</p>
     </div>
   </section>
 
@@ -86,23 +86,23 @@ const faqSchema = buildFaqSchema(faqs);
     <div class="container">
       <div class="eyebrow">Pairing with the park</div>
       <h2 class="section-title" id="combo">Nature and history in one visit</h2>
-      <p class="section-lead">Combining {ATTRACTION.fullNameLatin}'s open green areas, the monument, and nearby institutions (Lok Virsa Museum, etc.) is efficient in both time and energy.</p>
+      <p class="section-lead">A combined visit to {ATTRACTION.fullNameLatin}, the monument and nearby institutions is an optional planning idea. Adopt it only after confirming each destination’s opening, tickets and actual connecting route that day; time and effort depend on your pace and conditions.</p>
       <div class="guide-grid">
         <article class="guide-card">
           <h3>Visit order</h3>
-          <p>Start with the greenery and a walk, then go to the monument on the western hill, and finish with the indoor museum while the light is soft.</p>
+          <p>An optional order is greenery → monument → indoor museum. Use or change this order only after confirming opening times, tickets and the actual connecting routes on the day; no continuous walking route or completion time is verified.</p>
         </article>
         <article class="guide-card">
           <h3>Time split</h3>
-          <p>One to two hours is enough for the monument alone; a half day is more comfortable with the park and other museums.</p>
+          <p>As planning examples, consider 1–2 hours for the monument alone or a half day with the park and museums. These are not measured completion times: confirm each destination’s opening, tickets and routes, and adjust to your pace.</p>
         </article>
         <article class="guide-card">
           <h3>Photography</h3>
-          <p>The open plazas around the monument and the hill edge give good angles with the city backdrop; follow security instructions.</p>
+          <p>If staff confirm a public area is open, choose a photo position within that area and follow security instructions. This guide does not establish access to hill edges or the monument’s top.</p>
         </article>
         <article class="guide-card">
           <h3>Reaching the zone</h3>
-          <p>Tell the driver or map not just “Shakarparian” but the desired visitor zone — the main park area or the Pakistan Monument — because there are different access points on the hill.</p>
+          <p>Specify the separate destination you intend to visit. Confirm its entrance and lawful pick-up/drop-off point with its operator before arranging transport.</p>
         </article>
       </div>
     </div>

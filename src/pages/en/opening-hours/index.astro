@@ -7,8 +7,7 @@ import RelatedGuides from '../../../components/RelatedGuides.astro';
 import { ATTRACTION, SITE_URL, withSiteNameEn } from '../../../data/site';
 import { buildBreadcrumbSchema, buildFaqSchema } from '../../../lib/schema';
 
-const heroPhoto = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Pakistan_Islamabad_monument_03.jpg';
-const parkPhoto = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/Shakar_Parian_Islamabad.jpg';
+const parkPhoto = '/images/monument-05.jpg';
 
 const daysEn: Record<string, string> = {
   Monday: 'Mon', Tuesday: 'Tue', Wednesday: 'Wed', Thursday: 'Thu', Friday: 'Fri', Saturday: 'Sat', Sunday: 'Sun',
@@ -25,7 +24,7 @@ const crumb = { name: 'اوقات اور بہترین وقت', nameLatin: 'Openi
 const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
 
 const faqs: [string, string][] = [
-  ['What are the general hours of Shakarparian National Park?', `Per the recent Google place listing, the listed hours are ${schedule[0].days} ${schedule[0].opens}–${schedule[0].closes} and ${schedule[1].days} ${schedule[1].opens}–${schedule[1].closes}. These are changing information, especially on festival, official-event, or security-management days.`],
+  ['What are the general hours of Shakarparian National Park?', `Per the Google park listing checked on 20 October 2026, the listed hours are ${schedule[0].days} ${schedule[0].opens}–${schedule[0].closes} and ${schedule[1].days} ${schedule[1].opens}–${schedule[1].closes}. These are changing information, especially on festival, official-event, or security-management days.`],
   ['Do museums have different hours?', 'Yes — the Pakistan Monument and nearby museums’ indoor sections may have hours separate from the open park. Check the current schedule of the relevant institution before you go.'],
   ['Which weekday is less crowded?', 'Generally the early weekdays (Monday to Thursday, except holidays) are relatively less crowded. Weekends, Sunday, and national holidays can bring larger crowds.'],
   ['How is it in rain or fog?', 'Because it is an open hillside site, rain, fog, or extreme heat can change the experience. Pick the time by checking the weather, and carry suitable clothing/water.'],
@@ -37,10 +36,10 @@ const faqSchema = buildFaqSchema(faqs);
   ogTitle={`Opening Hours & Best Time — ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}`}
   description={`${ATTRACTION.fullNameLatin} (${ATTRACTION.cityLatin}) general hours, seasonal comparison, and the best time to avoid crowds — a non-commercial English guide.`}
   image={parkPhoto}
-  imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+  imageAlt="Pakistan Monument in 2018; separate from the park listing"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
   <SubHero
     kicker="Visit planning"
@@ -48,7 +47,7 @@ const faqSchema = buildFaqSchema(faqs);
     latin="Opening Hours & Best Time to Visit Shakarparian"
     lead={`${ATTRACTION.fullNameLatin}'s general hours, a seasonal comparison, and the best moments to avoid crowds — so your visit is more relaxed and less busy.`}
     image={parkPhoto}
-    imageAlt={`Garden and memorial planting of ${ATTRACTION.fullNameLatin}, ${ATTRACTION.cityLatin}, ${ATTRACTION.countryLatin}`}
+    imageAlt="Pakistan Monument in 2018; separate from the park listing"
   />
 
   <div class="container breadcrumb-bar">
@@ -59,7 +58,7 @@ const faqSchema = buildFaqSchema(faqs);
     <div class="container">
       <div class="eyebrow">Current general hours</div>
       <h2 class="section-title" id="hours">{ATTRACTION.fullNameLatin} opening hours</h2>
-      <p class="section-lead">These hours are taken from the recent public Google place listing and are changing information. They can change on festivals, official events, or security-management days.</p>
+      <p class="section-lead">These hours are from the Google park listing checked on 20 October 2026 and are changing information. They can change on festivals, official events, or security-management days.</p>
       <div class="visit-grid">
         {schedule.map((row) => (
           <article class="visit-card">
@@ -71,7 +70,7 @@ const faqSchema = buildFaqSchema(faqs);
         ))}
         <article class="visit-card">
           <h3>Indoor museums</h3>
-          <p>The hours of the Pakistan Monument and nearby museums’ indoor sections may differ from this table. Check the current schedule of the relevant institution on your travel day.</p>
+          <p>This park-listing table does not establish Pakistan Monument or museum opening hours. Check the current schedule of the relevant institution on your travel day.</p>
         </article>
       </div>
     </div>
@@ -97,9 +96,9 @@ const faqSchema = buildFaqSchema(faqs);
       <div class="eyebrow">How long to stay</div>
       <h2 class="section-title" id="duration">How much time to keep</h2>
       <div class="guide-grid">
-        <article class="guide-card"><h3>Park only</h3><p>1.5–3 hours is enough for greenery, the view, and a relaxed walk.</p></article>
-        <article class="guide-card"><h3>With the monument</h3><p>3–4 hours is more comfortable if you include the Pakistan Monument and the indoor museum.</p></article>
-        <article class="guide-card"><h3>Full half day</h3><p>Combining the park, the monument, Lok Virsa, and a meal flows easily through a half day.</p></article>
+        <article class="guide-card"><h3>Park only</h3><p>Allow around 1.5–3 hours as a planning example for greenery, the view, and a relaxed walk.</p></article>
+        <article class="guide-card"><h3>With the monument</h3><p>Consider 3–4 hours as a planning example for the Pakistan Monument and indoor museum; confirm each destination’s opening, tickets and route, and adjust to your pace.</p></article>
+        <article class="guide-card"><h3>Full half day</h3><p>A half day combining the park, monument, Lok Virsa and a meal is a planning example, not a verified completion time. First confirm each destination’s opening, tickets and routes, and adjust the plan to your pace.</p></article>
       </div>
     </div>
   </section>
@@ -119,6 +118,7 @@ const faqSchema = buildFaqSchema(faqs);
     </div>
   </section>
 
+<p class="notice">Google park listing checked 20 October 2026: the table applies only to this park listing. Lok Virsa’s own website separately lists Heritage Museum 10:00–20:00 all week and Pakistan Monument Museum 10:00–20:00 Tuesday–Sunday. These are separate indoor institutions; confirm their current tickets, dates and access with <a href="https://lokvirsa.org.pk/">Lok Virsa</a>.</p>
   <RelatedGuides exclude="opening-hours" />
   <SourcesSection />
 </BaseLayout>

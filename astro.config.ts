@@ -9,7 +9,7 @@ const SITE_URL = 'https://shakarparian.com';
 export default defineConfig({
   site: SITE_URL || undefined,
   output: 'static',
-  integrations: SITE_URL ? [sitemap()] : [],
+  integrations: SITE_URL ? [sitemap({ filter: (page) => !page.endsWith('/404.html') })] : [],
   vite: {
     plugins: [tailwindcss()],
   },

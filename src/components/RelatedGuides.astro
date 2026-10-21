@@ -33,7 +33,7 @@ const guides = [
     en: { ur: 'Getting There & Parking', latin: 'Getting There & Parking', desc: 'Airport, metrobus, taxi, private car, and detailed parking explanation.' },
   },
 ];
-const shown = guides.filter((g) => g.slug !== exclude).map((g) => g[locale]);
+const shown = guides.filter((g) => g.slug !== exclude).map((g) => ({ ...g[locale], slug: g.slug }));
 const langBase = locale === 'en' ? '/en' : '';
 const defaultHeading = locale === 'en' ? 'More detailed sub-guides' : 'مزید تفصیلی ذیلی رہنما';
 const resolvedHeading = heading ?? defaultHeading;
