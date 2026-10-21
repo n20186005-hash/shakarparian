@@ -96,9 +96,9 @@ const faqSchema = buildFaqSchema(faqs);
           <span>{ATTRACTION.fullName}</span> → <span>{ATTRACTION.city}</span> → <span>{ATTRACTION.region}</span> → <span>{ATTRACTION.country}</span>
         </p>
         <p>
-          {ATTRACTION.fullName} کے دورے کے دوران زائرین گرد و نواح کے تاریخی اور ثقافتی نشانات بھی آسانی سے دیکھ سکتے ہیں، جن میں
+          شکرپڑیاں کے علاقے میں تاریخی اور ثقافتی مقامات شامل ہیں، جن میں
           <strong>{NEARBY_LANDMARKS[0].name}</strong> ({NEARBY_LANDMARKS[0].nameLatin}) اور <strong>{NEARBY_LANDMARKS[1].name}</strong> ({NEARBY_LANDMARKS[1].nameLatin})
-          خاص طور پر نمایاں ہیں۔ یہی وجہ ہے کہ ایک ہی نصف دن میں فطرت، قومی تاریخ اور دستکاری سب ایک ساتھ دیکھی جا سکتی ہے۔
+          خاص طور پر نمایاں ہیں۔ یہ الگ مقامات ہیں؛ مشترکہ دورہ بنانے سے پہلے ہر آپریٹر سے موجودہ رسائی، اوقات اور اخراجات، اور مقامات کے درمیان موجودہ راستہ معلوم کریں۔
         </p>
       </div>
       <aside class="entity-card" aria-label="مقام کی تکنیکی تفصیلات">
@@ -212,14 +212,14 @@ const faqSchema = buildFaqSchema(faqs);
             <tr>
               <td data-label="طریقہ"><strong>ٹیکسی / رائیڈ ہیلنگ</strong></td>
               <td data-label="موزوں">چھوٹے گروپ، لچکدار وقت</td>
-              <td data-label="فائدہ">دروازے سے دروازے تک، نشان زدہ زون بتائیں</td>
+              <td data-label="فائدہ">آپریٹر سے مطلوبہ داخلی مقام اور قانونی سوار ہونے یا اترنے کی جگہ معلوم کریں</td>
               <td data-label="نقصان">اوقات میں رش اور سگنل مسائل</td>
               <td data-label="لاگت">موجودہ اخراجات معلوم کریں</td>
             </tr>
             <tr>
               <td data-label="طریقہ"><strong>میٹروبس / فیڈر بس</strong></td>
-              <td data-label="موزوں">بجٹ سفر، ماحول دوست</td>
-              <td data-label="فائدہ">سستا، مرکزی کوریڈورز سے جڑتا ہے</td>
+              <td data-label="موزوں">پبلک ٹرانسپورٹ پر غور کرنے والے مسافر</td>
+              <td data-label="فائدہ">روانگی سے پہلے موجودہ سروس، رابطے اور کرایے معلوم کریں</td>
               <td data-label="نقصان">آخری حصہ پیدل یا مختصر ٹیکسی سے طے کریں</td>
               <td data-label="لاگت">موجودہ اخراجات معلوم کریں</td>
             </tr>
@@ -289,8 +289,8 @@ const faqSchema = buildFaqSchema(faqs);
       <div class="eyebrow">قریبی عوامی مقامات</div>
       <h2 class="section-title">{ATTRACTION.shortName} کے گرد تاریخی نشانات اور قریبی مقامات</h2>
       <p class="section-lead">
-        {ATTRACTION.fullName} کے دورے میں زائرین ارد گرد کے تاریخی نشانات اور دلچسپ مقامات باآسانی دیکھ سکتے ہیں، جن میں <strong>{NEARBY_LANDMARKS[0].name}</strong> اور
-        <strong>{NEARBY_LANDMARKS[1].name}</strong> سب سے نمایاں ہیں۔ سی ڈی اے مونومنٹ اور لوک ورثہ کے سیاق کی تائید کرتا ہے۔ باقی کارڈ الگ تحقیق کے امیدوار ہیں، تصدیق شدہ مشترکہ راستہ نہیں۔ ہر ادارے کی موجودہ رسائی، اوقات اور اخراجات الگ معلوم کریں۔
+        گرد و نواح میں الگ تاریخی اور ثقافتی مقامات شامل ہیں، جن میں <strong>{NEARBY_LANDMARKS[0].name}</strong> اور
+        <strong>{NEARBY_LANDMARKS[1].name}</strong> سب سے نمایاں ہیں۔ سی ڈی اے مونومنٹ اور لوک ورثہ کے سیاق کی تائید کرتا ہے۔ باقی کارڈ الگ تحقیق کے امیدوار ہیں، تصدیق شدہ مشترکہ راستہ نہیں۔ ہر ادارے کی موجودہ رسائی، اوقات اور اخراجات، اور مقامات کے درمیان موجودہ راستہ الگ معلوم کریں۔
       </p>
       <div class="attractions">
         <article class="attraction"><b>پاکستان مونومنٹ</b><small>شکرپڑیاں کی مغربی پہاڑی پر قومی وحدت کی علامتی یادگار؛ پارک کے دورے کے ساتھ قدرتی امتزاج۔</small></article>

@@ -95,9 +95,9 @@ const faqSchema = buildFaqSchema(faqs);
           <span>{ATTRACTION.fullNameLatin}</span> → <span>{ATTRACTION.cityLatin}</span> → <span>{ATTRACTION.regionLatin}</span> → <span>{ATTRACTION.countryLatin}</span>
         </p>
         <p>
-          While visiting {ATTRACTION.fullNameLatin}, travellers can easily see the surrounding historical and cultural landmarks, especially
+          The Shakarparian area includes historical and cultural landmarks, especially
           <strong>{NEARBY_LANDMARKS[0].nameLatin}</strong> and <strong>{NEARBY_LANDMARKS[1].nameLatin}</strong>.
-          That is why within a single half day you can see nature, national history, and crafts together.
+          These are separate destinations. Confirm each operator’s current access, hours and charges, and the route between them before planning a combined visit.
         </p>
       </div>
       <aside class="entity-card" aria-label="Technical details of the place">
@@ -211,14 +211,14 @@ const faqSchema = buildFaqSchema(faqs);
             <tr>
               <td data-label="Method"><strong>Taxi / ride-hailing</strong></td>
               <td data-label="Best for">Small groups, flexible time</td>
-              <td data-label="Advantage">Door to door, name the marked zone</td>
+              <td data-label="Advantage">Confirm the intended entrance and lawful pick-up/drop-off point with the operator</td>
               <td data-label="Disadvantage">Rush-hour and signal issues</td>
               <td data-label="Cost">Confirm current charges</td>
             </tr>
             <tr>
               <td data-label="Method"><strong>Metrobus / feeder bus</strong></td>
-              <td data-label="Best for">Budget travel, eco-friendly</td>
-              <td data-label="Advantage">Cheap, connects to main corridors</td>
+              <td data-label="Best for">Travellers considering public transport</td>
+              <td data-label="Advantage">Check current service, connections and fares before travel</td>
               <td data-label="Disadvantage">Final leg on foot or short taxi</td>
               <td data-label="Cost">Confirm current charges</td>
             </tr>
@@ -288,8 +288,8 @@ const faqSchema = buildFaqSchema(faqs);
       <div class="eyebrow">Nearby public sites</div>
       <h2 class="section-title">Historical markers and nearby places around {ATTRACTION.shortNameLatin}</h2>
       <p class="section-lead">
-        While visiting {ATTRACTION.fullNameLatin}, travellers can easily see the surrounding historical markers and interesting places, among which <strong>{NEARBY_LANDMARKS[0].nameLatin}</strong> and
-        <strong>{NEARBY_LANDMARKS[1].nameLatin}</strong> are most prominent. CDA supports the Monument and Lok Virsa context. The remaining cards are separate research candidates, not a verified connected itinerary. Confirm each institution’s current access, hours and charges separately.
+        The surrounding area includes separate historical and cultural destinations, among which <strong>{NEARBY_LANDMARKS[0].nameLatin}</strong> and
+        <strong>{NEARBY_LANDMARKS[1].nameLatin}</strong> are most prominent. CDA supports the Monument and Lok Virsa context. The remaining cards are separate research candidates, not a verified connected itinerary. Confirm each institution’s current access, hours and charges, and the current route between destinations separately.
       </p>
       <div class="attractions">
         <article class="attraction"><b>Pakistan Monument</b><small>Symbolic monument of national unity on the western Shakarparian hill; a natural blend with the park visit.</small></article>
