@@ -18,7 +18,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(pageUrl, crumb);
 const faqs: [string, string][] = [
   ['How to reach Shakarparian from Islamabad Airport?', 'Use a licensed taxi or ride-hailing directly to “Shakarparian National Park / Pakistan Monument zone”. Depending on traffic it is a medium cross-city journey.'],
   ['Is public transport available?', 'The CDA public transit map lists a feeder route via Shakarparian Park (e.g., ST-02). Routes, operating days, and frequency can change, so check the current map on your travel day.'],
-  ['Is parking available?', 'Confirm parking location, availability and charges for your intended entrance; this guide has not independently verified them. Space can be limited on weekends and event days, so arriving early is better.'],
+  ['Is parking available?', 'Ask the operator responsible for your intended entrance whether parking is currently available, where it is, and what conditions or charges apply. This guide has not verified parking locations, capacity, weekend availability or fees.'],
   ['What address to tell the driver?', 'Rather than just saying “Shakarparian”, specify the desired visitor zone — the main park area or the Pakistan Monument — because there are different access points on the hill.'],
 ];
 const faqSchema = buildFaqSchema(faqs);
@@ -68,7 +68,7 @@ const faqSchema = buildFaqSchema(faqs);
         </article>
         <article class="guide-card">
           <h3>Private car, bicycle, and walking</h3>
-          <p>For a private car, go to the marked parking zone and follow traffic-control instructions. A short walk inside the hill is pleasant, but walking or cycling from far against the large expressways is not comfortable for every traveller.</p>
+          <p>Before driving, ask the relevant operator about an authorised arrival and parking point. A walking or cycling connection has not been checked; research a safe permitted route before choosing either option.</p>
         </article>
       </div>
       <div class="notice"><strong>Before you leave:</strong> Check the official transit map, weather, security/event closures, and museums’ separate hours.</div>
@@ -85,11 +85,11 @@ const faqSchema = buildFaqSchema(faqs);
             <tr><th>Method</th><th>Best for</th><th>Advantage</th><th>Disadvantage / caution</th><th>Cost trend</th></tr>
           </thead>
           <tbody>
-            <tr><td data-label="Method"><strong>Airport transfer</strong></td><td data-label="Best for">First-time visitors, with luggage</td><td data-label="Advantage">Direct to the place, little guidance needed</td><td data-label="Disadvantage">Cross-city distance and traffic</td><td data-label="Cost">Medium to high</td></tr>
-            <tr><td data-label="Method"><strong>Taxi / ride-hailing</strong></td><td data-label="Best for">Small groups, flexible time</td><td data-label="Advantage">Door to door, name the marked zone</td><td data-label="Disadvantage">Rush-hour and signal issues</td><td data-label="Cost">Medium</td></tr>
-            <tr><td data-label="Method"><strong>Metrobus / feeder bus</strong></td><td data-label="Best for">Budget travel, eco-friendly</td><td data-label="Advantage">Cheap, connects to main corridors</td><td data-label="Disadvantage">Final leg on foot or short taxi</td><td data-label="Cost">Low</td></tr>
-            <tr><td data-label="Method"><strong>Private car</strong></td><td data-label="Best for">Family, luggage, freedom</td><td data-label="Advantage">Easy to parking zone, flexible return</td><td data-label="Disadvantage">Limited parking on weekends</td><td data-label="Cost">Fuel + parking</td></tr>
-            <tr><td data-label="Method"><strong>Bicycle / walking</strong></td><td data-label="Best for">From nearby residence</td><td data-label="Advantage">Green and free</td><td data-label="Disadvantage">Stay away from large expressways</td><td data-label="Cost">Free</td></tr>
+            <tr><td data-label="Method"><strong>Airport transfer</strong></td><td data-label="Best for">First-time visitors, with luggage</td><td data-label="Advantage">Direct to the place, little guidance needed</td><td data-label="Disadvantage">Cross-city distance and traffic</td><td data-label="Cost">Confirm current charges</td></tr>
+            <tr><td data-label="Method"><strong>Taxi / ride-hailing</strong></td><td data-label="Best for">Small groups, flexible time</td><td data-label="Advantage">Door to door, name the marked zone</td><td data-label="Disadvantage">Rush-hour and signal issues</td><td data-label="Cost">Confirm current charges</td></tr>
+            <tr><td data-label="Method"><strong>Metrobus / feeder bus</strong></td><td data-label="Best for">Budget travel, eco-friendly</td><td data-label="Advantage">Cheap, connects to main corridors</td><td data-label="Disadvantage">Final leg on foot or short taxi</td><td data-label="Cost">Confirm current charges</td></tr>
+            <tr><td data-label="Method"><strong>Private car</strong></td><td data-label="Best for">Family, luggage, freedom</td><td data-label="Advantage">Flexible return; confirm arrival point</td><td data-label="Disadvantage">Parking location and capacity unverified</td><td data-label="Cost">Confirm current charges</td></tr>
+            <tr><td data-label="Method"><strong>Bicycle / walking</strong></td><td data-label="Best for">From nearby residence</td><td data-label="Advantage">Research a permitted route</td><td data-label="Disadvantage">Stay away from large expressways</td><td data-label="Cost">Confirm current charges</td></tr>
           </tbody>
         </table>
       </div>
@@ -101,12 +101,12 @@ const faqSchema = buildFaqSchema(faqs);
       <div class="story-copy">
         <div class="eyebrow">Parking</div>
         <h2 class="section-title" id="parking">Where to park the car</h2>
-        <p>Confirm parking location, availability and charges for your intended entrance; this guide has not independently verified them. Arriving early on weekends, holidays, and event days is better so you can find space.</p>
+        <p>Ask the operator responsible for your intended entrance whether parking is currently available, where it is, and what conditions or charges apply. This guide has not verified parking locations, capacity, weekend availability or fees.</p>
         <p>Avoid unauthorized roadside parking because security and traffic management can tighten suddenly. No permanent public charger inside the park could be confirmed from a reliable official source for this guide, so completing a charge at an available public charging point in the city first is the safer plan.</p>
       </div>
       <div class="story-image">
-        <img src={parkPhoto} alt="Pakistan Monument: stone petals and steps, photographed in 2018" width="1600" height="900" loading="lazy" />
-        <div class="story-badge">Use marked parking zones and follow security instructions.</div>
+        <img src={parkPhoto} alt="Pakistan Monument stone petals and steps, photographed in September 2018" width="1600" height="900" loading="lazy" />
+        <div class="story-badge">Pakistan Monument, September 2018 · Fawad4real · <a href="#photo-credits">Source and licence</a></div>
       </div>
     </div>
   </section>
