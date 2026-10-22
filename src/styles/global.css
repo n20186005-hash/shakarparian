@@ -281,4 +281,5 @@ summary::-webkit-details-marker { display:none; } summary::after{content:"＋";c
 html:lang(ur) .hero h1{font-size:clamp(2rem,6.5vw,5rem);line-height:1.8;letter-spacing:normal}
 html:lang(ur) .hero-city{font-size:clamp(1.25rem,2.3vw,1.8rem);line-height:1.9;margin-block-start:.8rem}
 html:lang(ur) .subhero h1,html:lang(ur) .legal-hero h1{line-height:1.85;letter-spacing:normal}
+html:lang(ur) .legal-hero h1{padding-inline:.5em}
 html:lang(ur) .section-title{line-height:1.9;letter-spacing:normal}
