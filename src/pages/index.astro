@@ -11,6 +11,7 @@ import AudienceRoutes from '../components/AudienceRoutes.astro';
 import ItinerarySection from '../components/ItinerarySection.astro';
 import ResponsibilitySection from '../components/ResponsibilitySection.astro';
 import RelatedGuides from '../components/RelatedGuides.astro';
+import TopicCluster from '../components/TopicCluster.astro';
 
 const heroPhoto = '/images/monument-03.jpg';
 const parkPhoto = '/images/monument-05.jpg';
@@ -303,6 +304,8 @@ const faqSchema = buildFaqSchema(faqs);
   </section>
 
   <RelatedGuides showHome={false} heading="مفصل ذیلی رہنما" />
+
+  <TopicCluster heading="40 موضوعاتی رہنما" />
 
   <section class="section-sm" aria-labelledby="food-title">
     <div class="container story-grid">

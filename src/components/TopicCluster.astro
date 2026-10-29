@@ -1,0 +1,52 @@
+---
+import { topicsByGroup, type TopicLocale } from '../data/topics';
+import { localeFromUrl } from '../i18n';
+
+interface Props {
+  heading?: string;
+}
+const { heading } = Astro.props;
+const isEn = localeFromUrl(Astro.url) === 'en';
+const locale: TopicLocale = isEn ? 'en' : 'ur';
+const groups = topicsByGroup(locale);
+const langBase = isEn ? '/en' : '';
+const resolvedHeading = heading ?? (isEn ? 'Topic guides' : 'موضوعاتی رہنما');
+---
+
+<section class="section-sm" aria-labelledby="topic-cluster-title">
+  <div class="container">
+    <div class="eyebrow">{isEn ? 'Browse by topic' : 'موضوع کے لحاظ سے دیکھیں'}</div>
+    <h2 class="section-title" id="topic-cluster-title">{resolvedHeading}</h2>
+    <div class="topic-cluster">
+      {
+        groups.map((g) => (
+          <div class="cluster-group">
+            <h3 class="cluster-label">{g.label}</h3>
+            <ul class="cluster-list">
+              {g.items.map((it) => (
+                <li><a href={`${langBase}/${it.slug}/`}>{it.title}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .topic-cluster { display: grid; gap: 1.5rem; margin-top: 1.25rem; }
+  .cluster-group { border-top: 1px solid var(--line); padding-top: 1rem; }
+  .cluster-label { font-size: 1.02rem; color: var(--pine); margin: 0 0 .7rem; font-weight: 800; }
+  .cluster-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .45rem .9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .cluster-list a { color: var(--muted); text-decoration: none; }
+  .cluster-list a:hover { color: var(--clay); text-decoration: underline; }
+  @media (max-width: 640px) { .cluster-list { grid-template-columns: 1fr; } }
+</style>

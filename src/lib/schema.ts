@@ -45,6 +45,32 @@ export function buildAttractionSchema(options: { url: string; images: string[] }
   };
 }
 
+/**
+ * ذیلی/موضوعی صفحہ کے لیے WebPage JSON-LD۔
+ * یہ صفحہ کو سائٹ کا حصہ اور اصل مقام (TouristAttraction) کا "about" ظاہر کرتا ہے،
+ * لیکن ریٹنگ یا review ٹھوس طور پر نہیں جوڑتا — وہ صرف Google Maps کے حوالے کے لیے ہے۔
+ */
+export function buildWebPageSchema(options: {
+  url: string;
+  name: string;
+  nameLatin: string;
+  description: string;
+  inLanguage: string;
+}) {
+  const { url, name, nameLatin, description, inLanguage } = options;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: `${name} (${nameLatin})`,
+    description,
+    inLanguage,
+    about: { '@id': ATTRACTION_ID },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+  };
+}
+
 /** سوالات کے جوابات کا FAQPage JSON-LD */
 export function buildFaqSchema(faqs: readonly Faq[]) {
   return {
